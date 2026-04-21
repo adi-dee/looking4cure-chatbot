@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliz</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --teal:#0d6b54;
+  --teal-mid:#0e7a60;
+  --teal-light:#e8f5f0;
+  --teal-border:#b8dcd4;
+  --white:#ffffff;
+  --off:#f6faf8;
+  --g1:#eceae8;
+  --g3:#c0bebb;
+  --g9:#1a1917;
+  --pink-soft:#fff0f7;
+  --pink-border:#f5c0d8;
+  --pink-text:#7a1a4a;
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+
+/* ══════════════════════════════════════════
+   DESKTOP MODE (default — applied via JS)
+   ══════════════════════════════════════════ */
+html,body{
+  height:100%;width:100%;
+  margin:0;padding:0;
+  font-family:var(--font);
+  background:transparent;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+/* Constrain to bottom-right corner so the iframe
+   doesn't need to be full-screen and block clicks */
+#desktop-root{
+  position:fixed;
+  bottom:0;right:0;
+  width:440px;   /* wide enough for panel + FAB */
+  height:660px;  /* tall enough for panel + FAB */
+  pointer-events:none;
+}
+
+/* ── MOBILE MODE class applied by JS to <html> ── */
+html.mobile-mode,
+html.mobile-mode body{
+  height:auto;
+  overflow:visible;
+  background:#ffffff;
+  pointer-events:all;
+}
+html.mobile-mode #desktop-root{ display:none; }
+html.mobile-mode #fab{ display:none; }
+html.mobile-mode #panel{
+  position:relative !important;
+  top:auto !important;left:auto !important;
+  right:auto !important;bottom:auto !important;
+  width:100% !important;
+  height:100vh !important;
+  max-height:100vh !important;
+  border-radius:0 !important;
+  border:none !important;
+  transform:none !important;
+  opacity:1 !important;
+  pointer-events:all !important;
+  box-shadow:none !important;
+  display:flex !important;
+}
+html.mobile-mode .ph-close{ display:none !important; }
+html.mobile-mode .pinp{ font-size:16px; }
+html.mobile-mode .psnd{ width:42px;height:42px; }
+html.mobile-mode .psnd svg{ width:16px;height:16px; }
+html.mobile-mode .sugg{ font-size:13px;padding:7px 15px; }
+html.mobile-mode .bub{ font-size:14px; }
+html.mobile-mode .mmeta{ font-size:11px; }
+
+#fab{
+  position:fixed;bottom:24px;right:24px;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--teal);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(13,107,84,.4);
+  transition:transform .18s,box-shadow .18s;
+  z-index:9999;pointer-events:all;
+}
+#fab:hover{transform:scale(1.08)}
+#fab:active{transform:scale(.95)}
+#fab svg{width:24px;height:24px;position:absolute;transition:opacity .18s,transform .18s}
+.ic-c{opacity:1;transform:scale(1)}
+.ic-x{opacity:0;transform:scale(.6) rotate(-45deg)}
+#fab.open .ic-c{opacity:0;transform:scale(.6) rotate(45deg)}
+#fab.open .ic-x{opacity:1;transform:scale(1) rotate(0)}
+#fab::before{
+  content:'';position:absolute;width:100%;height:100%;border-radius:50%;
+  border:2px solid var(--teal);
+  animation:pring 2.8s ease-out 1.2s infinite;opacity:0;
+}
+@keyframes pring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.75);opacity:0}}
+
+#panel{
+  position:fixed;bottom:96px;right:24px;
+  width:380px;        /* wider */
+  height:560px;       /* taller — fixed height so it feels substantial */
+  border-radius:20px;background:#fff;
+  border:1px solid var(--g1);
+  display:flex;flex-direction:column;overflow:hidden;
+  z-index:9998;
+  transform:translateY(16px) scale(.93);
+  transform-origin:bottom right;
+  opacity:0;pointer-events:none;
+  transition:transform .26s cubic-bezier(.34,1.5,.64,1),opacity .18s;
+  box-shadow:0 20px 60px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.08);
+}
+#panel.open{
+  transform:translateY(0) scale(1);
+  opacity:1;pointer-events:all;
+}
+
+/* Mobile styles handled via html.mobile-mode class — see above */
+
+/* ══════════════════════════════════════════
+   SHARED COMPONENT STYLES
+   ══════════════════════════════════════════ */
+
+/* Header */
+.ph{
+  padding:14px 16px 12px;
+  background:var(--teal);
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+.ph::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#ff6eb4,#ffd54f,#69d5a8,#60b8ff,#c084fc,#ff6eb4);
+  background-size:220% 100%;animation:rb 4s linear infinite;
+}
+@keyframes rb{0%{background-position:0 0}100%{background-position:220% 0}}
+.ph-av{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.ph-info{flex:1}
+.ph-info h2{font-size:15px;font-weight:600;color:#fff;line-height:1.2}
+.ph-info p{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
+.ph-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#6ee7b7;flex-shrink:0;
+  animation:dp 2.2s ease-in-out infinite;
+}
+@keyframes dp{0%,100%{opacity:1}50%{opacity:.4}}
+.ph-close{
+  display:none;background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.8);padding:4px;flex-shrink:0;pointer-events:all;
+}
+.ph-close svg{width:20px;height:20px;display:block}
+/* Close button shown on desktop only (hidden via mobile-mode class) */
+@media(min-width:601px){
+  .ph-close{display:flex;align-items:center;}
+}
+
+/* Messages scroll area */
+.pmsgs{
+  flex:1;overflow-y:auto;
+  padding:14px 13px 8px;
+  display:flex;flex-direction:column;gap:9px;
+  scroll-behavior:smooth;
+  background:#ffffff;
+}
+.pmsgs::-webkit-scrollbar{width:3px}
+.pmsgs::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px}
+
+/* Message bubbles */
+.msg{
+  display:flex;flex-direction:column;
+  max-width:86%;
+  animation:mi .22s ease;
+}
+@keyframes mi{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.msg.bot{align-self:flex-start}
+.msg.user{align-self:flex-end}
+
+.bub{
+  padding:10px 13px;border-radius:16px;
+  font-size:13.5px;line-height:1.6;
+}
+.msg.bot .bub{
+  background:#f6faf8;
+  border:1px solid var(--teal-border);
+  color:var(--g9);
+  border-bottom-left-radius:4px;
+}
+.msg.user .bub{
+  background:var(--teal);color:#fff;
+  border-bottom-right-radius:4px;
+}
+.bub a{color:var(--teal)}
+.msg.user .bub a{color:#a7f3d0}
+.bub b{font-weight:600}
+
+/* Read more */
+.more-btn{
+  display:inline-block;margin-top:6px;
+  font-size:12px;color:var(--teal);
+  background:none;border:none;cursor:pointer;
+  font-family:var(--font);padding:0;
+  text-decoration:underline;pointer-events:all;
+}
+.more-content{
+  margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--teal-border);
+  font-size:13px;line-height:1.65;color:var(--g9);
+}
+
+/* Suggestions shown after each reply */
+.sugg-row{
+  display:flex;flex-wrap:wrap;gap:5px;
+  margin-top:4px;align-self:flex-start;
+  animation:mi .28s ease;
+}
+.sugg{
+  font-family:var(--font);font-size:11.5px;
+  padding:5px 12px;border-radius:20px;
+  border:1.5px solid var(--teal);
+  color:var(--teal);background:transparent;
+  cursor:pointer;transition:all .12s;white-space:nowrap;
+  pointer-events:all;
+}
+.sugg:hover{background:var(--teal);color:#fff}
+.sugg:disabled{opacity:.35;cursor:default;pointer-events:none}
+
+/* Support card */
+.scard{
+  background:#fff0f7;border:1px solid var(--pink-border);
+  border-radius:12px;padding:11px 13px;
+  font-size:12.5px;line-height:1.6;
+  color:var(--pink-text);margin-top:6px;
+}
+.scard strong{display:block;margin-bottom:6px;font-size:13px}
+.scard a{color:var(--pink-text);font-weight:500}
+.sline{
+  margin-top:5px;padding-top:5px;
+  border-top:1px solid var(--pink-border);
+}
+
+/* Typing indicator */
+.typ-wrap{align-self:flex-start;animation:mi .2s ease}
+.typ{
+  display:flex;align-items:center;gap:4px;
+  padding:10px 13px;background:#f6faf8;
+  border:1px solid var(--teal-border);
+  border-radius:16px;border-bottom-left-radius:4px;
+  width:fit-content;
+}
+.typ span{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--teal-mid);opacity:.4;
+  animation:td 1.2s ease-in-out infinite;
+}
+.typ span:nth-child(2){animation-delay:.15s}
+.typ span:nth-child(3){animation-delay:.3s}
+@keyframes td{
+  0%,60%,100%{opacity:.4;transform:none}
+  30%{opacity:1;transform:translateY(-3px)}
+}
+
+/* Input area */
+.pinp-area{
+  padding:10px 11px;border-top:1px solid var(--g1);
+  display:flex;align-items:center;gap:8px;
+  background:#fff;flex-shrink:0;
+}
+.pinp{
+  flex:1;font-family:var(--font);font-size:13.5px;
+  border:1.5px solid var(--g1);border-radius:22px;
+  padding:9px 15px;background:#f6faf8;color:var(--g9);
+  outline:none;resize:none;transition:border-color .14s;
+  line-height:1.4;min-height:38px;max-height:80px;
+}
+.pinp:focus{border-color:var(--teal)}
+.pinp::placeholder{color:var(--g3)}
+.psnd{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--teal);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:opacity .12s,transform .1s;
+  pointer-events:all;
+}
+.psnd:hover{opacity:.85}
+.psnd:active{transform:scale(.93)}
+.psnd svg{width:14px;height:14px}
+
+/* Timestamp */
+.mmeta{
+  font-size:10px;color:var(--g3);
+  margin-top:3px;padding:0 4px;
+}
+.msg.user .mmeta{text-align:right}
+</style>
+</head>
+<body>
+
+<!-- Desktop root — constrains the iframe footprint to bottom-right corner -->
+<div id="desktop-root">
+
+<!-- Desktop FAB (hidden on mobile via CSS) -->
+<button id="fab" onclick="togglePanel()" aria-label="Chat with Eliz">
+  <svg class="ic-c" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<!-- Chat panel -->
+<div id="panel" role="dialog" aria-label="Eliz HIV Info">
+
+  <div class="ph">
+    <div class="ph-av">💊</div>
+    <div class="ph-info">
+      <h2>Eliz</h2>
+      <p>Ask me anything about HIV</p>
+    </div>
+    <div class="ph-dot"></div>
+    <!-- Close button desktop only -->
+    <button class="ph-close" onclick="togglePanel()" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="pmsgs" id="msgs"></div>
+
+  <div class="pinp-area">
+    <textarea class="pinp" id="inp" placeholder="Ask anything…" rows="1"></textarea>
+    <button class="psnd" onclick="handleSend()" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+
+</div><!-- /panel -->
+</div><!-- /desktop-root -->
+
+<script>
+// ════════════════════════════════════════════
+// KNOWLEDGE BASE
+// ════════════════════════════════════════════
+const KB = {
+  hiv:{
+    short:`HIV is a virus that attacks the immune system. Without treatment it weakens your body over time — but with treatment, people live long, healthy lives.`,
+    more:`HIV is mainly passed through unprotected penetrative sex, sharing needles, blood exposure, or from parent to child during pregnancy or breastfeeding.\n\nIt <b>cannot</b> spread through hugging, sharing food, kissing, or everyday contact.\n\nHIV works by sneaking into immune cells and hiding inside their DNA — which is why it's hard to fully remove, but very manageable with treatment.`,
+    tags:["hiv","what is hiv","human immunodeficiency","basics","how hiv works","explain hiv"],
+    sugg:["aids","art","prep"]
+  },
+  aids:{
+    short:`AIDS is the most advanced stage of HIV — it happens when HIV goes untreated for a long time and the immune system becomes severely weakened. With today's treatment, most people with HIV never get there.`,
+    more:`Getting tested early and starting treatment makes a huge difference. Modern HIV meds are so effective that AIDS is now rare in people who have access to care.`,
+    tags:["aids","acquired immunodeficiency","difference between hiv aids","aids definition"],
+    sugg:["art","viral_load","healthcare"]
+  },
+  art:{
+    short:`ART (antiretroviral therapy) is the medication that keeps HIV under control. It doesn't cure HIV, but it stops the virus from multiplying — keeping you healthy and making transmission impossible.`,
+    more:`Modern ART is usually one pill a day, or now even an injection every couple of months. Side effects are much rarer than they used to be.\n\nThe key is taking it consistently. Stopping gives the virus a chance to reactivate.\n\n💊 Check drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
+    tags:["art","antiretroviral","medication","treatment","medicines","hiv drugs","what is art","how does treatment work","arv"],
+    sugg:["uu","viral_load","treatment_history"]
+  },
+  cure:{
+    short:`There is no widely available cure for HIV yet. A small number of people have been cured through stem cell transplants — but that's a complex treatment for life-threatening cancer, not something available broadly. Research is advancing fast.`,
+    more:`Scientists are working toward two goals:\n\n<b>Sterilising cure</b> — removing all HIV from the body.\n<b>Functional cure / remission</b> — HIV stays but the immune system controls it without medication.\n\nNeither is available yet, but clinical trials are actively testing new approaches.`,
+    tags:["cure","is there a cure","hiv cure","cured","cure for hiv","when will there be a cure"],
+    sugg:["cure_strategies","bnabs","cure_cases"]
+  },
+  prep:{
+    short:`PrEP is medication that HIV-negative people take to prevent HIV. Taken correctly, it's over 99% effective against sexual transmission.`,
+    more:`<b>Options:</b>\n• Daily pill\n• Injection every 2 months\n• Lenacapavir — injection every 6 months (still expensive, not everywhere yet)\n\nPrEP doesn't protect against other STIs, so regular testing still matters.`,
+    tags:["prep","pre-exposure","prevention","hiv negative","prevent hiv","what is prep","prep pill","prep injection","lenacapavir"],
+    sugg:["uu","hiv","art"]
+  },
+  uu:{
+    short:`U=U means Undetectable = Untransmittable. If you're on treatment and your viral load is undetectable, you cannot pass HIV to a sexual partner. This is scientifically proven.`,
+    more:`Confirmed by major international studies and accepted by all leading health organisations.\n\nPeople on effective treatment pose zero risk of sexual transmission to their partners. U=U is also a powerful tool against stigma.`,
+    tags:["u=u","undetectable untransmittable","cannot transmit","undetectable equals","sex hiv","u u"],
+    sugg:["art","viral_load","prep"]
+  },
+  viral_load:{
+    short:`Viral load is the amount of HIV in your blood. The goal of treatment is to get it so low it becomes undetectable — great for your health, and means you can't pass HIV on sexually.`,
+    more:`When you're undetectable, HIV is still in your body (hiding in the reservoir), but it's not active. This is what U=U refers to.`,
+    tags:["viral load","undetectable","detectable","viral load test","what is viral load"],
+    sugg:["uu","art","reservoir"]
+  },
+  reservoir:{
+    short:`Even on perfect treatment, HIV can hide silently inside certain cells. This hidden stash is called the reservoir — and it's the main reason HIV can't be fully cured yet.`,
+    more:`Think of it like a virus in sleep mode. Treatment keeps it asleep, but can't destroy it. If you stop treatment, it wakes up.\n\nThe reservoir is tiny — about one infected cell per 100,000 — but incredibly hard to find and remove. Scientists call it "a needle in a haystack." Most cure research is focused on solving this.`,
+    tags:["reservoir","hiding","hidden","latency","latent","sleeping virus","hiv reservoir","why no cure","hiv persistence"],
+    sugg:["cure_strategies","bnabs","q4ddpcr"]
+  },
+  cure_cases:{
+    short:`As of 2024, nine people have been reported cured of HIV. All had serious blood cancer and received stem cell transplants from donors with a rare genetic mutation that makes immune cells HIV-resistant.`,
+    more:`These cases are remarkable but the treatment is extremely complex, risky, and only for life-threatening cancer. It's not available as a general HIV cure.\n\nStill, each case teaches researchers a lot about how a cure could work.`,
+    tags:["cured","berlin patient","stem cell","9 people","anyone cured","transplant","people cured hiv"],
+    sugg:["ccr5","cure_types","cure_strategies"]
+  },
+  cure_types:{
+    short:`Scientists are working toward two kinds of cure: a sterilising cure (removing all HIV from the body) and a functional cure (the immune system controls HIV permanently without medication).`,
+    more:`<b>Sterilising cure:</b> All HIV gone. Very hard — even tiny traces can bring it back.\n\n<b>Functional cure / remission:</b> Virus stays but permanently silent without treatment.\n\n<b>Elite controllers</b> are rare people whose immune systems do this naturally — researchers study them intensively.`,
+    tags:["types of cure","sterilising cure","functional cure","remission","sterile cure","elite controllers"],
+    sugg:["cure_strategies","bnabs","cure_cases"]
+  },
+  cure_strategies:{
+    short:`There's no cure yet, but researchers are testing several exciting approaches — from gene editing to re-engineering immune cells to powerful new antibodies.`,
+    more:`<b>Shock & Kill:</b> Wake up sleeping HIV so the immune system can destroy it.\n\n<b>Block & Lock:</b> Keep HIV permanently silenced forever.\n\n<b>CAR-T cells:</b> Re-engineer immune cells to hunt HIV-infected cells.\n\n<b>CRISPR:</b> Molecular scissors that cut HIV out of DNA.\n\n<b>Therapeutic vaccines:</b> Help the immune system control HIV — some use mRNA tech like COVID vaccines.\n\n<b>bNAbs:</b> Very promising antibodies — ask me about them!`,
+    tags:["cure strategies","shock kill","kick kill","block lock","car-t","crispr","gene editing","therapeutic vaccine","cure research","mrna cure"],
+    sugg:["bnabs","ati","q4ddpcr"]
+  },
+  bnabs:{
+    short:`bNAbs are powerful lab-made antibodies that block HIV from entering cells and help clear infected ones. They're one of the most promising areas in HIV cure research right now.`,
+    more:`HIV mutates a lot, but some parts never change — bNAbs target those stable parts.\n\n<b>2025 results:</b> About 3 in 4 participants controlled the virus for 20+ weeks without ART. Some stayed suppressed for 2+ years — suggesting the immune system took over.\n\nThe goal: replace daily pills with infusions every few months.`,
+    tags:["bnabs","broadly neutralising","broadly neutralizing","antibodies","bnab","neutralising antibodies","antibody treatment"],
+    sugg:["ati","cure_types","q4ddpcr"]
+  },
+  q4ddpcr:{
+    short:`Q4ddPCR is a new lab test developed at Charité Berlin that measures the HIV reservoir more accurately. It uses four targets instead of two, catching what previous tests missed.`,
+    more:`Published in <i>Nature Communications</i> 2026. Key improvements:\n\n• Detects intact HIV in <b>95% of samples</b> vs 79% before\n• More accurately tracks how fast the reservoir shrinks on treatment\n• Better predicts which virus can actually replicate\n\nThis precision matters for evaluating whether new cure strategies are actually working.`,
+    tags:["q4ddpcr","reservoir test","reservoir assay","ddpcr","ipda","intact proviral","measure reservoir","latest research","new research","nature communications"],
+    sugg:["reservoir","cure_strategies","bnabs"]
+  },
+  ati:{
+    short:`ATI (Analytical Treatment Interruption) is a supervised pause in HIV medication used inside clinical studies — to see if a new therapy can control the virus without ART.`,
+    more:`Only done under close medical supervision, never alone. The team monitors you throughout and you decide together when to restart medication.\n\nOne participant said: <i>"From the day I was infected, I felt I'd lost control. Joining a trial gave me some of that control back."</i>`,
+    tags:["ati","analytical treatment interruption","pause treatment","stop medication","treatment pause","stopping art"],
+    sugg:["bnabs","cure_strategies","clinical_trials"]
+  },
+  treatment_history:{
+    short:`HIV treatment has come a long way. In the 80s it was brutal. Now it can be one pill a day or an injection every two months. And science is still moving fast.`,
+    more:`• 1983 – HIV identified. Activists like ACT UP fought for faster research.\n• 1987 – First antiretroviral approved.\n• 1996 – Combination therapy made HIV manageable.\n• 2006 – Single daily pill.\n• 2021 – Long-acting injection every 2 months.\n• Now – Testing 4–6 month injections, bNAbs, and more.`,
+    tags:["treatment history","history","evolution","azt","1987","1996","timeline","long acting injection","how treatment changed"],
+    sugg:["art","prep","bnabs"]
+  },
+  ccr5:{
+    short:`CCR5 is a protein HIV uses like a door handle to get into your cells. Less than 1% of people have a natural mutation that breaks this handle — making them naturally resistant to HIV.`,
+    more:`This is why the Berlin Patient and others were cured through stem cell transplants — their donors had this mutation, giving them HIV-resistant immune cells.`,
+    tags:["ccr5","door handle","mutation","resistant","delta32","genetic mutation"],
+    sugg:["cure_cases","reservoir","hiv"]
+  },
+  global:{
+    short:`41 million people are living with HIV globally. 9 million still don't have access to treatment. Budget cuts are making things worse — which is exactly why cure research matters so much.`,
+    more:`UNAIDS modelling shows continued funding cuts could mean 4 million more AIDS-related deaths and 6 million new infections by 2029.\n\nA cure would reduce dependence on health systems that are becoming more fragile and unequal.`,
+    tags:["global","worldwide","statistics","numbers","deaths","infections","access","funding","unaids","budget cuts","41 million"],
+    sugg:["about","cure_types","art"]
+  },
+  clinical_trials:{
+    short:`Clinical trials are how new HIV treatments get tested — and they've given us every treatment available today. Participation is always voluntary, with full information upfront.`,
+    more:`Trials progress through phases: safety (Phase I), early effects (Phase II), large-scale effectiveness (Phase III). You always give informed consent and can stop at any time.`,
+    tags:["clinical trial","study","participate","participation","research","phase","informed consent","join study"],
+    sugg:["ati","bnabs","about"]
+  },
+  about:{
+    short:`Eliz is part of Looking4Cure — a project by BeCURE at Charité Berlin, videographer Michel Steinberg, and researcher Tomer Einav. The goal: make HIV cure research accessible to everyone.`,
+    more:`Looking4Cure believes people living with HIV should be partners in research — not just participants. HIV cure literacy is central to that.\n\nBeCURE is the Berlin Center for HIV Cure Research at Charité – Universitätsmedizin Berlin.`,
+    tags:["looking4cure","becure","charite","about","who made this","project","michel","tomer","berlin","who are you","eliz"],
+    sugg:["global","clinical_trials","cure_strategies"]
+  },
+  healthcare:{
+    short:`Finding a doctor you actually feel safe with matters. In Germany, Queer Medics lists inclusive, experienced providers. You always have the right to respectful care.`,
+    more:`A 2021 study found 60% of people with HIV in Germany face discrimination in healthcare. Not okay — and not your fault.\n\n<b>Your rights:</b> to be respected, to say no, to ask questions, to get a second opinion.\n\nCheck drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
+    tags:["doctor","healthcare","appointment","stigma","discrimination","rights","germany","finding doctor","queer medics"],
+    sugg:["art","mental_health","support"]
+  },
+  mental_health:{
+    short:`Living with HIV can affect how you feel emotionally — that's completely real and valid. Studies show 58% of people with HIV experience loneliness. You're not alone in that.`,
+    more:`Community, peer support, and talking to someone who gets it can make a real difference. In Berlin, Berliner AIDS-Hilfe offers counselling and peer connection.`,
+    tags:["lonely","loneliness","mental health","stress","anxiety","depression","feelings","alone","struggling","emotional"],
+    sugg:["support","healthcare","stigma"]
+  },
+  stigma:{
+    short:`HIV stigma is real, harmful, and based on misinformation. U=U alone dismantles most of it — people on treatment can't pass HIV on sexually.`,
+    more:`Stigma affects access to care, mental health, and quality of life — especially for queer communities, trans people, sex workers, and people who use drugs.\n\nLooking4Cure is committed to making HIV research inclusive.`,
+    tags:["stigma","discrimination","judgment","shame","key populations","trans","sex work","msm","queer","inclusion","equity"],
+    sugg:["uu","mental_health","support"]
+  },
+  vaccine:{
+    short:`There's no fully effective HIV vaccine yet. HIV is one of the hardest viruses to vaccinate against because it mutates so fast and hides in DNA.`,
+    more:`Therapeutic vaccines for people already living with HIV are being tested — some using mRNA tech similar to COVID-19 vaccines — aiming to help the immune system control the virus without daily medication.`,
+    tags:["vaccine","hiv vaccine","vaccination","why no vaccine","mrna vaccine","therapeutic vaccine"],
+    sugg:["cure_strategies","bnabs","hiv"]
+  },
+  support:{
+    short:`Hey — whatever you're going through, you don't have to face it alone. There are people who care and who get it.`,
+    isSupport:true,
+    tags:["help","support","crisis","scared","alone","emergency","worried","distressed","need help","not ok","struggling","hopeless","sad","anxious","suicid","harm","afraid"],
+    sugg:[]
+  }
+};
+
+const GUARANTEED = {
+  "is there a cure for hiv":"cure","is there a cure":"cure","hiv cure":"cure",
+  "what is hiv":"hiv","what's hiv":"hiv",
+  "what is prep":"prep","what's prep":"prep",
+  "what is u=u":"uu","what's u=u":"uu","u=u":"uu","undetectable":"uu",
+  "what is art":"art","what's art":"art",
+  "what is the reservoir":"reservoir","hiv reservoir":"reservoir",
+  "what are bnabs":"bnabs","bnabs":"bnabs",
+  "what is ati":"ati","q4ddpcr":"q4ddpcr",
+  "latest research":"q4ddpcr","new research":"q4ddpcr"
+};
+
+const LABELS = {
+  hiv:'What is HIV?',aids:'What is AIDS?',art:'How does treatment work?',
+  cure:'Is there a cure?',prep:"What's PrEP?",uu:'What is U=U?',
+  viral_load:'Viral load',reservoir:'HIV reservoir',
+  cure_cases:'Has anyone been cured?',cure_types:'Types of cure',
+  cure_strategies:'Cure strategies',bnabs:'What are bNAbs?',
+  q4ddpcr:'New reservoir research',ati:'What is ATI?',
+  treatment_history:'Treatment history',ccr5:'What is CCR5?',
+  global:'HIV globally',clinical_trials:'How do trials work?',
+  about:'About Looking4Cure',healthcare:'Finding a good doctor',
+  mental_health:'Mental health & HIV',stigma:'HIV & stigma',
+  vaccine:'Is there a vaccine?',support:'I need support'
+};
+
+// ════════════════════════════════════════════
+// SEARCH ENGINE
+// ════════════════════════════════════════════
+function findEntry(q) {
+  const clean = q.toLowerCase().trim().replace(/[?!.,]/g,'');
+  if (GUARANTEED[clean]) return KB[GUARANTEED[clean]];
+  const distress = ['help me','not ok','scared','crisis','alone','distress','desperate','afraid','hopeless','suicid','self harm','hurting','depressed','anxious','not coping','struggling'];
+  if (distress.some(w => clean.includes(w))) return KB.support;
+  const words = clean.split(/\s+/).filter(w => w.length > 2);
+  let best = null, bestScore = 0;
+  Object.values(KB).forEach(entry => {
+    let s = 0;
+    entry.tags.forEach(tag => {
+      if (clean === tag) s += 20;
+      else if (clean.includes(tag)) s += 12;
+      else if (tag.includes(clean)) s += 8;
+      else tag.split(' ').forEach(tw => words.forEach(qw => {
+        if (tw === qw) s += 6;
+        else if (tw.includes(qw) && qw.length > 3) s += 3;
+      }));
+    });
+    if (s > bestScore) { bestScore = s; best = entry; }
+  });
+  return bestScore > 0 ? best : null;
+}
+
+// ════════════════════════════════════════════
+// DETECT MOBILE via PARENT WINDOW width
+// Uses window.top so we read the real screen,
+// not the iframe's own narrow width
+// ════════════════════════════════════════════
+function getViewportWidth() {
+  try {
+    // If inside an iframe, read the parent window width
+    return window.top.innerWidth || window.top.document.documentElement.clientWidth;
+  } catch(e) {
+    // Cross-origin fallback — use own window
+    return window.innerWidth;
+  }
+}
+const isMobile = () => getViewportWidth() <= 768;
+
+const isMob = isMobile(); // check once on load
+if (isMob) document.documentElement.classList.add('mobile-mode');
+
+let isOpen = false;
+let expandSet = new Set();
+
+const tn = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+const sb = () => { const m = document.getElementById('msgs'); m.scrollTop = m.scrollHeight; };
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const nl2br = s => s.replace(/\n/g,'<br>');
+
+function init() {
+  if (isMob) {
+    showWelcome();
+  }
+}
+
+function togglePanel() {
+  if (isMob) return; // mobile is always open inline
+  isOpen = !isOpen;
+  document.getElementById('panel').classList.toggle('open', isOpen);
+  document.getElementById('fab').classList.toggle('open', isOpen);
+  if (isOpen && !document.getElementById('msgs').children.length) showWelcome();
+  if (isOpen) setTimeout(() => document.getElementById('inp').focus(), 300);
+}
+
+function showWelcome() {
+  const area = document.getElementById('msgs');
+  if (area.children.length) return;
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.innerHTML = `<div class="bub">Hey 👋 I'm <b>Eliz</b>. Ask me anything about HIV — treatment, prevention, cure research, or just getting your head around it all.</div>
+  <div class="mmeta">${tn()}</div>`;
+  area.appendChild(d);
+  addSuggestions(['hiv','cure','prep'], true);
+  sb();
+}
+
+function addUserMsg(text) {
+  const area = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'msg user';
+  d.innerHTML = `<div class="bub">${esc(text)}</div><div class="mmeta">${tn()}</div>`;
+  area.appendChild(d); sb();
+}
+
+function addBotMsg(entry) {
+  const area = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  const entryId = Object.keys(KB).find(k => KB[k] === entry);
+  let html = `<div class="bub">${nl2br(entry.short || '')}`;
+  if (entry.more && entryId && !expandSet.has(entryId)) {
+    html += `<br><button class="more-btn" onclick="expandEntry('${entryId}',this)">Read more ↓</button>`;
+  }
+  html += `</div>`;
+  if (entry.isSupport) {
+    html += `<div class="scard">
+      <strong>🤝 Here for you</strong>
+      <div><b>Berliner AIDS-Hilfe</b><br>
+        <a href="tel:+4930886400">+49 30 886 400 0</a><br>
+        <a href="https://berlin.aidshilfe.de" target="_blank">berlin.aidshilfe.de</a>
+      </div>
+      <div class="sline">Medical helpline Germany 24/7: <a href="tel:116117"><b>116 117</b></a></div>
+      <div class="sline">Report side effects: <a href="https://nebenwirkungen.bund.de" target="_blank">nebenwirkungen.bund.de</a></div>
+    </div>`;
+  }
+  html += `<div class="mmeta">${tn()}</div>`;
+  d.innerHTML = html;
+  area.appendChild(d);
+  if (entry.sugg && entry.sugg.length) addSuggestions(entry.sugg);
+  sb();
+}
+
+function expandEntry(id, btn) {
+  expandSet.add(id);
+  const entry = KB[id];
+  if (!entry || !entry.more) return;
+  const bub = btn.closest('.bub');
+  btn.remove();
+  const div = document.createElement('div');
+  div.className = 'more-content';
+  div.innerHTML = nl2br(entry.more);
+  bub.appendChild(div); sb();
+}
+
+function addSuggestions(ids, isWelcome=false) {
+  const area = document.getElementById('msgs');
+  const valid = ids.filter(id => KB[id]).slice(0,3);
+  if (!valid.length) return;
+  const row = document.createElement('div');
+  row.className = 'sugg-row';
+  if (isWelcome) row.style.marginTop = '2px';
+  valid.forEach(id => {
+    const label = LABELS[id] || id;
+    const btn = document.createElement('button');
+    btn.className = 'sugg';
+    btn.textContent = label;
+    btn.onclick = () => {
+      row.querySelectorAll('.sugg').forEach(b => b.disabled = true);
+      row.style.opacity = '.4';
+      addUserMsg(label);
+      respond(null, id);
+    };
+    row.appendChild(btn);
+  });
+  area.appendChild(row); sb();
+}
+
+function showTyping() {
+  const area = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'typ-wrap'; d.id = 'typ';
+  d.innerHTML = `<div class="typ"><span></span><span></span><span></span></div>`;
+  area.appendChild(d); sb();
+}
+function hideTyping() { const d = document.getElementById('typ'); if(d) d.remove(); }
+
+function respond(query, forcedId) {
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    if (forcedId && KB[forcedId]) { addBotMsg(KB[forcedId]); return; }
+    const entry = findEntry(query);
+    if (!entry) {
+      const area = document.getElementById('msgs');
+      const d = document.createElement('div');
+      d.className = 'msg bot';
+      d.innerHTML = `<div class="bub">I'm not fully across that one yet — but I can help with HIV basics, treatment, prevention, or cure research.</div>
+      <div class="mmeta">${tn()}</div>`;
+      area.appendChild(d);
+      addSuggestions(['hiv','cure','prep']); sb();
+      return;
+    }
+    addBotMsg(entry);
+  }, 380 + Math.random()*280);
+}
+
+function handleSend() {
+  const inp = document.getElementById('inp');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = ''; inp.style.height = 'auto';
+  addUserMsg(text); respond(text);
+}
+
+document.getElementById('inp').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+});
+document.getElementById('inp').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+});
+
+window.addEventListener('load', init);
+</script>
+</body>
+</html>
