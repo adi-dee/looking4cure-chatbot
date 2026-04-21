@@ -11,141 +11,32 @@
 :root{
   --teal:#0d6b54;
   --teal-mid:#0e7a60;
-  --teal-light:#e8f5f0;
   --teal-border:#b8dcd4;
-  --white:#ffffff;
-  --off:#f6faf8;
   --g1:#eceae8;
   --g3:#c0bebb;
   --g9:#1a1917;
-  --pink-soft:#fff0f7;
-  --pink-border:#f5c0d8;
-  --pink-text:#7a1a4a;
   --font:'Plus Jakarta Sans',system-ui,sans-serif;
 }
 
-/* ══════════════════════════════════════════
-   DESKTOP MODE
-   The iframe is full-viewport in Wix.
-   We make html/body transparent and use
-   pointer-events:none on everything EXCEPT
-   the FAB and open panel.
-   ══════════════════════════════════════════ */
-html{
-  background:transparent !important;
-}
-body{
+/* ── Fill exactly whatever space Wix gives us ── */
+html,body{
   height:100%;width:100%;
   margin:0;padding:0;
   font-family:var(--font);
-  background:transparent !important;
-  overflow:hidden;
-  /* Everything is click-through by default */
-  pointer-events:none;
-}
-
-/* Only the FAB and open panel capture clicks */
-#fab{ pointer-events:all !important; }
-#panel.open{ pointer-events:all !important; }
-
-/* Make sure closed panel never blocks anything */
-#panel:not(.open){
-  pointer-events:none !important;
-  visibility:hidden;
-}
-
-/* Desktop root — just a layout container */
-#desktop-root{
-  position:fixed;
-  bottom:24px;
-  right:24px;
-  width:0;
-  height:0;
-  pointer-events:none;
-}
-
-/* ── MOBILE MODE class applied by JS to <html> ── */
-html.mobile-mode,
-html.mobile-mode body{
-  height:auto;
-  overflow:visible;
   background:#ffffff;
-  pointer-events:all;
-}
-html.mobile-mode #desktop-root{ display:none; }
-html.mobile-mode #fab{ display:none; }
-html.mobile-mode #panel{
-  position:relative !important;
-  top:auto !important;left:auto !important;
-  right:auto !important;bottom:auto !important;
-  width:100% !important;
-  height:100vh !important;
-  max-height:100vh !important;
-  border-radius:0 !important;
-  border:none !important;
-  transform:none !important;
-  opacity:1 !important;
-  pointer-events:all !important;
-  box-shadow:none !important;
-  display:flex !important;
-}
-html.mobile-mode .ph-close{ display:none !important; }
-html.mobile-mode .pinp{ font-size:16px; }
-html.mobile-mode .psnd{ width:42px;height:42px; }
-html.mobile-mode .psnd svg{ width:16px;height:16px; }
-html.mobile-mode .sugg{ font-size:13px;padding:7px 15px; }
-html.mobile-mode .bub{ font-size:14px; }
-html.mobile-mode .mmeta{ font-size:11px; }
-
-#fab{
-  position:fixed;bottom:24px;right:24px;
-  width:56px;height:56px;border-radius:50%;
-  background:var(--teal);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(13,107,84,.4);
-  transition:transform .18s,box-shadow .18s;
-  z-index:9999;pointer-events:all;
-}
-#fab:hover{transform:scale(1.08)}
-#fab:active{transform:scale(.95)}
-#fab svg{width:24px;height:24px;position:absolute;transition:opacity .18s,transform .18s}
-.ic-c{opacity:1;transform:scale(1)}
-.ic-x{opacity:0;transform:scale(.6) rotate(-45deg)}
-#fab.open .ic-c{opacity:0;transform:scale(.6) rotate(45deg)}
-#fab.open .ic-x{opacity:1;transform:scale(1) rotate(0)}
-#fab::before{
-  content:'';position:absolute;width:100%;height:100%;border-radius:50%;
-  border:2px solid var(--teal);
-  animation:pring 2.8s ease-out 1.2s infinite;opacity:0;
-}
-@keyframes pring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.75);opacity:0}}
-
-#panel{
-  position:fixed;bottom:96px;right:24px;
-  width:380px;        /* wider */
-  height:560px;       /* taller — fixed height so it feels substantial */
-  border-radius:20px;background:#fff;
-  border:1px solid var(--g1);
-  display:flex;flex-direction:column;overflow:hidden;
-  z-index:9998;
-  transform:translateY(16px) scale(.93);
-  transform-origin:bottom right;
-  opacity:0;pointer-events:none;
-  transition:transform .26s cubic-bezier(.34,1.5,.64,1),opacity .18s;
-  box-shadow:0 20px 60px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.08);
-}
-#panel.open{
-  transform:translateY(0) scale(1);
-  opacity:1;pointer-events:all;
+  overflow:hidden;
 }
 
-/* Mobile styles handled via html.mobile-mode class — see above */
+#chat{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  height:100%;
+  background:#ffffff;
+  overflow:hidden;
+}
 
-/* ══════════════════════════════════════════
-   SHARED COMPONENT STYLES
-   ══════════════════════════════════════════ */
-
-/* Header */
+/* ── Header ── */
 .ph{
   padding:14px 16px 12px;
   background:var(--teal);
@@ -173,46 +64,31 @@ html.mobile-mode .mmeta{ font-size:11px; }
   animation:dp 2.2s ease-in-out infinite;
 }
 @keyframes dp{0%,100%{opacity:1}50%{opacity:.4}}
-.ph-close{
-  display:none;background:none;border:none;cursor:pointer;
-  color:rgba(255,255,255,.8);padding:4px;flex-shrink:0;pointer-events:all;
-}
-.ph-close svg{width:20px;height:20px;display:block}
-/* Close button shown on desktop only (hidden via mobile-mode class) */
-@media(min-width:601px){
-  .ph-close{display:flex;align-items:center;}
-}
 
-/* Messages scroll area */
-.pmsgs{
+/* ── Messages ── */
+.msgs{
   flex:1;overflow-y:auto;
   padding:14px 13px 8px;
   display:flex;flex-direction:column;gap:9px;
   scroll-behavior:smooth;
   background:#ffffff;
 }
-.pmsgs::-webkit-scrollbar{width:3px}
-.pmsgs::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px}
+.msgs::-webkit-scrollbar{width:3px}
+.msgs::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px}
 
-/* Message bubbles */
-.msg{
-  display:flex;flex-direction:column;
-  max-width:86%;
-  animation:mi .22s ease;
-}
-@keyframes mi{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.msg{display:flex;flex-direction:column;max-width:86%;animation:mi .22s ease}
+@keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .msg.bot{align-self:flex-start}
 .msg.user{align-self:flex-end}
 
 .bub{
   padding:10px 13px;border-radius:16px;
-  font-size:13.5px;line-height:1.6;
+  font-size:14px;line-height:1.6;
 }
 .msg.bot .bub{
   background:#f6faf8;
   border:1px solid var(--teal-border);
-  color:var(--g9);
-  border-bottom-left-radius:4px;
+  color:var(--g9);border-bottom-left-radius:4px;
 }
 .msg.user .bub{
   background:var(--teal);color:#fff;
@@ -222,13 +98,15 @@ html.mobile-mode .mmeta{ font-size:11px; }
 .msg.user .bub a{color:#a7f3d0}
 .bub b{font-weight:600}
 
-/* Read more */
+.mmeta{font-size:10px;color:var(--g3);margin-top:3px;padding:0 4px}
+.msg.user .mmeta{text-align:right}
+
+/* ── Read more ── */
 .more-btn{
   display:inline-block;margin-top:6px;
   font-size:12px;color:var(--teal);
   background:none;border:none;cursor:pointer;
-  font-family:var(--font);padding:0;
-  text-decoration:underline;pointer-events:all;
+  font-family:var(--font);padding:0;text-decoration:underline;
 }
 .more-content{
   margin-top:8px;padding-top:8px;
@@ -236,45 +114,40 @@ html.mobile-mode .mmeta{ font-size:11px; }
   font-size:13px;line-height:1.65;color:var(--g9);
 }
 
-/* Suggestions shown after each reply */
+/* ── Suggestions ── */
 .sugg-row{
   display:flex;flex-wrap:wrap;gap:5px;
   margin-top:4px;align-self:flex-start;
   animation:mi .28s ease;
 }
 .sugg{
-  font-family:var(--font);font-size:11.5px;
-  padding:5px 12px;border-radius:20px;
+  font-family:var(--font);font-size:12px;
+  padding:5px 13px;border-radius:20px;
   border:1.5px solid var(--teal);
   color:var(--teal);background:transparent;
   cursor:pointer;transition:all .12s;white-space:nowrap;
-  pointer-events:all;
 }
 .sugg:hover{background:var(--teal);color:#fff}
-.sugg:disabled{opacity:.35;cursor:default;pointer-events:none}
+.sugg:disabled{opacity:.35;cursor:default}
 
-/* Support card */
+/* ── Support card ── */
 .scard{
-  background:#fff0f7;border:1px solid var(--pink-border);
+  background:#fff0f7;border:1px solid #f5c0d8;
   border-radius:12px;padding:11px 13px;
   font-size:12.5px;line-height:1.6;
-  color:var(--pink-text);margin-top:6px;
+  color:#7a1a4a;margin-top:6px;
 }
 .scard strong{display:block;margin-bottom:6px;font-size:13px}
-.scard a{color:var(--pink-text);font-weight:500}
-.sline{
-  margin-top:5px;padding-top:5px;
-  border-top:1px solid var(--pink-border);
-}
+.scard a{color:#7a1a4a;font-weight:500}
+.sline{margin-top:5px;padding-top:5px;border-top:1px solid #f5c0d8}
 
-/* Typing indicator */
+/* ── Typing ── */
 .typ-wrap{align-self:flex-start;animation:mi .2s ease}
 .typ{
   display:flex;align-items:center;gap:4px;
   padding:10px 13px;background:#f6faf8;
   border:1px solid var(--teal-border);
-  border-radius:16px;border-bottom-left-radius:4px;
-  width:fit-content;
+  border-radius:16px;border-bottom-left-radius:4px;width:fit-content;
 }
 .typ span{
   width:5px;height:5px;border-radius:50%;
@@ -283,63 +156,43 @@ html.mobile-mode .mmeta{ font-size:11px; }
 }
 .typ span:nth-child(2){animation-delay:.15s}
 .typ span:nth-child(3){animation-delay:.3s}
-@keyframes td{
-  0%,60%,100%{opacity:.4;transform:none}
-  30%{opacity:1;transform:translateY(-3px)}
-}
+@keyframes td{0%,60%,100%{opacity:.4;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 
-/* Input area */
-.pinp-area{
+/* ── Input ── */
+.inp-area{
   padding:10px 11px;border-top:1px solid var(--g1);
   display:flex;align-items:center;gap:8px;
   background:#fff;flex-shrink:0;
 }
-.pinp{
-  flex:1;font-family:var(--font);font-size:13.5px;
+.inp{
+  flex:1;font-family:var(--font);font-size:15px;
   border:1.5px solid var(--g1);border-radius:22px;
   padding:9px 15px;background:#f6faf8;color:var(--g9);
   outline:none;resize:none;transition:border-color .14s;
-  line-height:1.4;min-height:38px;max-height:80px;
+  line-height:1.4;min-height:40px;max-height:80px;
 }
-.pinp:focus{border-color:var(--teal)}
-.pinp::placeholder{color:var(--g3)}
-.psnd{
-  width:36px;height:36px;border-radius:50%;
+.inp:focus{border-color:var(--teal)}
+.inp::placeholder{color:var(--g3)}
+.snd{
+  width:38px;height:38px;border-radius:50%;
   background:var(--teal);border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;transition:opacity .12s,transform .1s;
-  pointer-events:all;
 }
-.psnd:hover{opacity:.85}
-.psnd:active{transform:scale(.93)}
-.psnd svg{width:14px;height:14px}
+.snd:hover{opacity:.85}.snd:active{transform:scale(.93)}
+.snd svg{width:15px;height:15px}
 
-/* Timestamp */
-.mmeta{
+/* ── Disclaimer ── */
+.disc{
+  padding:5px 12px 6px;border-top:1px solid var(--g1);
   font-size:10px;color:var(--g3);
-  margin-top:3px;padding:0 4px;
+  text-align:center;background:#fff;flex-shrink:0;
 }
-.msg.user .mmeta{text-align:right}
 </style>
 </head>
 <body>
 
-<!-- Desktop root — constrains the iframe footprint to bottom-right corner -->
-<div id="desktop-root">
-
-<!-- Desktop FAB (hidden on mobile via CSS) -->
-<button id="fab" onclick="togglePanel()" aria-label="Chat with Eliz">
-  <svg class="ic-c" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-  </svg>
-  <svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-  </svg>
-</button>
-
-<!-- Chat panel -->
-<div id="panel" role="dialog" aria-label="Eliz HIV Info">
-
+<div id="chat">
   <div class="ph">
     <div class="ph-av">💊</div>
     <div class="ph-info">
@@ -347,20 +200,13 @@ html.mobile-mode .mmeta{ font-size:11px; }
       <p>Ask me anything about HIV</p>
     </div>
     <div class="ph-dot"></div>
-    <!-- Close button desktop only -->
-    <button class="ph-close" onclick="togglePanel()" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </button>
   </div>
 
-  <div class="pmsgs" id="msgs"></div>
+  <div class="msgs" id="msgs"></div>
 
-  <div class="pinp-area">
-    <textarea class="pinp" id="inp" placeholder="Ask anything…" rows="1"></textarea>
-    <button class="psnd" onclick="handleSend()" aria-label="Send">
+  <div class="inp-area">
+    <textarea class="inp" id="inp" placeholder="Ask anything…" rows="1"></textarea>
+    <button class="snd" onclick="handleSend()" aria-label="Send">
       <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="22" y1="2" x2="11" y2="13"/>
         <polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -368,284 +214,283 @@ html.mobile-mode .mmeta{ font-size:11px; }
     </button>
   </div>
 
-</div><!-- /panel -->
-</div><!-- /desktop-root -->
+  <div class="disc">General information only · Not medical advice · No data stored</div>
+</div>
 
 <script>
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // KNOWLEDGE BASE
-// ════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 const KB = {
   hiv:{
     short:`HIV is a virus that attacks the immune system. Without treatment it weakens your body over time — but with treatment, people live long, healthy lives.`,
-    more:`HIV is mainly passed through unprotected penetrative sex, sharing needles, blood exposure, or from parent to child during pregnancy or breastfeeding.\n\nIt <b>cannot</b> spread through hugging, sharing food, kissing, or everyday contact.\n\nHIV works by sneaking into immune cells and hiding inside their DNA — which is why it's hard to fully remove, but very manageable with treatment.`,
-    tags:["hiv","what is hiv","human immunodeficiency","basics","how hiv works","explain hiv"],
+    more:`HIV is mainly passed through unprotected penetrative sex, sharing needles, blood exposure, or from parent to child during pregnancy or breastfeeding.\n\nIt <b>cannot</b> spread through hugging, sharing food, kissing, or everyday contact.`,
+    tags:["hiv","human immunodeficiency","what is hiv","explain hiv","how hiv works"],
     sugg:["aids","art","prep"]
   },
   aids:{
     short:`AIDS is the most advanced stage of HIV — it happens when HIV goes untreated for a long time and the immune system becomes severely weakened. With today's treatment, most people with HIV never get there.`,
     more:`Getting tested early and starting treatment makes a huge difference. Modern HIV meds are so effective that AIDS is now rare in people who have access to care.`,
-    tags:["aids","acquired immunodeficiency","difference between hiv aids","aids definition"],
+    tags:["aids","acquired immunodeficiency","aids definition","hiv vs aids","difference aids hiv"],
     sugg:["art","viral_load","healthcare"]
   },
   art:{
     short:`ART (antiretroviral therapy) is the medication that keeps HIV under control. It doesn't cure HIV, but it stops the virus from multiplying — keeping you healthy and making transmission impossible.`,
-    more:`Modern ART is usually one pill a day, or now even an injection every couple of months. Side effects are much rarer than they used to be.\n\nThe key is taking it consistently. Stopping gives the virus a chance to reactivate.\n\n💊 Check drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
-    tags:["art","antiretroviral","medication","treatment","medicines","hiv drugs","what is art","how does treatment work","arv"],
+    more:`Modern ART is usually one pill a day, or an injection every couple of months. Side effects are much rarer than they used to be.\n\nThe key is taking it consistently. Stopping gives the virus a chance to reactivate.\n\n💊 Check drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
+    tags:["art","antiretroviral therapy","antiretroviral","treatment","hiv medication","hiv medicine","hiv drugs","what is art","how does treatment work"],
     sugg:["uu","viral_load","treatment_history"]
   },
   cure:{
     short:`There is no widely available cure for HIV yet. A small number of people have been cured through stem cell transplants — but that's a complex treatment for life-threatening cancer, not something available broadly. Research is advancing fast.`,
-    more:`Scientists are working toward two goals:\n\n<b>Sterilising cure</b> — removing all HIV from the body.\n<b>Functional cure / remission</b> — HIV stays but the immune system controls it without medication.\n\nNeither is available yet, but clinical trials are actively testing new approaches.`,
-    tags:["cure","is there a cure","hiv cure","cured","cure for hiv","when will there be a cure"],
+    more:`Scientists are working toward two goals:\n\n<b>Sterilising cure</b> — removing all HIV from the body.\n<b>Functional cure</b> — HIV stays but the immune system controls it without medication.\n\nNeither is available yet, but clinical trials are testing new approaches every year.`,
+    tags:["cure","hiv cure","is there a cure","cured","cure for hiv","when will there be a cure","can hiv be cured"],
     sugg:["cure_strategies","bnabs","cure_cases"]
   },
   prep:{
     short:`PrEP is medication that HIV-negative people take to prevent HIV. Taken correctly, it's over 99% effective against sexual transmission.`,
     more:`<b>Options:</b>\n• Daily pill\n• Injection every 2 months\n• Lenacapavir — injection every 6 months (still expensive, not everywhere yet)\n\nPrEP doesn't protect against other STIs, so regular testing still matters.`,
-    tags:["prep","pre-exposure","prevention","hiv negative","prevent hiv","what is prep","prep pill","prep injection","lenacapavir"],
+    tags:["prep","pre-exposure prophylaxis","hiv prevention","prevent hiv","prep pill","prep injection","lenacapavir","what is prep"],
     sugg:["uu","hiv","art"]
   },
   uu:{
     short:`U=U means Undetectable = Untransmittable. If you're on treatment and your viral load is undetectable, you cannot pass HIV to a sexual partner. This is scientifically proven.`,
     more:`Confirmed by major international studies and accepted by all leading health organisations.\n\nPeople on effective treatment pose zero risk of sexual transmission to their partners. U=U is also a powerful tool against stigma.`,
-    tags:["u=u","undetectable untransmittable","cannot transmit","undetectable equals","sex hiv","u u"],
+    tags:["u=u","undetectable untransmittable","undetectable equals untransmittable","cannot transmit hiv","cannot pass hiv","undetectable"],
     sugg:["art","viral_load","prep"]
   },
   viral_load:{
     short:`Viral load is the amount of HIV in your blood. The goal of treatment is to get it so low it becomes undetectable — great for your health, and means you can't pass HIV on sexually.`,
     more:`When you're undetectable, HIV is still in your body (hiding in the reservoir), but it's not active. This is what U=U refers to.`,
-    tags:["viral load","undetectable","detectable","viral load test","what is viral load"],
+    tags:["viral load","undetectable","virus in blood","what is viral load","viral load test","hiv levels"],
     sugg:["uu","art","reservoir"]
   },
   reservoir:{
     short:`Even on perfect treatment, HIV can hide silently inside certain cells. This hidden stash is called the reservoir — and it's the main reason HIV can't be fully cured yet.`,
     more:`Think of it like a virus in sleep mode. Treatment keeps it asleep, but can't destroy it. If you stop treatment, it wakes up.\n\nThe reservoir is tiny — about one infected cell per 100,000 — but incredibly hard to find and remove. Scientists call it "a needle in a haystack." Most cure research is focused on solving this.`,
-    tags:["reservoir","hiding","hidden","latency","latent","sleeping virus","hiv reservoir","why no cure","hiv persistence"],
+    tags:["reservoir","hiv reservoir","hidden hiv","latency","latent hiv","sleeping hiv","why no cure","hiv hiding","hiv persistence"],
     sugg:["cure_strategies","bnabs","q4ddpcr"]
   },
   cure_cases:{
     short:`As of 2024, nine people have been reported cured of HIV. All had serious blood cancer and received stem cell transplants from donors with a rare genetic mutation that makes immune cells HIV-resistant.`,
-    more:`These cases are remarkable but the treatment is extremely complex, risky, and only for life-threatening cancer. It's not available as a general HIV cure.\n\nStill, each case teaches researchers a lot about how a cure could work.`,
-    tags:["cured","berlin patient","stem cell","9 people","anyone cured","transplant","people cured hiv"],
+    more:`These cases are remarkable but the treatment is extremely complex and risky, only for life-threatening cancer. It's not available as a general HIV cure.\n\nStill, each case teaches researchers a lot about how a cure could work.`,
+    tags:["cured","hiv cured","berlin patient","stem cell","people cured hiv","has anyone been cured","cure cases","9 people cured"],
     sugg:["ccr5","cure_types","cure_strategies"]
   },
   cure_types:{
     short:`Scientists are working toward two kinds of cure: a sterilising cure (removing all HIV from the body) and a functional cure (the immune system controls HIV permanently without medication).`,
     more:`<b>Sterilising cure:</b> All HIV gone. Very hard — even tiny traces can bring it back.\n\n<b>Functional cure / remission:</b> Virus stays but permanently silent without treatment.\n\n<b>Elite controllers</b> are rare people whose immune systems do this naturally — researchers study them intensively.`,
-    tags:["types of cure","sterilising cure","functional cure","remission","sterile cure","elite controllers"],
+    tags:["types of cure","sterilising cure","functional cure","hiv remission","sterile cure","elite controllers","long term remission"],
     sugg:["cure_strategies","bnabs","cure_cases"]
   },
   cure_strategies:{
     short:`There's no cure yet, but researchers are testing several exciting approaches — from gene editing to re-engineering immune cells to powerful new antibodies.`,
     more:`<b>Shock & Kill:</b> Wake up sleeping HIV so the immune system can destroy it.\n\n<b>Block & Lock:</b> Keep HIV permanently silenced forever.\n\n<b>CAR-T cells:</b> Re-engineer immune cells to hunt HIV-infected cells.\n\n<b>CRISPR:</b> Molecular scissors that cut HIV out of DNA.\n\n<b>Therapeutic vaccines:</b> Help the immune system control HIV — some use mRNA tech like COVID vaccines.\n\n<b>bNAbs:</b> Very promising antibodies — ask me about them!`,
-    tags:["cure strategies","shock kill","kick kill","block lock","car-t","crispr","gene editing","therapeutic vaccine","cure research","mrna cure"],
+    tags:["cure strategies","shock and kill","kick and kill","block and lock","car-t cells","crispr","gene editing","therapeutic vaccine","mrna hiv vaccine","hiv cure research","cure approaches"],
     sugg:["bnabs","ati","q4ddpcr"]
   },
   bnabs:{
     short:`bNAbs are powerful lab-made antibodies that block HIV from entering cells and help clear infected ones. They're one of the most promising areas in HIV cure research right now.`,
     more:`HIV mutates a lot, but some parts never change — bNAbs target those stable parts.\n\n<b>2025 results:</b> About 3 in 4 participants controlled the virus for 20+ weeks without ART. Some stayed suppressed for 2+ years — suggesting the immune system took over.\n\nThe goal: replace daily pills with infusions every few months.`,
-    tags:["bnabs","broadly neutralising","broadly neutralizing","antibodies","bnab","neutralising antibodies","antibody treatment"],
+    tags:["bnabs","broadly neutralising antibodies","broadly neutralizing antibodies","neutralising antibodies","bnab","antibody treatment hiv","antibodies hiv"],
     sugg:["ati","cure_types","q4ddpcr"]
   },
   q4ddpcr:{
     short:`Q4ddPCR is a new lab test developed at Charité Berlin that measures the HIV reservoir more accurately. It uses four targets instead of two, catching what previous tests missed.`,
-    more:`Published in <i>Nature Communications</i> 2026. Key improvements:\n\n• Detects intact HIV in <b>95% of samples</b> vs 79% before\n• More accurately tracks how fast the reservoir shrinks on treatment\n• Better predicts which virus can actually replicate\n\nThis precision matters for evaluating whether new cure strategies are actually working.`,
-    tags:["q4ddpcr","reservoir test","reservoir assay","ddpcr","ipda","intact proviral","measure reservoir","latest research","new research","nature communications"],
+    more:`Published in <i>Nature Communications</i> 2026:\n\n• Detects intact HIV in <b>95% of samples</b> vs 79% before\n• More accurately tracks how fast the reservoir shrinks on treatment\n• Better predicts which virus can actually replicate\n\nThis precision matters for evaluating whether new cure strategies are actually working.`,
+    tags:["q4ddpcr","reservoir test","reservoir assay","ddpcr","ipda","intact proviral dna","measure hiv reservoir","latest hiv research","new hiv research","nature communications hiv","charite hiv research"],
     sugg:["reservoir","cure_strategies","bnabs"]
   },
   ati:{
     short:`ATI (Analytical Treatment Interruption) is a supervised pause in HIV medication used inside clinical studies — to see if a new therapy can control the virus without ART.`,
     more:`Only done under close medical supervision, never alone. The team monitors you throughout and you decide together when to restart medication.\n\nOne participant said: <i>"From the day I was infected, I felt I'd lost control. Joining a trial gave me some of that control back."</i>`,
-    tags:["ati","analytical treatment interruption","pause treatment","stop medication","treatment pause","stopping art"],
+    tags:["ati","analytical treatment interruption","pause hiv treatment","stop hiv medication","treatment interruption","stopping art hiv"],
     sugg:["bnabs","cure_strategies","clinical_trials"]
   },
   treatment_history:{
     short:`HIV treatment has come a long way. In the 80s it was brutal. Now it can be one pill a day or an injection every two months. And science is still moving fast.`,
     more:`• 1983 – HIV identified. Activists like ACT UP fought for faster research.\n• 1987 – First antiretroviral approved.\n• 1996 – Combination therapy made HIV manageable.\n• 2006 – Single daily pill.\n• 2021 – Long-acting injection every 2 months.\n• Now – Testing 4–6 month injections, bNAbs, and more.`,
-    tags:["treatment history","history","evolution","azt","1987","1996","timeline","long acting injection","how treatment changed"],
+    tags:["treatment history","history of hiv treatment","hiv timeline","evolution of hiv treatment","azt","1987 hiv","1996 hiv","long acting hiv injection","how treatment changed"],
     sugg:["art","prep","bnabs"]
   },
   ccr5:{
     short:`CCR5 is a protein HIV uses like a door handle to get into your cells. Less than 1% of people have a natural mutation that breaks this handle — making them naturally resistant to HIV.`,
     more:`This is why the Berlin Patient and others were cured through stem cell transplants — their donors had this mutation, giving them HIV-resistant immune cells.`,
-    tags:["ccr5","door handle","mutation","resistant","delta32","genetic mutation"],
+    tags:["ccr5","ccr5 mutation","door handle hiv","hiv resistant","delta 32","natural hiv resistance","genetic hiv resistance"],
     sugg:["cure_cases","reservoir","hiv"]
   },
   global:{
     short:`41 million people are living with HIV globally. 9 million still don't have access to treatment. Budget cuts are making things worse — which is exactly why cure research matters so much.`,
     more:`UNAIDS modelling shows continued funding cuts could mean 4 million more AIDS-related deaths and 6 million new infections by 2029.\n\nA cure would reduce dependence on health systems that are becoming more fragile and unequal.`,
-    tags:["global","worldwide","statistics","numbers","deaths","infections","access","funding","unaids","budget cuts","41 million"],
+    tags:["global hiv","hiv worldwide","hiv statistics","hiv numbers","hiv deaths","hiv infections","hiv access","hiv funding","unaids","hiv budget cuts","41 million hiv","how many people have hiv"],
     sugg:["about","cure_types","art"]
   },
   clinical_trials:{
     short:`Clinical trials are how new HIV treatments get tested — and they've given us every treatment available today. Participation is always voluntary, with full information upfront.`,
     more:`Trials progress through phases: safety (Phase I), early effects (Phase II), large-scale effectiveness (Phase III). You always give informed consent and can stop at any time.`,
-    tags:["clinical trial","study","participate","participation","research","phase","informed consent","join study"],
+    tags:["clinical trial","clinical trials hiv","hiv study","participate hiv research","hiv trial","informed consent","join hiv study","phases of trial"],
     sugg:["ati","bnabs","about"]
   },
   about:{
     short:`Eliz is part of Looking4Cure — a project by BeCURE at Charité Berlin, videographer Michel Steinberg, and researcher Tomer Einav. The goal: make HIV cure research accessible to everyone.`,
     more:`Looking4Cure believes people living with HIV should be partners in research — not just participants. HIV cure literacy is central to that.\n\nBeCURE is the Berlin Center for HIV Cure Research at Charité – Universitätsmedizin Berlin.`,
-    tags:["looking4cure","becure","charite","about","who made this","project","michel","tomer","berlin","who are you","eliz"],
+    tags:["looking4cure","becure","charite","about eliz","who made eliz","looking4cure project","michel steinberg","tomer einav","berlin hiv","who are you eliz"],
     sugg:["global","clinical_trials","cure_strategies"]
   },
   healthcare:{
     short:`Finding a doctor you actually feel safe with matters. In Germany, Queer Medics lists inclusive, experienced providers. You always have the right to respectful care.`,
     more:`A 2021 study found 60% of people with HIV in Germany face discrimination in healthcare. Not okay — and not your fault.\n\n<b>Your rights:</b> to be respected, to say no, to ask questions, to get a second opinion.\n\nCheck drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
-    tags:["doctor","healthcare","appointment","stigma","discrimination","rights","germany","finding doctor","queer medics"],
+    tags:["doctor hiv","healthcare hiv","hiv appointment","hiv discrimination","hiv stigma doctor","rights hiv patient","queer medics","find hiv doctor","hiv healthcare germany"],
     sugg:["art","mental_health","support"]
   },
   mental_health:{
     short:`Living with HIV can affect how you feel emotionally — that's completely real and valid. Studies show 58% of people with HIV experience loneliness. You're not alone in that.`,
     more:`Community, peer support, and talking to someone who gets it can make a real difference. In Berlin, Berliner AIDS-Hilfe offers counselling and peer connection.`,
-    tags:["lonely","loneliness","mental health","stress","anxiety","depression","feelings","alone","struggling","emotional"],
+    tags:["mental health hiv","hiv loneliness","hiv anxiety","hiv depression","hiv emotional","hiv wellbeing","feeling alone hiv","hiv stigma mental","hiv community support"],
     sugg:["support","healthcare","stigma"]
   },
   stigma:{
     short:`HIV stigma is real, harmful, and based on misinformation. U=U alone dismantles most of it — people on treatment can't pass HIV on sexually.`,
     more:`Stigma affects access to care, mental health, and quality of life — especially for queer communities, trans people, sex workers, and people who use drugs.\n\nLooking4Cure is committed to making HIV research inclusive.`,
-    tags:["stigma","discrimination","judgment","shame","key populations","trans","sex work","msm","queer","inclusion","equity"],
+    tags:["stigma hiv","hiv discrimination","hiv judgment","hiv shame","hiv prejudice","hiv queer","hiv trans","hiv sex workers","hiv inclusion","hiv equity","hiv key populations"],
     sugg:["uu","mental_health","support"]
   },
   vaccine:{
     short:`There's no fully effective HIV vaccine yet. HIV is one of the hardest viruses to vaccinate against because it mutates so fast and hides in DNA.`,
     more:`Therapeutic vaccines for people already living with HIV are being tested — some using mRNA tech similar to COVID-19 vaccines — aiming to help the immune system control the virus without daily medication.`,
-    tags:["vaccine","hiv vaccine","vaccination","why no vaccine","mrna vaccine","therapeutic vaccine"],
+    tags:["hiv vaccine","vaccine hiv","hiv vaccination","why no hiv vaccine","mrna hiv","therapeutic vaccine hiv","preventive hiv vaccine","when will hiv vaccine"],
     sugg:["cure_strategies","bnabs","hiv"]
   },
   support:{
     short:`Hey — whatever you're going through, you don't have to face it alone. There are people who care and who get it.`,
     isSupport:true,
-    tags:["help","support","crisis","scared","alone","emergency","worried","distressed","need help","not ok","struggling","hopeless","sad","anxious","suicid","harm","afraid"],
+    tags:["need help","support hiv","hiv crisis","scared hiv","alone hiv","hiv emergency","hiv worried","feeling distressed","not ok","struggling hiv","hopeless hiv","sad about hiv"],
     sugg:[]
   }
 };
 
+// ── Guaranteed exact answers ──
 const GUARANTEED = {
   "is there a cure for hiv":"cure","is there a cure":"cure","hiv cure":"cure",
-  "what is hiv":"hiv","what's hiv":"hiv",
-  "what is prep":"prep","what's prep":"prep",
-  "what is u=u":"uu","what's u=u":"uu","u=u":"uu","undetectable":"uu",
-  "what is art":"art","what's art":"art",
-  "what is the reservoir":"reservoir","hiv reservoir":"reservoir",
-  "what are bnabs":"bnabs","bnabs":"bnabs",
-  "what is ati":"ati","q4ddpcr":"q4ddpcr",
-  "latest research":"q4ddpcr","new research":"q4ddpcr"
+  "what is hiv":"hiv","what's hiv":"hiv","explain hiv":"hiv",
+  "what is prep":"prep","what's prep":"prep","what is pre-exposure prophylaxis":"prep",
+  "what is u=u":"uu","what's u=u":"uu","u=u":"uu",
+  "what is art":"art","what's art":"art","antiretroviral therapy":"art",
+  "what is the hiv reservoir":"reservoir","hiv reservoir":"reservoir",
+  "what are bnabs":"bnabs","bnabs":"bnabs","broadly neutralising antibodies":"bnabs",
+  "what is ati":"ati","analytical treatment interruption":"ati",
+  "what is q4ddpcr":"q4ddpcr","q4ddpcr":"q4ddpcr",
+  "latest research":"q4ddpcr","new hiv research":"q4ddpcr"
 };
 
+// ── Suggestion labels ──
 const LABELS = {
-  hiv:'What is HIV?',aids:'What is AIDS?',art:'How does treatment work?',
-  cure:'Is there a cure?',prep:"What's PrEP?",uu:'What is U=U?',
-  viral_load:'Viral load',reservoir:'HIV reservoir',
-  cure_cases:'Has anyone been cured?',cure_types:'Types of cure',
-  cure_strategies:'Cure strategies',bnabs:'What are bNAbs?',
-  q4ddpcr:'New reservoir research',ati:'What is ATI?',
-  treatment_history:'Treatment history',ccr5:'What is CCR5?',
-  global:'HIV globally',clinical_trials:'How do trials work?',
-  about:'About Looking4Cure',healthcare:'Finding a good doctor',
-  mental_health:'Mental health & HIV',stigma:'HIV & stigma',
-  vaccine:'Is there a vaccine?',support:'I need support'
+  hiv:'What is HIV?', aids:'What is AIDS?', art:'How does ART work?',
+  cure:'Is there a cure?', prep:"What's PrEP?", uu:'What is U=U?',
+  viral_load:'Viral load', reservoir:'HIV reservoir',
+  cure_cases:'Has anyone been cured?', cure_types:'Types of cure',
+  cure_strategies:'Cure strategies', bnabs:'What are bNAbs?',
+  q4ddpcr:'New reservoir research', ati:'What is ATI?',
+  treatment_history:'Treatment history', ccr5:'CCR5 mutation',
+  global:'HIV globally', clinical_trials:'How do trials work?',
+  about:'About Looking4Cure', healthcare:'Finding a good doctor',
+  mental_health:'Mental health & HIV', stigma:'HIV & stigma',
+  vaccine:'Is there a vaccine?', support:'I need support'
 };
 
-// ════════════════════════════════════════════
-// SEARCH ENGINE — stricter matching
-// ════════════════════════════════════════════
-function findEntry(q) {
-  const clean = q.toLowerCase().trim().replace(/[?!.,]/g,'');
+// ── Suggestion pools for rotation ──
+const POOLS = [
+  ['hiv','cure','prep'],
+  ['uu','art','reservoir'],
+  ['bnabs','cure_strategies','clinical_trials'],
+  ['treatment_history','stigma','mental_health'],
+  ['global','about','healthcare'],
+  ['viral_load','cure_types','vaccine'],
+  ['q4ddpcr','ati','cure_cases'],
+];
+let poolIdx = 0;
+const nextPool = () => { const p = POOLS[poolIdx % POOLS.length]; poolIdx++; return p; };
 
-  // Too short or too vague — go straight to fallback
+// ── Fallback messages ──
+const FALLBACKS = [
+  { msg:"I didn't quite catch that — try asking about a specific topic.", sugg:['hiv','prep','cure'] },
+  { msg:"Not sure what you mean — but I'm happy to help with anything HIV-related.", sugg:['uu','reservoir','bnabs'] },
+  { msg:"Try asking something more specific — I know a lot about HIV treatment, research, and prevention.", sugg:['cure_strategies','clinical_trials','treatment_history'] },
+  { msg:"Let me know what you'd like to know more about.", sugg:['stigma','mental_health','healthcare'] },
+  { msg:"Good question — can you be a bit more specific? I'm here to help.", sugg:['art','viral_load','global'] },
+];
+let fbIdx = 0;
+
+// ── Vague / greetings that should never match ──
+const VAGUE = new Set(['hi','hey','hello','ok','okay','sure','yes','no',
+  'thanks','thank you','cool','nice','interesting','really','wow','what',
+  'what else','something else','more','tell me more','and','so','right',
+  'hm','hmm','lol','ok cool','oh','ah']);
+
+// ══════════════════════════════════════════════════
+// SEARCH ENGINE
+// ══════════════════════════════════════════════════
+function findEntry(q) {
+  const clean = q.toLowerCase().trim().replace(/[?!.,]/g,'').trim();
+
+  // Too short
   if (clean.length < 3) return null;
 
-  // 1. Guaranteed exact-match map
+  // Guaranteed exact map
   if (GUARANTEED[clean]) return KB[GUARANTEED[clean]];
 
-  // 2. Distress detection
-  const distress = ['help me','not ok','scared','crisis','alone','distress',
+  // Distress
+  const distress = ['help me','not ok','scared','crisis','distress',
     'desperate','afraid','hopeless','suicid','self harm','hurting',
     'depressed','anxious','not coping','struggling'];
   if (distress.some(w => clean.includes(w))) return KB.support;
 
-  // 3. Vague filler words → fallback (don't force a match)
-  const vague = ['what else','something else','more','tell me more',
-    'and','ok','okay','sure','yes','no','hi','hey','hello','thanks',
-    'thank you','cool','nice','interesting','really','wow'];
-  if (vague.includes(clean)) return null;
+  // Vague words → no match
+  if (VAGUE.has(clean)) return null;
 
-  // 4. Tag scoring — require meaningful word overlap
-  const words = clean.split(/\s+/).filter(w => w.length > 3); // only words >3 chars
+  // Word-level scoring — only words longer than 3 chars
+  const words = clean.split(/\s+/).filter(w => w.length > 3);
+
+  // If no meaningful words after filtering, return null
+  if (words.length === 0 && clean.length < 6) return null;
+
   let best = null, bestScore = 0;
 
   Object.values(KB).forEach(entry => {
     let s = 0;
     entry.tags.forEach(tag => {
-      // Exact full match — highest confidence
-      if (clean === tag) s += 20;
-      // Query contains full tag phrase
-      else if (clean.includes(tag) && tag.length > 3) s += 12;
-      // Tag contains full query (only if query is meaningful length)
-      else if (tag.includes(clean) && clean.length > 4) s += 8;
-      // Word-level overlap — only count words longer than 3 chars
-      else {
-        const tagWords = tag.split(' ').filter(tw => tw.length > 3);
-        tagWords.forEach(tw => words.forEach(qw => {
-          if (tw === qw) s += 6;
-          else if (tw.startsWith(qw) && qw.length > 4) s += 3;
-        }));
-      }
+      const tagClean = tag.toLowerCase();
+      // Exact full match
+      if (clean === tagClean) { s += 25; return; }
+      // Query contains full tag
+      if (clean.includes(tagClean) && tagClean.length > 4) { s += 15; return; }
+      // Tag contains full query (only meaningful queries)
+      if (tagClean.includes(clean) && clean.length > 5) { s += 10; return; }
+      // Word overlap
+      const tagWords = tagClean.split(' ').filter(tw => tw.length > 3);
+      tagWords.forEach(tw => words.forEach(qw => {
+        if (tw === qw) s += 8;
+        else if (tw.startsWith(qw) && qw.length > 4) s += 4;
+        else if (qw.startsWith(tw) && tw.length > 4) s += 4;
+      }));
     });
     if (s > bestScore) { bestScore = s; best = entry; }
   });
 
-  // Require a minimum score to avoid false positives
-  return bestScore >= 6 ? best : null;
+  // Require meaningful score
+  return bestScore >= 8 ? best : null;
 }
 
-// ════════════════════════════════════════════
-// DETECT MOBILE via PARENT WINDOW width
-// Uses window.top so we read the real screen,
-// not the iframe's own narrow width
-// ════════════════════════════════════════════
-function getViewportWidth() {
-  try {
-    // If inside an iframe, read the parent window width
-    return window.top.innerWidth || window.top.document.documentElement.clientWidth;
-  } catch(e) {
-    // Cross-origin fallback — use own window
-    return window.innerWidth;
-  }
-}
-const isMobile = () => getViewportWidth() <= 768;
-
-const isMob = isMobile(); // check once on load
-if (isMob) document.documentElement.classList.add('mobile-mode');
-
-let isOpen = false;
+// ══════════════════════════════════════════════════
+// UI
+// ══════════════════════════════════════════════════
 let expandSet = new Set();
-
 const tn = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
 const sb = () => { const m = document.getElementById('msgs'); m.scrollTop = m.scrollHeight; };
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const nl2br = s => s.replace(/\n/g,'<br>');
 
-function init() {
-  if (isMob) {
-    showWelcome();
-  }
-}
-
-function togglePanel() {
-  if (isMob) return; // mobile is always open inline
-  isOpen = !isOpen;
-  document.getElementById('panel').classList.toggle('open', isOpen);
-  document.getElementById('fab').classList.toggle('open', isOpen);
-  if (isOpen && !document.getElementById('msgs').children.length) showWelcome();
-  if (isOpen) setTimeout(() => document.getElementById('inp').focus(), 300);
-}
-
 function showWelcome() {
   const area = document.getElementById('msgs');
-  if (area.children.length) return;
   const d = document.createElement('div');
   d.className = 'msg bot';
   d.innerHTML = `<div class="bub">Hey 👋 I'm <b>Eliz</b>. Ask me anything about HIV — treatment, prevention, cure research, or just getting your head around it all.</div>
@@ -668,11 +513,13 @@ function addBotMsg(entry) {
   const d = document.createElement('div');
   d.className = 'msg bot';
   const entryId = Object.keys(KB).find(k => KB[k] === entry);
+
   let html = `<div class="bub">${nl2br(entry.short || '')}`;
   if (entry.more && entryId && !expandSet.has(entryId)) {
     html += `<br><button class="more-btn" onclick="expandEntry('${entryId}',this)">Read more ↓</button>`;
   }
   html += `</div>`;
+
   if (entry.isSupport) {
     html += `<div class="scard">
       <strong>🤝 Here for you</strong>
@@ -681,29 +528,28 @@ function addBotMsg(entry) {
         <a href="https://berlin.aidshilfe.de" target="_blank">berlin.aidshilfe.de</a>
       </div>
       <div class="sline">Medical helpline Germany 24/7: <a href="tel:116117"><b>116 117</b></a></div>
-      <div class="sline">Report side effects: <a href="https://nebenwirkungen.bund.de" target="_blank">nebenwirkungen.bund.de</a></div>
+      <div class="sline">Side effects: <a href="https://nebenwirkungen.bund.de" target="_blank">nebenwirkungen.bund.de</a></div>
     </div>`;
   }
+
   html += `<div class="mmeta">${tn()}</div>`;
   d.innerHTML = html;
   area.appendChild(d);
 
-  // Use entry's own suggestions, but filter out ones already asked
-  // and fall back to rotating pool if needed
-  let suggIds = (entry.sugg || []).filter(id => KB[id]);
-  if (suggIds.length < 2) {
-    // top up with rotating pool, avoiding current entry
-    const pool = getNextSuggPool().filter(id => id !== entryId && KB[id]);
-    suggIds = [...new Set([...suggIds, ...pool])].slice(0, 3);
+  // Build fresh suggestion list — use entry sugg + rotate pool to avoid repeats
+  let suggIds = (entry.sugg || []).filter(id => KB[id] && id !== entryId);
+  if (suggIds.length < 3) {
+    const pool = nextPool().filter(id => id !== entryId && !suggIds.includes(id) && KB[id]);
+    suggIds = [...suggIds, ...pool].slice(0, 3);
   }
-  if (suggIds.length) addSuggestions(suggIds);
+  addSuggestions(suggIds);
   sb();
 }
 
 function expandEntry(id, btn) {
   expandSet.add(id);
   const entry = KB[id];
-  if (!entry || !entry.more) return;
+  if (!entry?.more) return;
   const bub = btn.closest('.bub');
   btn.remove();
   const div = document.createElement('div');
@@ -744,34 +590,6 @@ function showTyping() {
 }
 function hideTyping() { const d = document.getElementById('typ'); if(d) d.remove(); }
 
-// Rotating fallback messages so it never feels repetitive
-const FALLBACKS = [
-  { msg: "I didn't quite catch that — try asking about a specific topic.", sugg: ['hiv','prep','cure'] },
-  { msg: "Not sure what you mean — but I'm happy to help with anything HIV-related.", sugg: ['uu','reservoir','bnabs'] },
-  { msg: "I work best with specific questions. Want to explore one of these?", sugg: ['cure_strategies','clinical_trials','treatment_history'] },
-  { msg: "Let me know what you'd like to know more about.", sugg: ['stigma','mental_health','healthcare'] },
-  { msg: "Try asking something more specific — I know a lot about HIV treatment, research, and prevention.", sugg: ['art','viral_load','global'] },
-];
-let fallbackIndex = 0;
-
-// All suggestion pools — rotate through so they never feel stuck
-const SUGG_POOLS = [
-  ['hiv','cure','prep'],
-  ['uu','art','reservoir'],
-  ['bnabs','cure_strategies','clinical_trials'],
-  ['treatment_history','stigma','mental_health'],
-  ['global','about','healthcare'],
-  ['viral_load','cure_types','vaccine'],
-  ['q4ddpcr','ati','cure_cases'],
-];
-let suggPoolIndex = 0;
-
-function getNextSuggPool() {
-  const pool = SUGG_POOLS[suggPoolIndex % SUGG_POOLS.length];
-  suggPoolIndex++;
-  return pool;
-}
-
 function respond(query, forcedId) {
   showTyping();
   setTimeout(() => {
@@ -779,20 +597,17 @@ function respond(query, forcedId) {
     if (forcedId && KB[forcedId]) { addBotMsg(KB[forcedId]); return; }
     const entry = findEntry(query);
     if (!entry) {
-      // Rotate through fallback messages
-      const fb = FALLBACKS[fallbackIndex % FALLBACKS.length];
-      fallbackIndex++;
+      const fb = FALLBACKS[fbIdx % FALLBACKS.length]; fbIdx++;
       const area = document.getElementById('msgs');
       const d = document.createElement('div');
       d.className = 'msg bot';
-      d.innerHTML = `<div class="bub">${fb.msg}</div>
-      <div class="mmeta">${tn()}</div>`;
+      d.innerHTML = `<div class="bub">${fb.msg}</div><div class="mmeta">${tn()}</div>`;
       area.appendChild(d);
       addSuggestions(fb.sugg); sb();
       return;
     }
     addBotMsg(entry);
-  }, 380 + Math.random()*280);
+  }, 350 + Math.random()*250);
 }
 
 function handleSend() {
@@ -811,7 +626,7 @@ document.getElementById('inp').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
 });
 
-window.addEventListener('load', init);
+window.addEventListener('load', showWelcome);
 </script>
 </body>
 </html>
