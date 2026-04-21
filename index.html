@@ -48,6 +48,12 @@ body{
 #fab{ pointer-events:all !important; }
 #panel.open{ pointer-events:all !important; }
 
+/* Make sure closed panel never blocks anything */
+#panel:not(.open){
+  pointer-events:none !important;
+  visibility:hidden;
+}
+
 /* Desktop root — just a layout container */
 #desktop-root{
   position:fixed;
@@ -542,29 +548,56 @@ const LABELS = {
 };
 
 // ════════════════════════════════════════════
-// SEARCH ENGINE
+// SEARCH ENGINE — stricter matching
 // ════════════════════════════════════════════
 function findEntry(q) {
   const clean = q.toLowerCase().trim().replace(/[?!.,]/g,'');
+
+  // Too short or too vague — go straight to fallback
+  if (clean.length < 3) return null;
+
+  // 1. Guaranteed exact-match map
   if (GUARANTEED[clean]) return KB[GUARANTEED[clean]];
-  const distress = ['help me','not ok','scared','crisis','alone','distress','desperate','afraid','hopeless','suicid','self harm','hurting','depressed','anxious','not coping','struggling'];
+
+  // 2. Distress detection
+  const distress = ['help me','not ok','scared','crisis','alone','distress',
+    'desperate','afraid','hopeless','suicid','self harm','hurting',
+    'depressed','anxious','not coping','struggling'];
   if (distress.some(w => clean.includes(w))) return KB.support;
-  const words = clean.split(/\s+/).filter(w => w.length > 2);
+
+  // 3. Vague filler words → fallback (don't force a match)
+  const vague = ['what else','something else','more','tell me more',
+    'and','ok','okay','sure','yes','no','hi','hey','hello','thanks',
+    'thank you','cool','nice','interesting','really','wow'];
+  if (vague.includes(clean)) return null;
+
+  // 4. Tag scoring — require meaningful word overlap
+  const words = clean.split(/\s+/).filter(w => w.length > 3); // only words >3 chars
   let best = null, bestScore = 0;
+
   Object.values(KB).forEach(entry => {
     let s = 0;
     entry.tags.forEach(tag => {
+      // Exact full match — highest confidence
       if (clean === tag) s += 20;
-      else if (clean.includes(tag)) s += 12;
-      else if (tag.includes(clean)) s += 8;
-      else tag.split(' ').forEach(tw => words.forEach(qw => {
-        if (tw === qw) s += 6;
-        else if (tw.includes(qw) && qw.length > 3) s += 3;
-      }));
+      // Query contains full tag phrase
+      else if (clean.includes(tag) && tag.length > 3) s += 12;
+      // Tag contains full query (only if query is meaningful length)
+      else if (tag.includes(clean) && clean.length > 4) s += 8;
+      // Word-level overlap — only count words longer than 3 chars
+      else {
+        const tagWords = tag.split(' ').filter(tw => tw.length > 3);
+        tagWords.forEach(tw => words.forEach(qw => {
+          if (tw === qw) s += 6;
+          else if (tw.startsWith(qw) && qw.length > 4) s += 3;
+        }));
+      }
     });
     if (s > bestScore) { bestScore = s; best = entry; }
   });
-  return bestScore > 0 ? best : null;
+
+  // Require a minimum score to avoid false positives
+  return bestScore >= 6 ? best : null;
 }
 
 // ════════════════════════════════════════════
@@ -653,7 +686,16 @@ function addBotMsg(entry) {
   html += `<div class="mmeta">${tn()}</div>`;
   d.innerHTML = html;
   area.appendChild(d);
-  if (entry.sugg && entry.sugg.length) addSuggestions(entry.sugg);
+
+  // Use entry's own suggestions, but filter out ones already asked
+  // and fall back to rotating pool if needed
+  let suggIds = (entry.sugg || []).filter(id => KB[id]);
+  if (suggIds.length < 2) {
+    // top up with rotating pool, avoiding current entry
+    const pool = getNextSuggPool().filter(id => id !== entryId && KB[id]);
+    suggIds = [...new Set([...suggIds, ...pool])].slice(0, 3);
+  }
+  if (suggIds.length) addSuggestions(suggIds);
   sb();
 }
 
@@ -701,6 +743,34 @@ function showTyping() {
 }
 function hideTyping() { const d = document.getElementById('typ'); if(d) d.remove(); }
 
+// Rotating fallback messages so it never feels repetitive
+const FALLBACKS = [
+  { msg: "I didn't quite catch that — try asking about a specific topic.", sugg: ['hiv','prep','cure'] },
+  { msg: "Not sure what you mean — but I'm happy to help with anything HIV-related.", sugg: ['uu','reservoir','bnabs'] },
+  { msg: "I work best with specific questions. Want to explore one of these?", sugg: ['cure_strategies','clinical_trials','treatment_history'] },
+  { msg: "Let me know what you'd like to know more about.", sugg: ['stigma','mental_health','healthcare'] },
+  { msg: "Try asking something more specific — I know a lot about HIV treatment, research, and prevention.", sugg: ['art','viral_load','global'] },
+];
+let fallbackIndex = 0;
+
+// All suggestion pools — rotate through so they never feel stuck
+const SUGG_POOLS = [
+  ['hiv','cure','prep'],
+  ['uu','art','reservoir'],
+  ['bnabs','cure_strategies','clinical_trials'],
+  ['treatment_history','stigma','mental_health'],
+  ['global','about','healthcare'],
+  ['viral_load','cure_types','vaccine'],
+  ['q4ddpcr','ati','cure_cases'],
+];
+let suggPoolIndex = 0;
+
+function getNextSuggPool() {
+  const pool = SUGG_POOLS[suggPoolIndex % SUGG_POOLS.length];
+  suggPoolIndex++;
+  return pool;
+}
+
 function respond(query, forcedId) {
   showTyping();
   setTimeout(() => {
@@ -708,13 +778,16 @@ function respond(query, forcedId) {
     if (forcedId && KB[forcedId]) { addBotMsg(KB[forcedId]); return; }
     const entry = findEntry(query);
     if (!entry) {
+      // Rotate through fallback messages
+      const fb = FALLBACKS[fallbackIndex % FALLBACKS.length];
+      fallbackIndex++;
       const area = document.getElementById('msgs');
       const d = document.createElement('div');
       d.className = 'msg bot';
-      d.innerHTML = `<div class="bub">I'm not fully across that one yet — but I can help with HIV basics, treatment, prevention, or cure research.</div>
+      d.innerHTML = `<div class="bub">${fb.msg}</div>
       <div class="mmeta">${tn()}</div>`;
       area.appendChild(d);
-      addSuggestions(['hiv','cure','prep']); sb();
+      addSuggestions(fb.sugg); sb();
       return;
     }
     addBotMsg(entry);
