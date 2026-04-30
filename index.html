@@ -365,6 +365,118 @@ const KB = {
     isSupport:true,
     tags:["need help","support hiv","hiv crisis","scared hiv","alone hiv","hiv emergency","hiv worried","feeling distressed","not ok","struggling hiv","hopeless hiv","sad about hiv"],
     sugg:[]
+  },
+
+  // ── Local resources ──
+  local_resources:{
+    short:`For personal support, testing, or PrEP access, your best first step is a local community organisation or sexual health clinic. They know your area and can guide you directly.`,
+    more:`In Germany, try:\n• <a href="https://berlin.aidshilfe.de" target="_blank">Berliner AIDS-Hilfe</a> — counselling, support, community\n• <a href="https://queermedics.de" target="_blank">Queer Medics</a> — find inclusive doctors near you\n• Your local sexual health clinic or Gesundheitsamt\n\nEliz shares general information — for personal medical advice, always speak with a healthcare provider.`,
+    tags:["where to get tested","hiv test","get tested hiv","testing hiv","where to get prep","prep access","hiv clinic","sexual health clinic","local hiv support","community hiv","i have hiv","just diagnosed","newly diagnosed hiv","hiv positive","hiv diagnosis","where can i get help","hiv help near me","hiv support near me"],
+    sugg:["healthcare","mental_health","support"]
+  },
+
+  // ── Undetectable ──
+  undetectable:{
+    short:`"Undetectable" means the virus level in your blood is so low that tests can't detect it. It doesn't mean HIV is gone — it's still present in the body in hidden forms.`,
+    more:`Reaching undetectable status is a major goal of treatment. When undetectable:\n\n• Your immune system stays healthy\n• You cannot pass HIV on sexually (U=U)\n• HIV is still hiding in the reservoir — which is why treatment must continue\n\nUndetectable is not a cure, but it's a powerful and life-changing outcome.`,
+    tags:["undetectable hiv","what does undetectable mean","hiv undetectable","what is undetectable","undetectable means","when is hiv undetectable","hiv not detectable"],
+    sugg:["uu","viral_load","reservoir"]
+  },
+
+  // ── HIV lifecycle ──
+  hiv_lifecycle:{
+    short:`HIV has a specific way of taking over cells. It enters, copies its genetic material into the cell's DNA, then uses that cell to make new virus particles that spread to others.`,
+    more:`The steps:\n1. HIV attaches to a CD4 cell using the CCR5 receptor\n2. It releases its genetic material into the cell\n3. Uses <b>reverse transcription</b> to convert RNA into DNA\n4. <b>Integration</b> — HIV DNA is inserted into the cell's own DNA\n5. The cell is used to produce new virus\n6. New virus particles are released to infect more cells\n\nEach step is a potential target for treatment — which is why combination ART works so well.`,
+    tags:["hiv lifecycle","hiv cycle","how hiv replicates","hiv replication","hiv inside cell","what does hiv do","reverse transcription","integration hiv","hiv dna","hiv rna","viral replication hiv"],
+    sugg:["art","reservoir","cd4"]
+  },
+
+  // ── CD4 cells ──
+  cd4:{
+    short:`CD4 T cells are key immune cells that coordinate your body's defence. HIV specifically targets and destroys them — weakening the immune system over time.`,
+    more:`A healthy CD4 count is around 500–1,500 cells/mm³. As HIV destroys CD4 cells:\n\n• The immune system weakens\n• The body becomes vulnerable to infections\n• Risk of AIDS increases\n\nWith ART, CD4 counts recover and stay high. Your doctor monitors your CD4 count at regular checkups alongside your viral load.`,
+    tags:["cd4","cd4 cells","cd4 count","t cells hiv","t helper cells","immune cells hiv","cd4 t cells","what are cd4 cells","hiv immune cells","low cd4"],
+    sugg:["art","viral_load","aids"]
+  },
+
+  // ── Latency ──
+  latency:{
+    short:`Latency is when HIV is inside a cell but completely silent — not making new virus. The immune system can't see it, and treatment can't reach it. This is what makes HIV so hard to cure.`,
+    more:`When HIV enters latency:\n\n• It inserts itself into the cell's DNA (<b>integration</b>)\n• The cell looks completely normal\n• Neither the immune system nor ART can detect or destroy it\n• It can stay latent for years\n\nIf treatment stops, latent HIV can reactivate — which is why lifelong treatment is needed until a cure is found.`,
+    tags:["latency hiv","latent hiv","what is latency","hiv latent","silent hiv","inactive hiv","hiv sleeping","latent reservoir","hiv integration","hiv in dna"],
+    sugg:["reservoir","cure_strategies","art"]
+  },
+
+  // ── Viral rebound ──
+  viral_rebound:{
+    short:`Viral rebound is when HIV becomes detectable again after treatment is stopped. It shows the virus was still hiding in the body even when undetectable.`,
+    more:`Rebound typically happens within <b>days to weeks</b> after stopping treatment — sometimes faster.\n\nIn clinical studies, viral rebound is actually used as a research tool. Scientists watch how quickly rebound happens to understand whether a new therapy is working.`,
+    tags:["viral rebound","hiv rebound","what is viral rebound","hiv comes back","hiv return after treatment","rebound hiv","stopping treatment hiv","treatment stopped hiv"],
+    sugg:["reservoir","ati","art"]
+  },
+
+  // ── Immune system ──
+  immune_system:{
+    short:`Your immune system is your body's defence network. HIV specifically targets it — making your body less able to fight infections over time.`,
+    more:`Key players:\n\n• <b>CD4 T cells</b> — the main target of HIV; coordinate immune defence\n• <b>Antibodies</b> — proteins that recognise and block viruses\n• <b>Macrophages</b> — immune cells that can also be infected by HIV\n• <b>Natural killer cells</b> — help destroy infected cells\n\nWith ART, the immune system can recover significantly. Cure research focuses heavily on strengthening the immune system so it can control HIV on its own.`,
+    tags:["immune system hiv","how hiv affects immune system","immunity hiv","hiv immune response","body defence hiv","macrophage hiv","natural killer cells hiv","immune cells hiv","antibodies hiv"],
+    sugg:["cd4","art","cure_strategies"]
+  },
+
+  // ── Informed consent ──
+  informed_consent:{
+    short:`Informed consent means you receive clear, complete information about a study — including risks, benefits, and procedures — before agreeing to take part. It's always voluntary.`,
+    more:`In HIV cure research, informed consent is especially important because:\n\n• Some interventions carry real risks (like ATI)\n• Benefits may not be direct or guaranteed\n• You have the right to withdraw at any time\n\nGood research teams take time to explain everything and answer your questions before you sign anything. You should never feel pressured.`,
+    tags:["informed consent","consent research","hiv study consent","what is informed consent","research consent hiv","participant rights hiv","right to withdraw study"],
+    sugg:["clinical_trials","ati","about"]
+  },
+
+  // ── Gene therapy / CRISPR detail ──
+  gene_therapy:{
+    short:`Gene therapy involves changing DNA to treat or prevent disease. In HIV research, it's being explored to either remove HIV from infected cells or make cells resistant to infection.`,
+    more:`Two main approaches:\n\n<b>CRISPR gene editing:</b> Acts like molecular scissors — finds exactly where HIV DNA is hiding in a cell and cuts it out.\n\n<b>Modifying CCR5:</b> Editing cells so HIV can't use the CCR5 "door handle" to get in — inspired by the natural resistance seen in cure cases.\n\n<b>AAV vectors:</b> Safe virus-like tools used to deliver new genetic instructions into cells.\n\nGene therapy is still in early research phases but represents one of the most exciting directions in cure science.`,
+    tags:["gene therapy hiv","crispr hiv","gene editing hiv","aav vector hiv","ccr5 gene editing","modifying dna hiv","genetic cure hiv","vector hiv research"],
+    sugg:["cure_strategies","ccr5","cure_cases"]
+  },
+
+  // ── Assays / lab methods ──
+  assays:{
+    short:`Assays are laboratory tests used to measure HIV and evaluate treatments. They're essential for understanding the reservoir and knowing whether a cure strategy is working.`,
+    more:`Key assays in HIV research:\n\n• <b>Viral load assay</b> — measures HIV in the blood\n• <b>PCR assay</b> — detects HIV genetic material in cells\n• <b>Reservoir assay</b> — measures hidden HIV (e.g. IPDA, Q4ddPCR)\n• <b>Neutralisation assay</b> — tests whether antibodies can block HIV\n• <b>Cell-based assay</b> — studies HIV behaviour in living cells\n\nNo single test can fully measure all of HIV in the body — which is why scientists use multiple approaches together.`,
+    tags:["assay hiv","lab test hiv","hiv assay","pcr hiv","reservoir assay","viral load test","neutralisation assay","cell assay hiv","measuring hiv","hiv lab methods","hiv research methods","ipda assay"],
+    sugg:["q4ddpcr","reservoir","viral_load"]
+  },
+
+  // ── What is a cure in science ──
+  cure_definition:{
+    short:`In science, an HIV cure means controlling or removing HIV so that treatment is no longer needed — either by eliminating all virus, or by achieving lasting immune control.`,
+    more:`There are two definitions researchers use:\n\n<b>Sterilising cure:</b> All replication-capable HIV is removed. Extremely difficult because even a tiny amount left can restart infection.\n\n<b>Functional cure:</b> HIV stays in the body but is permanently controlled by the immune system, with no need for medication.\n\nThe ultimate goal is a safe, accessible cure that works for everyone — regardless of HIV subtype, location, or health status.`,
+    tags:["what is hiv cure","cure definition hiv","sterilising cure","functional cure","hiv cure definition","what counts as hiv cure","scientific hiv cure","when is hiv cured"],
+    sugg:["cure_types","cure_strategies","cure_cases"]
+  },
+
+  // ── Participation in research ──
+  participation:{
+    short:`Participating in HIV research means contributing to the development of new treatments and potentially a cure. Every advance we have today came from people who volunteered to take part.`,
+    more:`Before joining any study, you should know:\n\n• The risks and potential benefits\n• What monitoring and procedures are involved\n• That you can withdraw at any time\n• That your safety always comes first\n\nParticipation is a personal choice — and a meaningful one. It's also okay to ask questions, take time to decide, and seek a second opinion.`,
+    tags:["participate hiv research","join hiv study","hiv research participation","clinical trial participation","should i join hiv study","hiv study volunteer","hiv participant","research volunteer hiv"],
+    sugg:["clinical_trials","ati","informed_consent"]
+  },
+
+  // ── Future of treatment ──
+  future_treatment:{
+    short:`The future of HIV treatment is heading toward longer-acting options, fewer side effects, and more personalised care — moving further away from daily pills.`,
+    more:`What's coming:\n\n• Injections lasting <b>4–6 months</b> (being tested now)\n• <b>Implants</b> that release medication slowly over months\n• <b>bNAb infusions</b> as an alternative to ART\n• More options for people who face barriers to daily adherence\n\nThe goal is treatment that fits your life — not the other way around. And beyond treatment, an accessible cure for everyone.`,
+    tags:["future hiv treatment","long acting hiv","hiv injection","hiv implant","future of hiv","hiv treatment future","new hiv treatment","upcoming hiv treatment","hiv treatment advances"],
+    sugg:["bnabs","treatment_history","art"]
+  },
+
+  // ── Community & health literacy ──
+  health_literacy:{
+    short:`HIV cure literacy means understanding what cure research is, what it isn't, and how to engage with it. It helps you ask better questions and make informed decisions.`,
+    more:`It's not just about knowing the science — it's about being able to:\n\n• Critically assess information and spot misinformation\n• Understand risks and realistic timelines\n• Engage with researchers as a partner, not just a participant\n• Access information in formats that are relevant to your life\n\nLooking4Cure exists to make this kind of literacy possible for everyone — especially communities that are often left out of research conversations.`,
+    tags:["health literacy hiv","hiv literacy","hiv cure literacy","understanding hiv research","hiv misinformation","hiv information","hiv education","hiv knowledge","understanding cure research"],
+    sugg:["about","participation","stigma"]
   }
 };
 
@@ -379,7 +491,23 @@ const GUARANTEED = {
   "what are bnabs":"bnabs","bnabs":"bnabs","broadly neutralising antibodies":"bnabs",
   "what is ati":"ati","analytical treatment interruption":"ati",
   "what is q4ddpcr":"q4ddpcr","q4ddpcr":"q4ddpcr",
-  "latest research":"q4ddpcr","new hiv research":"q4ddpcr"
+  "latest research":"q4ddpcr","new hiv research":"q4ddpcr",
+  "what does undetectable mean":"undetectable","undetectable":"undetectable",
+  "what is latency":"latency","latent hiv":"latency",
+  "what is viral rebound":"viral_rebound","viral rebound":"viral_rebound",
+  "what are cd4 cells":"cd4","cd4 cells":"cd4","cd4":"cd4",
+  "what is informed consent":"informed_consent","informed consent":"informed_consent",
+  "what is gene therapy":"gene_therapy","crispr":"gene_therapy",
+  "where to get tested":"local_resources","where to get prep":"local_resources",
+  "i have hiv":"local_resources","just diagnosed":"local_resources",
+  "newly diagnosed":"local_resources","hiv positive":"local_resources",
+  "what is a cure":"cure_definition","cure definition":"cure_definition",
+  "what are assays":"assays","lab tests hiv":"assays",
+  "future of hiv treatment":"future_treatment","long acting hiv":"future_treatment",
+  "hiv lifecycle":"hiv_lifecycle","how hiv replicates":"hiv_lifecycle",
+  "immune system":"immune_system","how hiv affects immune system":"immune_system",
+  "health literacy":"health_literacy","hiv literacy":"health_literacy",
+  "participate in research":"participation","join a study":"participation"
 };
 
 // ── Suggestion labels ──
@@ -387,14 +515,24 @@ const LABELS = {
   hiv:'What is HIV?', aids:'What is AIDS?', art:'How does ART work?',
   cure:'Is there a cure?', prep:"What's PrEP?", uu:'What is U=U?',
   viral_load:'Viral load', reservoir:'HIV reservoir',
+  undetectable:'What does undetectable mean?',
+  latency:'What is latency?', viral_rebound:'What is viral rebound?',
+  cd4:'What are CD4 cells?', immune_system:'HIV & the immune system',
+  hiv_lifecycle:'How does HIV work?',
   cure_cases:'Has anyone been cured?', cure_types:'Types of cure',
+  cure_definition:'What counts as a cure?',
   cure_strategies:'Cure strategies', bnabs:'What are bNAbs?',
   q4ddpcr:'New reservoir research', ati:'What is ATI?',
   treatment_history:'Treatment history', ccr5:'CCR5 mutation',
+  gene_therapy:'Gene therapy & CRISPR', assays:'How is HIV measured?',
   global:'HIV globally', clinical_trials:'How do trials work?',
+  informed_consent:'What is informed consent?', participation:'Joining a study',
   about:'About Looking4Cure', healthcare:'Finding a good doctor',
   mental_health:'Mental health & HIV', stigma:'HIV & stigma',
-  vaccine:'Is there a vaccine?', support:'I need support'
+  vaccine:'Is there a vaccine?', support:'I need support',
+  local_resources:'Where to get tested or PrEP',
+  future_treatment:'Future of HIV treatment',
+  health_literacy:'HIV cure literacy'
 };
 
 // ── Suggestion pools for rotation ──
@@ -406,6 +544,11 @@ const POOLS = [
   ['global','about','healthcare'],
   ['viral_load','cure_types','vaccine'],
   ['q4ddpcr','ati','cure_cases'],
+  ['undetectable','latency','viral_rebound'],
+  ['cd4','immune_system','hiv_lifecycle'],
+  ['gene_therapy','assays','cure_definition'],
+  ['informed_consent','participation','health_literacy'],
+  ['local_resources','future_treatment','ccr5'],
 ];
 let poolIdx = 0;
 const nextPool = () => { const p = POOLS[poolIdx % POOLS.length]; poolIdx++; return p; };
@@ -419,6 +562,13 @@ const FALLBACKS = [
   { msg:"Good question — can you be a bit more specific? I'm here to help.", sugg:['art','viral_load','global'] },
 ];
 let fbIdx = 0;
+
+// ── Personal statements — redirect to local resources ──
+const PERSONAL = ['i have hiv','i tested positive','i was diagnosed','i just found out',
+  'i am hiv positive','i am positive','just got diagnosed','newly diagnosed',
+  'where can i get tested','where to get tested','how do i get prep',
+  'where can i get prep','where do i get help','i need hiv treatment',
+  'i need medication','i need a doctor','find a clinic'];
 
 // ── Vague / greetings that should never match ──
 const VAGUE = new Set(['hi','hey','hello','ok','okay','sure','yes','no',
@@ -437,6 +587,9 @@ function findEntry(q) {
 
   // Guaranteed exact map
   if (GUARANTEED[clean]) return KB[GUARANTEED[clean]];
+
+  // Personal statements → redirect to local resources
+  if (PERSONAL.some(p => clean.includes(p))) return KB.local_resources;
 
   // Distress
   const distress = ['help me','not ok','scared','crisis','distress',
@@ -493,7 +646,7 @@ function showWelcome() {
   const area = document.getElementById('msgs');
   const d = document.createElement('div');
   d.className = 'msg bot';
-  d.innerHTML = `<div class="bub">Hey 👋 I'm <b>Eliz</b>. Ask me anything about HIV — treatment, prevention, cure research, or just getting your head around it all.</div>
+  d.innerHTML = `<div class="bub">Hey 👋 I'm <b>Eliz</b>. Ask me anything about HIV — treatment, prevention, cure research, or just getting your head around it all.<br><br><span style="font-size:12px;color:#7c7a77">💬 Please don't share personal information in this chat. I'm here for general HIV information — not personal medical advice.</span></div>
   <div class="mmeta">${tn()}</div>`;
   area.appendChild(d);
   addSuggestions(['hiv','cure','prep'], true);
