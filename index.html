@@ -271,10 +271,10 @@ const KB = {
     sugg:["cure_strategies","bnabs","q4ddpcr"]
   },
   cure_cases:{
-    short:`As of 2024, nine people have been reported cured of HIV. All had serious blood cancer and received stem cell transplants from donors with a rare genetic mutation that makes immune cells HIV-resistant.`,
-    more:`These cases are remarkable but the treatment is extremely complex and risky, only for life-threatening cancer. It's not available as a general HIV cure.\n\nStill, each case teaches researchers a lot about how a cure could work.`,
-    tags:["cured","hiv cured","berlin patient","stem cell","people cured hiv","has anyone been cured","cure cases","9 people cured"],
-    sugg:["ccr5","cure_types","cure_strategies"]
+    short:`A small number of people have been reported cured or in long-term HIV remission — all through stem cell transplants for cancer. The most recent: the "second Berlin patient," who has maintained remission for over 6 years without ART.`,
+    more:`Most cases involved donors with the rare <b>CCR5Δ32 mutation</b>, making their new immune cells resistant to HIV.\n\nBut the <b>second Berlin patient (Nature, 2026)</b> changed the picture: the donor had only a partial CCR5 mutation — yet HIV remission has lasted 6+ years. This suggests the <b>immune response itself</b> — including ADCC (antibody-dependent cellular cytotoxicity) and natural killer cells — may have cleared the reservoir, not just genetic resistance.\n\nThese cases are remarkable but the treatment is extremely complex, only for life-threatening cancer, and not available as a general cure. Still, each case gives researchers critical clues about what conditions allow HIV to be eliminated.`,
+    tags:["cured","hiv cured","berlin patient","stem cell","people cured hiv","has anyone been cured","cure cases","nine people cured","second berlin patient","nature 2026 cure","hiv remission case","london patient"],
+    sugg:["second_berlin","ccr5","cure_strategies"]
   },
   cure_types:{
     short:`Scientists are working toward two kinds of cure: a sterilising cure (removing all HIV from the body) and a functional cure (the immune system controls HIV permanently without medication).`,
@@ -301,9 +301,9 @@ const KB = {
     sugg:["reservoir","cure_strategies","bnabs"]
   },
   ati:{
-    short:`ATI (Analytical Treatment Interruption) is a supervised pause in HIV medication used inside clinical studies — to see if a new therapy can control the virus without ART.`,
-    more:`Only done under close medical supervision, never alone. The team monitors you throughout and you decide together when to restart medication.\n\nOne participant said: <i>"From the day I was infected, I felt I'd lost control. Joining a trial gave me some of that control back."</i>`,
-    tags:["ati","analytical treatment interruption","pause hiv treatment","stop hiv medication","treatment interruption","stopping art hiv"],
+    short:`ATI (Analytical Treatment Interruption) is a supervised pause in HIV medication inside a clinical study — to test whether a new therapy can control the virus without ART. It's never done alone.`,
+    more:`The research team explains everything before you start: what will happen, how far things can go, what actions can be taken. That clarity helps people make their decision.\n\nDuring ATI, your viral load and your partner's health are closely monitored. If your viral load rises, you restart treatment — and it always drops back to undetectable.\n\nOne participant described the experience: <i>"When you pause therapy, it goes against everything you've been told at diagnosis, and it can be frightening. You have to be in the right mindset — confident and supported."</i>\n\nAnd later: <i>"From the day I was infected, I felt I'd lost control. Joining a trial gave me some of that control back. It felt like I was taking ground away from the virus."</i>\n\nYou can stop at any point. Safety always comes first.`,
+    tags:["ati","analytical treatment interruption","pause hiv treatment","stop hiv medication","treatment interruption","stopping art hiv","treatment pause study","hiv trial pause","ati experience","ati personal story"],
     sugg:["bnabs","cure_strategies","clinical_trials"]
   },
   treatment_history:{
@@ -477,6 +477,70 @@ const KB = {
     more:`It's not just about knowing the science — it's about being able to:\n\n• Critically assess information and spot misinformation\n• Understand risks and realistic timelines\n• Engage with researchers as a partner, not just a participant\n• Access information in formats that are relevant to your life\n\nLooking4Cure exists to make this kind of literacy possible for everyone — especially communities that are often left out of research conversations.`,
     tags:["health literacy hiv","hiv literacy","hiv cure literacy","understanding hiv research","hiv misinformation","hiv information","hiv education","hiv knowledge","understanding cure research"],
     sugg:["about","participation","stigma"]
+  },
+
+  // ── Second Berlin Patient (Nature 2026) ──
+  second_berlin:{
+    short:`In late 2025, a second Berlin patient achieved long-term HIV remission after a stem cell transplant — and this case broke new ground. Unlike previous cures, the donor wasn't fully resistant to HIV. This suggests the immune response itself may be key to clearing the reservoir.`,
+    more:`Published in <i>Nature</i> (February 2026) by Charité Berlin researchers, the second Berlin patient (B2) has maintained undetectable HIV for <b>over 6 years</b> without ART after a stem cell transplant for leukaemia.\n\nWhat makes this case remarkable: the donor had only a <b>partial CCR5 mutation</b> (heterozygous CCR5Δ32), not the full mutation seen in previous cure cases. This means full CCR5 resistance alone isn't required for a cure.\n\nThe research points to <b>antibody-dependent cellular cytotoxicity (ADCC)</b> — where immune cells destroy HIV-infected cells guided by antibodies — as a likely contributor to reservoir clearance. Natural killer (NK) cells also appear to have played a significant role.\n\nThis is one of the most important HIV cure cases ever documented.`,
+    tags:["second berlin patient","berlin patient 2","b2 patient","ccr5 heterozygous","nature 2026","hiv cure 2026","new cure case","latest cure case","stem cell hiv 2026","charite cure","adcc hiv","natural killer cells hiv","gaebler","penack"],
+    sugg:["cure_cases","ccr5","adcc_nk"]
+  },
+
+  // ── ADCC and Natural Killer cells ──
+  adcc_nk:{
+    short:`ADCC (antibody-dependent cellular cytotoxicity) is when immune cells — particularly natural killer (NK) cells — are guided by antibodies to find and destroy HIV-infected cells. It may play an important role in clearing the HIV reservoir.`,
+    more:`In the second Berlin patient, researchers found <b>unusually high ADCC activity</b> around the time of the stem cell transplant. This suggests that the combination of strong antibodies and active NK cells may have helped clear the HIV reservoir, even without full CCR5 resistance.\n\n<b>Natural killer (NK) cells</b> are part of the innate immune system — they can attack infected cells without prior "training." Some NK cell subsets appear memory-like and may persist long-term.\n\nThis discovery opens new questions: could boosting ADCC activity be a strategy toward a functional cure, even without a stem cell transplant?`,
+    tags:["adcc","antibody dependent cellular cytotoxicity","natural killer cells","nk cells hiv","nk hiv","adcc hiv","innate immunity hiv","immune clearance hiv","nk cell cure"],
+    sugg:["second_berlin","bnabs","cure_strategies"]
+  },
+
+  // ── Graft-versus-reservoir ──
+  gvr:{
+    short:`Graft-versus-reservoir (GVR) is a phenomenon where transplanted immune cells from a donor recognise and attack HIV-infected cells in the recipient — helping to clear the viral reservoir.`,
+    more:`In stem cell transplants for cancer, the donor's immune cells sometimes attack residual disease in the recipient — this is called the graft-versus-leukaemia (GVL) effect. Researchers now believe a similar process may help clear HIV-infected cells.\n\nIn the second Berlin patient, differences between donor and recipient immune proteins (HLA mismatches and minor histocompatibility antigens) may have driven GVR effects — clearing HIV even without full CCR5 resistance.\n\nThis opens the possibility that the <b>allogeneic immune response itself</b>, not just donor cell resistance to HIV, may be critical to achieving remission.`,
+    tags:["graft versus reservoir","gvr hiv","graft versus leukemia","allo-sct hiv","stem cell immune effect","donor immune response hiv","hla mismatch hiv"],
+    sugg:["second_berlin","cure_cases","cure_strategies"]
+  },
+
+  // ── Doctor appointment checklist ──
+  appointment:{
+    short:`It's easy to forget things when you're sitting in front of your doctor. Writing things down in advance — on your phone or on paper — really helps.`,
+    more:`For regular checkups (every 3–6 months), your doctor monitors your <b>CD4 count</b> (immune system strength) and <b>viral load</b> (amount of virus in your blood).\n\nThings to think about before your appointment:\n\n<b>Your body:</b> Any changes, pain, or discomfort? Nothing is too small to mention.\n\n<b>Your mind:</b> How have you been feeling mentally? Stress, sleep, mood, loneliness — all worth talking about. Studies show 58% of people living with HIV experience loneliness, so you're not alone.\n\n<b>Your lifestyle:</b> Travelling, partying, changes in routine? Your medication can adapt to fit your life — not the other way around.\n\n<b>Your medications:</b> Anything prescribed by another doctor, or bought at a pharmacy? Check interactions at <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
+    tags:["doctor appointment hiv","hiv checklist","prepare hiv appointment","hiv checkup","hiv doctor visit","what to ask hiv doctor","hiv regular check","hiv monitoring","cd4 checkup","viral load checkup"],
+    sugg:["healthcare","mental_health","art"]
+  },
+
+  // ── Why HIV isn't cured when undetectable ──
+  why_not_cured:{
+    short:`Even when HIV is undetectable, it's not gone. It's hiding. The virus hides inside cells in a state called latency, where it's invisible to both your immune system and to treatment.`,
+    more:`HIV integrates its DNA into the DNA of long-lived immune cells (CD4 T cells). While silent there, it produces no signals — so neither your body nor medication can find it.\n\nThis hidden virus is the <b>HIV reservoir</b>. It's extremely small (about 1 infected cell per 100,000), but it's enough to restart infection if treatment stops.\n\nUndetectable means the treatment is working brilliantly — but HIV is still there, asleep. This is why current research is so focused on either eliminating or permanently silencing the reservoir.`,
+    tags:["why not cured undetectable","hiv still there","hiv hiding when undetectable","why cant hiv be cured treatment","hiv undetectable not cured","why need lifelong treatment","why continue hiv meds"],
+    sugg:["reservoir","latency","cure_strategies"]
+  },
+
+  // ── How quickly HIV hides ──
+  hiv_timing:{
+    short:`HIV starts hiding very early — often within days to weeks of infection, before most people even know they have it. This early reservoir formation is one of the biggest challenges in cure research.`,
+    more:`The reservoir forms so quickly that by the time someone is diagnosed and starts treatment, HIV is already hiding in long-lived cells.\n\nThis is why <b>early treatment</b> matters — starting ART soon after infection leads to a smaller reservoir, which may make future cure strategies more effective.\n\nIf treatment is stopped, viral rebound typically happens within <b>days to weeks</b> — confirming the reservoir was still active despite appearing dormant.`,
+    tags:["how quickly hiv hides","when does hiv hide","hiv reservoir formation","early treatment hiv","hiv early infection","hiv days weeks hiding","hiv rebound how fast","why start treatment early hiv"],
+    sugg:["reservoir","latency","art"]
+  },
+
+  // ── Is HIV a chronic condition ──
+  chronic:{
+    short:`Yes — with treatment, HIV is a manageable chronic condition. People living with HIV on effective ART can expect to live full, long, healthy lives.`,
+    more:`HIV went from being a death sentence in the 1980s to a manageable long-term condition today. Modern treatment:\n\n• Has minimal side effects\n• Involves one pill a day, or an injection every 2 months\n• Keeps the virus undetectable and untransmittable (U=U)\n• Allows the immune system to stay healthy\n\nThe remaining challenge is the need for <b>lifelong treatment</b> — which is why cure research continues. A cure would mean freedom from that daily commitment.`,
+    tags:["hiv chronic condition","is hiv manageable","living with hiv","hiv long term","hiv life expectancy","hiv manageable today","hiv not death sentence","modern hiv treatment","hiv daily life"],
+    sugg:["art","uu","future_treatment"]
+  },
+
+  // ── What questions to ask researchers ──
+  research_questions:{
+    short:`Before joining any HIV study, there are key questions you have the right to ask — and good research teams will welcome them.`,
+    more:`Questions to consider:\n\n• <b>What are the risks?</b> What could go wrong, and how will it be managed?\n• <b>What are the potential benefits?</b> For you personally, and for science?\n• <b>Does this strategy address the reservoir?</b> If so, how?\n• <b>What monitoring is involved?</b> How often, how intensive?\n• <b>Can I stop at any time?</b> (The answer should always be yes.)\n• <b>What happens if my viral load rises?</b> What's the plan?\n• <b>Who do I contact if I have concerns during the study?</b>\n\nParticipation is meaningful — and your questions make research better.`,
+    tags:["questions for researchers","what to ask hiv study","hiv trial questions","research participation questions","informed consent questions","study questions hiv","what to know before hiv trial"],
+    sugg:["clinical_trials","ati","informed_consent"]
   }
 };
 
@@ -507,7 +571,16 @@ const GUARANTEED = {
   "hiv lifecycle":"hiv_lifecycle","how hiv replicates":"hiv_lifecycle",
   "immune system":"immune_system","how hiv affects immune system":"immune_system",
   "health literacy":"health_literacy","hiv literacy":"health_literacy",
-  "participate in research":"participation","join a study":"participation"
+  "participate in research":"participation","join a study":"participation",
+  "second berlin patient":"second_berlin","berlin patient 2":"second_berlin",
+  "nature 2026 hiv":"second_berlin","new cure case":"second_berlin",
+  "adcc":"adcc_nk","natural killer cells":"adcc_nk","nk cells hiv":"adcc_nk",
+  "graft versus reservoir":"gvr","gvr":"gvr",
+  "doctor appointment hiv":"appointment","hiv checklist":"appointment",
+  "why not cured undetectable":"why_not_cured","hiv still there":"why_not_cured",
+  "is hiv chronic":"chronic","hiv manageable":"chronic","living with hiv":"chronic",
+  "questions for researchers":"research_questions","what to ask hiv study":"research_questions",
+  "how quickly hiv hides":"hiv_timing","early hiv treatment":"hiv_timing"
 };
 
 // ── Suggestion labels ──
@@ -532,7 +605,15 @@ const LABELS = {
   vaccine:'Is there a vaccine?', support:'I need support',
   local_resources:'Where to get tested or PrEP',
   future_treatment:'Future of HIV treatment',
-  health_literacy:'HIV cure literacy'
+  health_literacy:'HIV cure literacy',
+  second_berlin:'The second Berlin patient',
+  adcc_nk:'ADCC & natural killer cells',
+  gvr:'Graft-versus-reservoir',
+  appointment:'Doctor appointment tips',
+  why_not_cured:'Why isn\'t HIV cured when undetectable?',
+  chronic:'Is HIV a chronic condition?',
+  research_questions:'Questions to ask researchers',
+  hiv_timing:'How quickly does HIV hide?'
 };
 
 // ── Suggestion pools for rotation ──
@@ -549,6 +630,9 @@ const POOLS = [
   ['gene_therapy','assays','cure_definition'],
   ['informed_consent','participation','health_literacy'],
   ['local_resources','future_treatment','ccr5'],
+  ['second_berlin','adcc_nk','gvr'],
+  ['appointment','why_not_cured','chronic'],
+  ['research_questions','hiv_timing','participation'],
 ];
 let poolIdx = 0;
 const nextPool = () => { const p = POOLS[poolIdx % POOLS.length]; poolIdx++; return p; };
