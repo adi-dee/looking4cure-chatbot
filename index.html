@@ -7,199 +7,91 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --teal:#0d6b54;
-  --teal-mid:#0e7a60;
-  --teal-border:#b8dcd4;
-  --g1:#eceae8;
-  --g3:#c0bebb;
-  --g9:#1a1917;
+  --teal:#0d6b54;--teal-mid:#0e7a60;--teal-border:#b8dcd4;
+  --g1:#eceae8;--g3:#c0bebb;--g9:#1a1917;
+  --pink-soft:#fff0f7;--pink-border:#f5c0d8;--pink-text:#7a1a4a;
   --font:'Plus Jakarta Sans',system-ui,sans-serif;
 }
+html,body{height:100%;width:100%;margin:0;padding:0;font-family:var(--font);background:#fff;overflow:hidden}
+#chat{display:flex;flex-direction:column;width:100%;height:100%;background:#fff;overflow:hidden}
 
-/* ── Fill exactly whatever space Wix gives us ── */
-html,body{
-  height:100%;width:100%;
-  margin:0;padding:0;
-  font-family:var(--font);
-  background:#ffffff;
-  overflow:hidden;
-}
-
-#chat{
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  height:100%;
-  background:#ffffff;
-  overflow:hidden;
-}
-
-/* ── Header ── */
-.ph{
-  padding:14px 16px 12px;
-  background:var(--teal);
-  display:flex;align-items:center;gap:10px;
-  flex-shrink:0;position:relative;overflow:hidden;
-}
-.ph::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+/* Header */
+.ph{padding:13px 15px 11px;background:var(--teal);display:flex;align-items:center;gap:10px;flex-shrink:0;position:relative;overflow:hidden}
+.ph::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
   background:linear-gradient(90deg,#ff6eb4,#ffd54f,#69d5a8,#60b8ff,#c084fc,#ff6eb4);
-  background-size:220% 100%;animation:rb 4s linear infinite;
-}
+  background-size:220% 100%;animation:rb 4s linear infinite}
 @keyframes rb{0%{background-position:0 0}100%{background-position:220% 0}}
-.ph-av{
-  width:34px;height:34px;border-radius:50%;
-  background:rgba(255,255,255,.18);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
+.ph-av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .ph-info{flex:1}
 .ph-info h2{font-size:15px;font-weight:600;color:#fff;line-height:1.2}
 .ph-info p{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
-.ph-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:#6ee7b7;flex-shrink:0;
-  animation:dp 2.2s ease-in-out infinite;
-}
+.ph-dot{width:8px;height:8px;border-radius:50%;background:#6ee7b7;flex-shrink:0;animation:dp 2.2s ease-in-out infinite}
 @keyframes dp{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── Messages ── */
-.msgs{
-  flex:1;overflow-y:auto;
-  padding:14px 13px 8px;
-  display:flex;flex-direction:column;gap:9px;
-  scroll-behavior:smooth;
-  background:#ffffff;
-}
+/* Language toggle */
+.lang-toggle{display:flex;gap:3px;flex-shrink:0;background:rgba(255,255,255,.15);border-radius:20px;padding:3px}
+.lang-btn{font-family:var(--font);font-size:11px;font-weight:600;padding:3px 10px;border-radius:16px;border:none;cursor:pointer;background:transparent;color:rgba(255,255,255,.7);transition:all .15s;letter-spacing:.03em}
+.lang-btn.active{background:#fff;color:var(--teal)}
+.lang-btn:hover:not(.active){color:#fff}
+
+/* Messages */
+.msgs{flex:1;overflow-y:auto;padding:13px 12px 6px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;background:#fff}
 .msgs::-webkit-scrollbar{width:3px}
 .msgs::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px}
-
 .msg{display:flex;flex-direction:column;max-width:86%;animation:mi .22s ease}
 @keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.msg.bot{align-self:flex-start}
-.msg.user{align-self:flex-end}
-
-.bub{
-  padding:10px 13px;border-radius:16px;
-  font-size:14px;line-height:1.6;
-}
-.msg.bot .bub{
-  background:#f6faf8;
-  border:1px solid var(--teal-border);
-  color:var(--g9);border-bottom-left-radius:4px;
-}
-.msg.user .bub{
-  background:var(--teal);color:#fff;
-  border-bottom-right-radius:4px;
-}
-.bub a{color:var(--teal)}
-.msg.user .bub a{color:#a7f3d0}
-.bub b{font-weight:600}
-
+.msg.bot{align-self:flex-start}.msg.user{align-self:flex-end}
+.bub{padding:9px 12px;border-radius:15px;font-size:14px;line-height:1.6}
+.msg.bot .bub{background:#f6faf8;border:1px solid var(--teal-border);color:var(--g9);border-bottom-left-radius:4px}
+.msg.user .bub{background:var(--teal);color:#fff;border-bottom-right-radius:4px}
+.bub a{color:var(--teal)}.msg.user .bub a{color:#a7f3d0}.bub b{font-weight:600}
 .mmeta{font-size:10px;color:var(--g3);margin-top:3px;padding:0 4px}
 .msg.user .mmeta{text-align:right}
+.more-btn{display:inline-block;margin-top:6px;font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;text-decoration:underline}
+.more-content{margin-top:8px;padding-top:8px;border-top:1px solid var(--teal-border);font-size:13px;line-height:1.65;color:var(--g9)}
 
-/* ── Read more ── */
-.more-btn{
-  display:inline-block;margin-top:6px;
-  font-size:12px;color:var(--teal);
-  background:none;border:none;cursor:pointer;
-  font-family:var(--font);padding:0;text-decoration:underline;
-}
-.more-content{
-  margin-top:8px;padding-top:8px;
-  border-top:1px solid var(--teal-border);
-  font-size:13px;line-height:1.65;color:var(--g9);
-}
+/* Suggestions */
+.sugg-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;align-self:flex-start;animation:mi .28s ease}
+.sugg{font-family:var(--font);font-size:12px;padding:5px 12px;border-radius:20px;border:1.5px solid var(--teal);color:var(--teal);background:transparent;cursor:pointer;transition:all .12s;white-space:nowrap}
+.sugg:hover{background:var(--teal);color:#fff}.sugg:disabled{opacity:.35;cursor:default}
 
-/* ── Suggestions ── */
-.sugg-row{
-  display:flex;flex-wrap:wrap;gap:5px;
-  margin-top:4px;align-self:flex-start;
-  animation:mi .28s ease;
-}
-.sugg{
-  font-family:var(--font);font-size:12px;
-  padding:5px 13px;border-radius:20px;
-  border:1.5px solid var(--teal);
-  color:var(--teal);background:transparent;
-  cursor:pointer;transition:all .12s;white-space:nowrap;
-}
-.sugg:hover{background:var(--teal);color:#fff}
-.sugg:disabled{opacity:.35;cursor:default}
+/* Support card */
+.scard{background:var(--pink-soft);border:1px solid var(--pink-border);border-radius:12px;padding:11px 13px;font-size:12.5px;line-height:1.6;color:var(--pink-text);margin-top:6px}
+.scard strong{display:block;margin-bottom:6px;font-size:13px}.scard a{color:var(--pink-text);font-weight:500}
+.sline{margin-top:5px;padding-top:5px;border-top:1px solid var(--pink-border)}
 
-/* ── Support card ── */
-.scard{
-  background:#fff0f7;border:1px solid #f5c0d8;
-  border-radius:12px;padding:11px 13px;
-  font-size:12.5px;line-height:1.6;
-  color:#7a1a4a;margin-top:6px;
-}
-.scard strong{display:block;margin-bottom:6px;font-size:13px}
-.scard a{color:#7a1a4a;font-weight:500}
-.sline{margin-top:5px;padding-top:5px;border-top:1px solid #f5c0d8}
-
-/* ── Typing ── */
+/* Typing */
 .typ-wrap{align-self:flex-start;animation:mi .2s ease}
-.typ{
-  display:flex;align-items:center;gap:4px;
-  padding:10px 13px;background:#f6faf8;
-  border:1px solid var(--teal-border);
-  border-radius:16px;border-bottom-left-radius:4px;width:fit-content;
-}
-.typ span{
-  width:5px;height:5px;border-radius:50%;
-  background:var(--teal-mid);opacity:.4;
-  animation:td 1.2s ease-in-out infinite;
-}
-.typ span:nth-child(2){animation-delay:.15s}
-.typ span:nth-child(3){animation-delay:.3s}
+.typ{display:flex;align-items:center;gap:4px;padding:10px 13px;background:#f6faf8;border:1px solid var(--teal-border);border-radius:15px;border-bottom-left-radius:4px;width:fit-content}
+.typ span{width:5px;height:5px;border-radius:50%;background:var(--teal-mid);opacity:.4;animation:td 1.2s ease-in-out infinite}
+.typ span:nth-child(2){animation-delay:.15s}.typ span:nth-child(3){animation-delay:.3s}
 @keyframes td{0%,60%,100%{opacity:.4;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 
-/* ── Input ── */
-.inp-area{
-  padding:10px 11px;border-top:1px solid var(--g1);
-  display:flex;align-items:center;gap:8px;
-  background:#fff;flex-shrink:0;
-}
-.inp{
-  flex:1;font-family:var(--font);font-size:15px;
-  border:1.5px solid var(--g1);border-radius:22px;
-  padding:9px 15px;background:#f6faf8;color:var(--g9);
-  outline:none;resize:none;transition:border-color .14s;
-  line-height:1.4;min-height:40px;max-height:80px;
-}
-.inp:focus{border-color:var(--teal)}
-.inp::placeholder{color:var(--g3)}
-.snd{
-  width:38px;height:38px;border-radius:50%;
-  background:var(--teal);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:opacity .12s,transform .1s;
-}
-.snd:hover{opacity:.85}.snd:active{transform:scale(.93)}
-.snd svg{width:15px;height:15px}
+/* Input */
+.inp-area{padding:9px 10px;border-top:1px solid var(--g1);display:flex;align-items:center;gap:7px;background:#fff;flex-shrink:0}
+.inp{flex:1;font-family:var(--font);font-size:15px;border:1.5px solid var(--g1);border-radius:22px;padding:9px 15px;background:#f6faf8;color:var(--g9);outline:none;resize:none;transition:border-color .14s;line-height:1.4;min-height:40px;max-height:80px}
+.inp:focus{border-color:var(--teal)}.inp::placeholder{color:var(--g3)}
+.snd{width:38px;height:38px;border-radius:50%;background:var(--teal);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .12s,transform .1s}
+.snd:hover{opacity:.85}.snd:active{transform:scale(.93)}.snd svg{width:15px;height:15px}
 
-/* ── Disclaimer ── */
-.disc{
-  padding:5px 12px 6px;border-top:1px solid var(--g1);
-  font-size:10px;color:var(--g3);
-  text-align:center;background:#fff;flex-shrink:0;
-}
+/* Footer */
+.disc{padding:5px 12px 6px;border-top:1px solid var(--g1);font-size:10px;color:var(--g3);text-align:center;background:#fff;flex-shrink:0}
 </style>
 </head>
 <body>
-
 <div id="chat">
   <div class="ph">
     <div class="ph-av">💊</div>
     <div class="ph-info">
       <h2>Eliz</h2>
-      <p>Ask me anything about HIV</p>
+      <p id="ph-sub">Ask me anything about HIV</p>
     </div>
     <div class="ph-dot"></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-de" onclick="setLang('de')">DE</button>
+    </div>
   </div>
 
   <div class="msgs" id="msgs"></div>
@@ -214,17 +106,115 @@ html,body{
     </button>
   </div>
 
-  <div class="disc">General information only · Not medical advice · No data stored</div>
+  <div class="disc" id="disc">General information only · Not medical advice · No data stored</div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════════
-// KNOWLEDGE BASE
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// UI STRINGS PER LANGUAGE
+// ══════════════════════════════════════════════
+const UI = {
+  en:{
+    sub:'Ask me anything about HIV',
+    placeholder:'Ask anything…',
+    disc:'General information only · Not medical advice · No data stored',
+    welcome:`Hey 👋 I'm <b>Eliz</b>. Ask me anything about HIV — treatment, prevention, cure research, or just getting your head around it all.<br><br><span style="font-size:12px;color:#7c7a77">💬 Please don't share personal information in this chat. I'm here for general HIV information — not personal medical advice.</span>`,
+    readmore:'Read more ↓',
+    support_title:'🤝 Here for you',
+    support_line1:'Medical helpline Germany (24/7):',
+    support_line2:'Report side effects:',
+    fallbacks:[
+      {msg:"I didn't quite catch that — try asking about a specific topic.",sugg:['hiv','prep','cure']},
+      {msg:"Not sure what you mean — but I'm happy to help with anything HIV-related.",sugg:['uu','reservoir','bnabs']},
+      {msg:"Try asking something more specific — I know a lot about HIV treatment, research, and prevention.",sugg:['cure_strategies','clinical_trials','treatment_history']},
+      {msg:"Let me know what you'd like to know more about.",sugg:['stigma','mental_health','healthcare']},
+      {msg:"Good question — can you be a bit more specific? I'm here to help.",sugg:['art','viral_load','global']},
+    ]
+  },
+  de:{
+    sub:'Frag mich alles über HIV',
+    placeholder:'Frag mich…',
+    disc:'Nur allgemeine Informationen · Keine medizinische Beratung · Keine Datenspeicherung',
+    welcome:`Hey 👋 Ich bin <b>Eliz</b>. Ich beantworte deine Fragen zu HIV — Behandlung, Prävention, Heilungsforschung oder alles, was du wissen möchtest.<br><br><span style="font-size:12px;color:#7c7a77">💬 Bitte teile keine persönlichen Informationen in diesem Chat. Ich biete allgemeine HIV-Informationen — keine persönliche medizinische Beratung.</span>`,
+    readmore:'Mehr lesen ↓',
+    support_title:'🤝 Für dich da',
+    support_line1:'Ärztlicher Bereitschaftsdienst (24/7):',
+    support_line2:'Nebenwirkungen melden:',
+    fallbacks:[
+      {msg:"Das habe ich leider nicht verstanden — versuch eine spezifischere Frage.",sugg:['hiv','prep','cure']},
+      {msg:"Das weiß ich gerade nicht genau — aber ich helfe gerne bei HIV-Themen.",sugg:['uu','reservoir','bnabs']},
+      {msg:"Kannst du etwas konkreter fragen? Ich kenne mich gut mit HIV-Behandlung und Forschung aus.",sugg:['cure_strategies','clinical_trials','treatment_history']},
+      {msg:"Lass mich wissen, worüber du mehr erfahren möchtest.",sugg:['stigma','mental_health','healthcare']},
+      {msg:"Gute Frage — kannst du es etwas genauer beschreiben?",sugg:['art','viral_load','global']},
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════
+// SUGGESTION LABELS EN + DE
+// ══════════════════════════════════════════════
+const LABELS = {
+  en:{
+    hiv:'What is HIV?',aids:'What is AIDS?',art:'How does ART work?',
+    cure:'Is there a cure?',prep:"What's PrEP?",uu:'What is U=U?',
+    viral_load:'Viral load',reservoir:'HIV reservoir',
+    undetectable:'What does undetectable mean?',latency:'What is latency?',
+    viral_rebound:'Viral rebound',cd4:'What are CD4 cells?',
+    immune_system:'HIV & the immune system',hiv_lifecycle:'How does HIV work?',
+    cure_cases:'Has anyone been cured?',cure_types:'Types of cure',
+    cure_definition:'What counts as a cure?',cure_strategies:'Cure strategies',
+    bnabs:'What are bNAbs?',q4ddpcr:'New reservoir research',ati:'What is ATI?',
+    treatment_history:'Treatment history',ccr5:'CCR5 mutation',
+    gene_therapy:'Gene therapy & CRISPR',assays:'How is HIV measured?',
+    global:'HIV globally',clinical_trials:'How do trials work?',
+    informed_consent:'What is informed consent?',participation:'Joining a study',
+    about:'About Looking4Cure',healthcare:'Finding a good doctor',
+    mental_health:'Mental health & HIV',stigma:'HIV & stigma',
+    vaccine:'Is there a vaccine?',support:'I need support',
+    local_resources:'Where to get tested or PrEP',
+    future_treatment:'Future of HIV treatment',health_literacy:'HIV cure literacy',
+    second_berlin:'The second Berlin patient',adcc_nk:'ADCC & NK cells',
+    gvr:'Graft-versus-reservoir',appointment:'Doctor appointment tips',
+    why_not_cured:"Why isn't HIV cured when undetectable?",
+    chronic:'Is HIV a chronic condition?',
+    research_questions:'Questions to ask researchers',
+    hiv_timing:'How quickly does HIV hide?'
+  },
+  de:{
+    hiv:'Was ist HIV?',aids:'Was ist AIDS?',art:'Wie funktioniert ART?',
+    cure:'Gibt es eine Heilung?',prep:'Was ist PrEP?',uu:'Was ist U=U?',
+    viral_load:'Viruslast',reservoir:'HIV-Reservoir',
+    undetectable:'Was bedeutet nicht nachweisbar?',latency:'Was ist Latenz?',
+    viral_rebound:'Viraler Rebound',cd4:'Was sind CD4-Zellen?',
+    immune_system:'HIV & das Immunsystem',hiv_lifecycle:'Wie funktioniert HIV?',
+    cure_cases:'Wurde jemand geheilt?',cure_types:'Arten der Heilung',
+    cure_definition:'Was gilt als Heilung?',cure_strategies:'Heilungsstrategien',
+    bnabs:'Was sind bNAbs?',q4ddpcr:'Neue Reservoir-Forschung',ati:'Was ist ATI?',
+    treatment_history:'Geschichte der Behandlung',ccr5:'CCR5-Mutation',
+    gene_therapy:'Gentherapie & CRISPR',assays:'Wie wird HIV gemessen?',
+    global:'HIV weltweit',clinical_trials:'Klinische Studien',
+    informed_consent:'Informierte Einwilligung',participation:'An einer Studie teilnehmen',
+    about:'Über Looking4Cure',healthcare:'Einen guten Arzt finden',
+    mental_health:'Psychische Gesundheit & HIV',stigma:'HIV & Stigma',
+    vaccine:'Gibt es einen Impfstoff?',support:'Ich brauche Hilfe',
+    local_resources:'Testen & PrEP',
+    future_treatment:'Zukunft der Behandlung',health_literacy:'HIV-Heilungskompetenz',
+    second_berlin:'Der zweite Berliner Patient',adcc_nk:'ADCC & NK-Zellen',
+    gvr:'Graft-versus-Reservoir',appointment:'Tipps für den Arzttermin',
+    why_not_cured:'Warum nicht geheilt wenn nicht nachweisbar?',
+    chronic:'Ist HIV eine chronische Erkrankung?',
+    research_questions:'Fragen an Forschende',
+    hiv_timing:'Wie schnell versteckt sich HIV?'
+  }
+};
+
+// ══════════════════════════════════════════════
+// KNOWLEDGE BASE — ENGLISH
+// ══════════════════════════════════════════════
 const KB = {
   hiv:{
     short:`HIV is a virus that attacks the immune system. Without treatment it weakens your body over time — but with treatment, people live long, healthy lives.`,
-    more:`HIV is mainly passed through unprotected penetrative sex, sharing needles, blood exposure, or from parent to child during pregnancy or breastfeeding.\n\nIt <b>cannot</b> spread through hugging, sharing food, kissing, or everyday contact.`,
+    more:`HIV is mainly passed through unprotected penetrative sex, sharing needles, blood exposure, or from parent to child during pregnancy or breastfeeding.\n\nIt <b>cannot</b> spread through hugging, sharing food, kissing, or everyday contact.\n\nHIV works by sneaking into immune cells and hiding inside their DNA — which is why it's hard to fully remove, but very manageable with treatment.`,
     tags:["hiv","human immunodeficiency","what is hiv","explain hiv","how hiv works"],
     sugg:["aids","art","prep"]
   },
@@ -237,7 +227,7 @@ const KB = {
   art:{
     short:`ART (antiretroviral therapy) is the medication that keeps HIV under control. It doesn't cure HIV, but it stops the virus from multiplying — keeping you healthy and making transmission impossible.`,
     more:`Modern ART is usually one pill a day, or an injection every couple of months. Side effects are much rarer than they used to be.\n\nThe key is taking it consistently. Stopping gives the virus a chance to reactivate.\n\n💊 Check drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
-    tags:["art","antiretroviral therapy","antiretroviral","treatment","hiv medication","hiv medicine","hiv drugs","what is art","how does treatment work"],
+    tags:["art","antiretroviral therapy","antiretroviral","treatment","hiv medication","hiv drugs","what is art","how does treatment work"],
     sugg:["uu","viral_load","treatment_history"]
   },
   cure:{
@@ -249,13 +239,13 @@ const KB = {
   prep:{
     short:`PrEP is medication that HIV-negative people take to prevent HIV. Taken correctly, it's over 99% effective against sexual transmission.`,
     more:`<b>Options:</b>\n• Daily pill\n• Injection every 2 months\n• Lenacapavir — injection every 6 months (still expensive, not everywhere yet)\n\nPrEP doesn't protect against other STIs, so regular testing still matters.`,
-    tags:["prep","pre-exposure prophylaxis","hiv prevention","prevent hiv","prep pill","prep injection","lenacapavir","what is prep"],
+    tags:["prep","pre-exposure prophylaxis","hiv prevention","prevent hiv","prep pill","prep injection","what is prep"],
     sugg:["uu","hiv","art"]
   },
   uu:{
     short:`U=U means Undetectable = Untransmittable. If you're on treatment and your viral load is undetectable, you cannot pass HIV to a sexual partner. This is scientifically proven.`,
-    more:`Confirmed by major international studies and accepted by all leading health organisations.\n\nPeople on effective treatment pose zero risk of sexual transmission to their partners. U=U is also a powerful tool against stigma.`,
-    tags:["u=u","undetectable untransmittable","undetectable equals untransmittable","cannot transmit hiv","cannot pass hiv","undetectable"],
+    more:`Confirmed by major international studies and accepted by all leading health organisations.\n\nPeople on effective treatment pose zero risk of sexual transmission. U=U is also a powerful tool against stigma.`,
+    tags:["u=u","undetectable untransmittable","undetectable equals untransmittable","cannot transmit hiv","undetectable"],
     sugg:["art","viral_load","prep"]
   },
   viral_load:{
@@ -267,356 +257,343 @@ const KB = {
   reservoir:{
     short:`Even on perfect treatment, HIV can hide silently inside certain cells. This hidden stash is called the reservoir — and it's the main reason HIV can't be fully cured yet.`,
     more:`Think of it like a virus in sleep mode. Treatment keeps it asleep, but can't destroy it. If you stop treatment, it wakes up.\n\nThe reservoir is tiny — about one infected cell per 100,000 — but incredibly hard to find and remove. Scientists call it "a needle in a haystack." Most cure research is focused on solving this.`,
-    tags:["reservoir","hiv reservoir","hidden hiv","latency","latent hiv","sleeping hiv","why no cure","hiv hiding","hiv persistence"],
+    tags:["reservoir","hiv reservoir","hidden hiv","latency","latent hiv","sleeping hiv","why no cure","hiv persistence"],
     sugg:["cure_strategies","bnabs","q4ddpcr"]
   },
   cure_cases:{
     short:`A small number of people have been reported cured or in long-term HIV remission — all through stem cell transplants for cancer. The most recent: the "second Berlin patient," who has maintained remission for over 6 years without ART.`,
-    more:`Most cases involved donors with the rare <b>CCR5Δ32 mutation</b>, making their new immune cells resistant to HIV.\n\nBut the <b>second Berlin patient (Nature, 2026)</b> changed the picture: the donor had only a partial CCR5 mutation — yet HIV remission has lasted 6+ years. This suggests the <b>immune response itself</b> — including ADCC (antibody-dependent cellular cytotoxicity) and natural killer cells — may have cleared the reservoir, not just genetic resistance.\n\nThese cases are remarkable but the treatment is extremely complex, only for life-threatening cancer, and not available as a general cure. Still, each case gives researchers critical clues about what conditions allow HIV to be eliminated.`,
-    tags:["cured","hiv cured","berlin patient","stem cell","people cured hiv","has anyone been cured","cure cases","nine people cured","second berlin patient","nature 2026 cure","hiv remission case","london patient"],
+    more:`Most cases involved donors with the rare <b>CCR5Δ32 mutation</b>, making their new immune cells resistant to HIV.\n\nBut the <b>second Berlin patient (Nature, 2026)</b> changed the picture: the donor had only a partial CCR5 mutation — yet HIV remission has lasted 6+ years. This suggests the <b>immune response itself</b> — including ADCC and natural killer cells — may have cleared the reservoir.\n\nThese cases are remarkable but the treatment is extremely complex, only for life-threatening cancer, and not available as a general cure. Still, each case gives researchers critical clues.`,
+    tags:["cured","hiv cured","berlin patient","stem cell","people cured hiv","has anyone been cured","cure cases","second berlin patient"],
     sugg:["second_berlin","ccr5","cure_strategies"]
   },
   cure_types:{
     short:`Scientists are working toward two kinds of cure: a sterilising cure (removing all HIV from the body) and a functional cure (the immune system controls HIV permanently without medication).`,
     more:`<b>Sterilising cure:</b> All HIV gone. Very hard — even tiny traces can bring it back.\n\n<b>Functional cure / remission:</b> Virus stays but permanently silent without treatment.\n\n<b>Elite controllers</b> are rare people whose immune systems do this naturally — researchers study them intensively.`,
-    tags:["types of cure","sterilising cure","functional cure","hiv remission","sterile cure","elite controllers","long term remission"],
+    tags:["types of cure","sterilising cure","functional cure","hiv remission","sterile cure","elite controllers"],
     sugg:["cure_strategies","bnabs","cure_cases"]
   },
   cure_strategies:{
     short:`There's no cure yet, but researchers are testing several exciting approaches — from gene editing to re-engineering immune cells to powerful new antibodies.`,
     more:`<b>Shock & Kill:</b> Wake up sleeping HIV so the immune system can destroy it.\n\n<b>Block & Lock:</b> Keep HIV permanently silenced forever.\n\n<b>CAR-T cells:</b> Re-engineer immune cells to hunt HIV-infected cells.\n\n<b>CRISPR:</b> Molecular scissors that cut HIV out of DNA.\n\n<b>Therapeutic vaccines:</b> Help the immune system control HIV — some use mRNA tech like COVID vaccines.\n\n<b>bNAbs:</b> Very promising antibodies — ask me about them!`,
-    tags:["cure strategies","shock and kill","kick and kill","block and lock","car-t cells","crispr","gene editing","therapeutic vaccine","mrna hiv vaccine","hiv cure research","cure approaches"],
+    tags:["cure strategies","shock and kill","block and lock","car-t cells","crispr","gene editing","therapeutic vaccine","hiv cure research"],
     sugg:["bnabs","ati","q4ddpcr"]
   },
   bnabs:{
     short:`bNAbs are powerful lab-made antibodies that block HIV from entering cells and help clear infected ones. They're one of the most promising areas in HIV cure research right now.`,
     more:`HIV mutates a lot, but some parts never change — bNAbs target those stable parts.\n\n<b>2025 results:</b> About 3 in 4 participants controlled the virus for 20+ weeks without ART. Some stayed suppressed for 2+ years — suggesting the immune system took over.\n\nThe goal: replace daily pills with infusions every few months.`,
-    tags:["bnabs","broadly neutralising antibodies","broadly neutralizing antibodies","neutralising antibodies","bnab","antibody treatment hiv","antibodies hiv"],
+    tags:["bnabs","broadly neutralising antibodies","broadly neutralizing antibodies","neutralising antibodies","antibody treatment hiv"],
     sugg:["ati","cure_types","q4ddpcr"]
   },
   q4ddpcr:{
     short:`Q4ddPCR is a new lab test developed at Charité Berlin that measures the HIV reservoir more accurately. It uses four targets instead of two, catching what previous tests missed.`,
     more:`Published in <i>Nature Communications</i> 2026:\n\n• Detects intact HIV in <b>95% of samples</b> vs 79% before\n• More accurately tracks how fast the reservoir shrinks on treatment\n• Better predicts which virus can actually replicate\n\nThis precision matters for evaluating whether new cure strategies are actually working.`,
-    tags:["q4ddpcr","reservoir test","reservoir assay","ddpcr","ipda","intact proviral dna","measure hiv reservoir","latest hiv research","new hiv research","nature communications hiv","charite hiv research"],
+    tags:["q4ddpcr","reservoir test","ddpcr","ipda","intact proviral","measure hiv reservoir","latest hiv research","new hiv research"],
     sugg:["reservoir","cure_strategies","bnabs"]
   },
   ati:{
     short:`ATI (Analytical Treatment Interruption) is a supervised pause in HIV medication inside a clinical study — to test whether a new therapy can control the virus without ART. It's never done alone.`,
-    more:`The research team explains everything before you start: what will happen, how far things can go, what actions can be taken. That clarity helps people make their decision.\n\nDuring ATI, your viral load and your partner's health are closely monitored. If your viral load rises, you restart treatment — and it always drops back to undetectable.\n\nOne participant described the experience: <i>"When you pause therapy, it goes against everything you've been told at diagnosis, and it can be frightening. You have to be in the right mindset — confident and supported."</i>\n\nAnd later: <i>"From the day I was infected, I felt I'd lost control. Joining a trial gave me some of that control back. It felt like I was taking ground away from the virus."</i>\n\nYou can stop at any point. Safety always comes first.`,
-    tags:["ati","analytical treatment interruption","pause hiv treatment","stop hiv medication","treatment interruption","stopping art hiv","treatment pause study","hiv trial pause","ati experience","ati personal story"],
+    more:`The research team explains everything before you start: what will happen, how far things can go, and what actions can be taken.\n\nDuring ATI, your viral load is closely monitored. If it rises, you restart treatment — and it always drops back to undetectable.\n\nOne participant said: <i>"When you pause therapy, it goes against everything you've been told at diagnosis, and it can be frightening. You have to be in the right mindset — confident and supported."</i>\n\nAnd: <i>"From the day I was infected, I felt I'd lost control. Joining a trial gave me some of that control back."</i>\n\nYou can stop at any point.`,
+    tags:["ati","analytical treatment interruption","pause hiv treatment","stop hiv medication","treatment interruption","stopping art hiv"],
     sugg:["bnabs","cure_strategies","clinical_trials"]
   },
   treatment_history:{
     short:`HIV treatment has come a long way. In the 80s it was brutal. Now it can be one pill a day or an injection every two months. And science is still moving fast.`,
     more:`• 1983 – HIV identified. Activists like ACT UP fought for faster research.\n• 1987 – First antiretroviral approved.\n• 1996 – Combination therapy made HIV manageable.\n• 2006 – Single daily pill.\n• 2021 – Long-acting injection every 2 months.\n• Now – Testing 4–6 month injections, bNAbs, and more.`,
-    tags:["treatment history","history of hiv treatment","hiv timeline","evolution of hiv treatment","azt","1987 hiv","1996 hiv","long acting hiv injection","how treatment changed"],
+    tags:["treatment history","history of hiv treatment","hiv timeline","evolution of hiv treatment","long acting hiv injection"],
     sugg:["art","prep","bnabs"]
   },
   ccr5:{
     short:`CCR5 is a protein HIV uses like a door handle to get into your cells. Less than 1% of people have a natural mutation that breaks this handle — making them naturally resistant to HIV.`,
-    more:`This is why the Berlin Patient and others were cured through stem cell transplants — their donors had this mutation, giving them HIV-resistant immune cells.`,
-    tags:["ccr5","ccr5 mutation","door handle hiv","hiv resistant","delta 32","natural hiv resistance","genetic hiv resistance"],
-    sugg:["cure_cases","reservoir","hiv"]
+    more:`This is why the Berlin patients were cured through stem cell transplants — their donors had this mutation.\n\nInterestingly, the second Berlin patient (2025) showed that even a <b>partial</b> CCR5 mutation can lead to long-term remission, suggesting the immune response also plays a key role.`,
+    tags:["ccr5","ccr5 mutation","door handle hiv","hiv resistant","delta 32","natural hiv resistance"],
+    sugg:["cure_cases","second_berlin","reservoir"]
+  },
+  second_berlin:{
+    short:`In 2025, the "second Berlin patient" achieved HIV remission for over 6 years after a stem cell transplant — and this case broke new ground. Unlike previous cures, the donor wasn't fully resistant to HIV.`,
+    more:`Published in <i>Nature</i> (2026) by Charité Berlin researchers, this case is remarkable because the donor had only a <b>partial CCR5 mutation</b> (heterozygous CCR5Δ32), not the full mutation seen in previous cure cases.\n\nThis means full CCR5 resistance alone isn't required for a cure. The research points to <b>ADCC</b> (antibody-dependent cellular cytotoxicity) — where immune cells destroy HIV-infected cells guided by antibodies — as a likely contributor. Natural killer (NK) cells also appear to have played a significant role.\n\nThis is one of the most important HIV cure cases ever documented.`,
+    tags:["second berlin patient","berlin patient 2","b2 patient","ccr5 heterozygous","nature 2026","hiv cure 2026","new cure case","charite cure","gaebler","penack"],
+    sugg:["cure_cases","ccr5","adcc_nk"]
+  },
+  adcc_nk:{
+    short:`ADCC (antibody-dependent cellular cytotoxicity) is when immune cells — guided by antibodies — find and destroy HIV-infected cells. Natural killer (NK) cells play a key role in this process.`,
+    more:`In the second Berlin patient, researchers found unusually high ADCC activity around the time of the stem cell transplant. This suggests that strong antibodies combined with active NK cells may have helped clear the HIV reservoir.\n\nThis opens new questions: could boosting ADCC be a strategy toward a functional cure, even without a stem cell transplant?`,
+    tags:["adcc","antibody dependent cellular cytotoxicity","natural killer cells","nk cells hiv","innate immunity hiv","immune clearance hiv"],
+    sugg:["second_berlin","bnabs","cure_strategies"]
+  },
+  gvr:{
+    short:`Graft-versus-reservoir (GVR) is when transplanted immune cells from a donor recognise and attack HIV-infected cells — helping clear the viral reservoir.`,
+    more:`In stem cell transplants, donor cells sometimes attack residual disease — the graft-versus-leukaemia (GVL) effect. Researchers believe a similar process may help clear HIV-infected cells.\n\nIn the second Berlin patient, HLA differences between donor and recipient may have driven GVR effects — clearing HIV even without full CCR5 resistance.`,
+    tags:["graft versus reservoir","gvr hiv","stem cell immune effect","donor immune response hiv","hla mismatch hiv"],
+    sugg:["second_berlin","cure_cases","cure_strategies"]
   },
   global:{
     short:`41 million people are living with HIV globally. 9 million still don't have access to treatment. Budget cuts are making things worse — which is exactly why cure research matters so much.`,
     more:`UNAIDS modelling shows continued funding cuts could mean 4 million more AIDS-related deaths and 6 million new infections by 2029.\n\nA cure would reduce dependence on health systems that are becoming more fragile and unequal.`,
-    tags:["global hiv","hiv worldwide","hiv statistics","hiv numbers","hiv deaths","hiv infections","hiv access","hiv funding","unaids","hiv budget cuts","41 million hiv","how many people have hiv"],
+    tags:["global hiv","hiv worldwide","hiv statistics","hiv numbers","hiv deaths","hiv funding","unaids","41 million hiv","how many people have hiv"],
     sugg:["about","cure_types","art"]
   },
   clinical_trials:{
     short:`Clinical trials are how new HIV treatments get tested — and they've given us every treatment available today. Participation is always voluntary, with full information upfront.`,
     more:`Trials progress through phases: safety (Phase I), early effects (Phase II), large-scale effectiveness (Phase III). You always give informed consent and can stop at any time.`,
-    tags:["clinical trial","clinical trials hiv","hiv study","participate hiv research","hiv trial","informed consent","join hiv study","phases of trial"],
+    tags:["clinical trial","clinical trials hiv","hiv study","participate hiv research","hiv trial","informed consent","join hiv study"],
     sugg:["ati","bnabs","about"]
+  },
+  informed_consent:{
+    short:`Informed consent means you receive clear, complete information about a study — including risks, benefits, and procedures — before agreeing to take part. It's always voluntary.`,
+    more:`In HIV cure research this is especially important because some interventions carry real risks (like ATI). You have the right to withdraw at any time. Good research teams take time to answer every question before you sign anything.`,
+    tags:["informed consent","consent research","hiv study consent","what is informed consent","participant rights hiv","right to withdraw study"],
+    sugg:["clinical_trials","ati","participation"]
+  },
+  participation:{
+    short:`Participating in HIV research means contributing to the development of new treatments. Every advance we have today came from people who volunteered to take part.`,
+    more:`Before joining any study:\n\n• Know the risks and potential benefits\n• Understand the monitoring involved\n• Know you can withdraw at any time\n• Your safety always comes first\n\nParticipation is meaningful — and your questions make research better.`,
+    tags:["participate hiv research","join hiv study","hiv research participation","hiv study volunteer","research volunteer hiv"],
+    sugg:["clinical_trials","ati","informed_consent"]
   },
   about:{
     short:`Eliz is part of Looking4Cure — a project by BeCURE at Charité Berlin, videographer Michel Steinberg, and researcher Tomer Einav. The goal: make HIV cure research accessible to everyone.`,
-    more:`Looking4Cure believes people living with HIV should be partners in research — not just participants. HIV cure literacy is central to that.\n\nBeCURE is the Berlin Center for HIV Cure Research at Charité – Universitätsmedizin Berlin.`,
-    tags:["looking4cure","becure","charite","about eliz","who made eliz","looking4cure project","michel steinberg","tomer einav","berlin hiv","who are you eliz"],
+    more:`Looking4Cure believes people living with HIV should be partners in research — not just participants. HIV cure literacy (understanding what the research is and isn't) is central to that.\n\nBeCURE is the Berlin Center for HIV Cure Research at Charité – Universitätsmedizin Berlin.`,
+    tags:["looking4cure","becure","charite","about eliz","who made eliz","looking4cure project","michel steinberg","tomer einav","berlin hiv"],
     sugg:["global","clinical_trials","cure_strategies"]
   },
   healthcare:{
     short:`Finding a doctor you actually feel safe with matters. In Germany, Queer Medics lists inclusive, experienced providers. You always have the right to respectful care.`,
     more:`A 2021 study found 60% of people with HIV in Germany face discrimination in healthcare. Not okay — and not your fault.\n\n<b>Your rights:</b> to be respected, to say no, to ask questions, to get a second opinion.\n\nCheck drug interactions: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
-    tags:["doctor hiv","healthcare hiv","hiv appointment","hiv discrimination","hiv stigma doctor","rights hiv patient","queer medics","find hiv doctor","hiv healthcare germany"],
-    sugg:["art","mental_health","support"]
+    tags:["doctor hiv","healthcare hiv","hiv appointment","hiv discrimination","rights hiv patient","queer medics","find hiv doctor","hiv healthcare germany"],
+    sugg:["art","mental_health","appointment"]
+  },
+  appointment:{
+    short:`It's easy to forget things at the doctor. Writing things down in advance — on your phone or paper — really helps.`,
+    more:`For regular checkups (every 3–6 months), your doctor monitors your <b>CD4 count</b> and <b>viral load</b>.\n\n<b>Your body:</b> Any changes, pain, or discomfort? Nothing too small.\n<b>Your mind:</b> Stress, sleep, mood, loneliness?\n<b>Your lifestyle:</b> Changes in routine? Your medication can adapt.\n<b>Your medications:</b> Anything from another doctor or pharmacy? Check: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
+    tags:["doctor appointment hiv","hiv checklist","prepare hiv appointment","hiv checkup","what to ask hiv doctor","hiv monitoring"],
+    sugg:["healthcare","mental_health","art"]
   },
   mental_health:{
     short:`Living with HIV can affect how you feel emotionally — that's completely real and valid. Studies show 58% of people with HIV experience loneliness. You're not alone in that.`,
     more:`Community, peer support, and talking to someone who gets it can make a real difference. In Berlin, Berliner AIDS-Hilfe offers counselling and peer connection.`,
-    tags:["mental health hiv","hiv loneliness","hiv anxiety","hiv depression","hiv emotional","hiv wellbeing","feeling alone hiv","hiv stigma mental","hiv community support"],
+    tags:["mental health hiv","hiv loneliness","hiv anxiety","hiv depression","hiv emotional","feeling alone hiv","hiv community support"],
     sugg:["support","healthcare","stigma"]
   },
   stigma:{
     short:`HIV stigma is real, harmful, and based on misinformation. U=U alone dismantles most of it — people on treatment can't pass HIV on sexually.`,
     more:`Stigma affects access to care, mental health, and quality of life — especially for queer communities, trans people, sex workers, and people who use drugs.\n\nLooking4Cure is committed to making HIV research inclusive.`,
-    tags:["stigma hiv","hiv discrimination","hiv judgment","hiv shame","hiv prejudice","hiv queer","hiv trans","hiv sex workers","hiv inclusion","hiv equity","hiv key populations"],
+    tags:["stigma hiv","hiv discrimination","hiv judgment","hiv shame","hiv queer","hiv trans","hiv sex workers","hiv inclusion","hiv equity"],
     sugg:["uu","mental_health","support"]
   },
   vaccine:{
     short:`There's no fully effective HIV vaccine yet. HIV is one of the hardest viruses to vaccinate against because it mutates so fast and hides in DNA.`,
     more:`Therapeutic vaccines for people already living with HIV are being tested — some using mRNA tech similar to COVID-19 vaccines — aiming to help the immune system control the virus without daily medication.`,
-    tags:["hiv vaccine","vaccine hiv","hiv vaccination","why no hiv vaccine","mrna hiv","therapeutic vaccine hiv","preventive hiv vaccine","when will hiv vaccine"],
+    tags:["hiv vaccine","vaccine hiv","hiv vaccination","why no hiv vaccine","mrna hiv","therapeutic vaccine hiv"],
     sugg:["cure_strategies","bnabs","hiv"]
+  },
+  local_resources:{
+    short:`For testing, PrEP access, or personal support, your best first step is a local community organisation or sexual health clinic. They know your area and can guide you directly.`,
+    more:`In Germany:\n• <a href="https://berlin.aidshilfe.de" target="_blank">Berliner AIDS-Hilfe</a> — counselling, support, community\n• <a href="https://queermedics.de" target="_blank">Queer Medics</a> — find inclusive doctors near you\n• Your local sexual health clinic or Gesundheitsamt\n\nEliz shares general information — for personal medical advice, always speak with a healthcare provider.`,
+    tags:["where to get tested","hiv test","get tested hiv","testing hiv","where to get prep","prep access","hiv clinic","local hiv support","i have hiv","just diagnosed","newly diagnosed hiv","hiv positive","hiv diagnosis"],
+    sugg:["healthcare","mental_health","support"]
+  },
+  future_treatment:{
+    short:`The future of HIV treatment is heading toward longer-acting options, fewer side effects, and more personalised care — moving further away from daily pills.`,
+    more:`What's coming:\n\n• Injections lasting <b>4–6 months</b> (being tested now)\n• <b>bNAb infusions</b> as an alternative to ART\n• More options for people who face barriers to daily adherence\n\nThe goal: treatment that fits your life — not the other way around.`,
+    tags:["future hiv treatment","long acting hiv","hiv injection future","new hiv treatment","upcoming hiv treatment"],
+    sugg:["bnabs","treatment_history","art"]
+  },
+  health_literacy:{
+    short:`HIV cure literacy means understanding what cure research is, what it isn't, and how to engage with it. It helps you ask better questions and make informed decisions.`,
+    more:`Not just science — it means being able to: critically assess information, spot misinformation, understand risks and realistic timelines, and engage as a partner in research.\n\nLooking4Cure exists to make this possible for everyone.`,
+    tags:["health literacy hiv","hiv literacy","hiv cure literacy","understanding hiv research","hiv education"],
+    sugg:["about","participation","stigma"]
+  },
+  cd4:{
+    short:`CD4 T cells coordinate your immune defence. HIV specifically targets and destroys them — weakening the immune system over time.`,
+    more:`A healthy CD4 count is around 500–1,500 cells/mm³. With ART, CD4 counts recover and stay high. Your doctor monitors them at regular checkups alongside your viral load.`,
+    tags:["cd4","cd4 cells","cd4 count","t cells hiv","immune cells hiv","what are cd4 cells","low cd4"],
+    sugg:["art","viral_load","aids"]
+  },
+  immune_system:{
+    short:`Your immune system is your body's defence network. HIV specifically targets it — making your body less able to fight infections over time.`,
+    more:`Key players: CD4 cells, antibodies, macrophages, natural killer cells. With ART, the immune system can recover significantly. Cure research focuses on strengthening it so it can control HIV on its own.`,
+    tags:["immune system hiv","how hiv affects immune system","immunity hiv","hiv immune response","antibodies hiv"],
+    sugg:["cd4","art","cure_strategies"]
+  },
+  latency:{
+    short:`Latency is when HIV is inside a cell but completely silent — not making new virus. The immune system can't see it, and treatment can't reach it. This is what makes HIV so hard to cure.`,
+    more:`HIV integrates into the cell's DNA. The cell looks completely normal. Neither the immune system nor ART can detect or destroy it. It can stay latent for years.`,
+    tags:["latency hiv","latent hiv","what is latency","silent hiv","inactive hiv","hiv sleeping","hiv integration","hiv in dna"],
+    sugg:["reservoir","cure_strategies","art"]
+  },
+  viral_rebound:{
+    short:`Viral rebound is when HIV becomes detectable again after treatment is stopped. It shows the virus was still hiding in the body even when undetectable.`,
+    more:`Rebound typically happens within <b>days to weeks</b> after stopping treatment. In clinical studies, viral rebound is used as a research tool — scientists watch how quickly it occurs to understand whether a new therapy is working.`,
+    tags:["viral rebound","hiv rebound","what is viral rebound","hiv comes back","hiv return after treatment"],
+    sugg:["reservoir","ati","art"]
+  },
+  hiv_lifecycle:{
+    short:`HIV has a specific way of taking over cells. It enters, copies its genetic material into the cell's DNA, then uses that cell to make new virus particles that spread to others.`,
+    more:`Steps: HIV enters → releases genetic material → reverse transcription (RNA→DNA) → integration into cell DNA → new virus produced → released.\n\nEach step is a potential treatment target — which is why combination ART works so well.`,
+    tags:["hiv lifecycle","hiv cycle","how hiv replicates","hiv replication","reverse transcription","integration hiv","hiv dna"],
+    sugg:["art","reservoir","cd4"]
+  },
+  gene_therapy:{
+    short:`Gene therapy involves changing DNA to treat or prevent disease. In HIV research, it's being explored to either remove HIV from infected cells or make cells resistant to infection.`,
+    more:`<b>CRISPR:</b> Molecular scissors that find exactly where HIV DNA is hiding in a cell and cut it out.\n\n<b>CCR5 editing:</b> Modifying cells so HIV can't use the CCR5 "door handle" to get in.\n\nStill in early research phases but one of the most exciting directions in cure science.`,
+    tags:["gene therapy hiv","crispr hiv","gene editing hiv","ccr5 gene editing","genetic cure hiv","aav vector hiv"],
+    sugg:["cure_strategies","ccr5","cure_cases"]
+  },
+  assays:{
+    short:`Assays are laboratory tests used to measure HIV and evaluate treatments. They're essential for understanding the reservoir and knowing whether a cure strategy is working.`,
+    more:`Key assays: <b>Viral load assay</b> (HIV in blood), <b>PCR assay</b> (HIV genetic material), <b>Reservoir assays</b> like IPDA and Q4ddPCR (hidden HIV), <b>Neutralisation assay</b> (antibody effectiveness).\n\nNo single test can fully measure all HIV in the body.`,
+    tags:["assay hiv","lab test hiv","hiv assay","pcr hiv","reservoir assay","hiv lab methods","ipda assay"],
+    sugg:["q4ddpcr","reservoir","viral_load"]
+  },
+  cure_definition:{
+    short:`In science, an HIV cure means controlling or removing HIV so that treatment is no longer needed — either by eliminating all virus, or by achieving lasting immune control.`,
+    more:`<b>Sterilising cure:</b> All replication-capable HIV removed. Extremely difficult.\n<b>Functional cure:</b> HIV permanently controlled by the immune system without medication.\n\nThe ultimate goal: a safe, accessible cure for everyone.`,
+    tags:["what is hiv cure","cure definition hiv","what counts as hiv cure","scientific hiv cure","when is hiv cured"],
+    sugg:["cure_types","cure_strategies","cure_cases"]
+  },
+  why_not_cured:{
+    short:`Even when HIV is undetectable, it's not gone. It's hiding. The virus hides inside cells in a state called latency, where it's invisible to both your immune system and to treatment.`,
+    more:`HIV integrates its DNA into long-lived immune cells. While silent there, it produces no signals — so nothing can find it.\n\nThis hidden virus is the <b>HIV reservoir</b>. It's extremely small but enough to restart infection if treatment stops. This is why research is so focused on eliminating or permanently silencing the reservoir.`,
+    tags:["why not cured undetectable","hiv still there","hiv hiding when undetectable","why need lifelong treatment","why continue hiv meds"],
+    sugg:["reservoir","latency","cure_strategies"]
+  },
+  chronic:{
+    short:`Yes — with treatment, HIV is a manageable chronic condition. People living with HIV on effective ART can expect to live full, long, healthy lives.`,
+    more:`HIV went from a death sentence in the 1980s to a manageable long-term condition. Modern treatment: minimal side effects, one pill a day or injection every 2 months, keeps the virus undetectable (U=U).\n\nThe remaining challenge is the need for <b>lifelong treatment</b> — which is why cure research continues.`,
+    tags:["hiv chronic condition","is hiv manageable","living with hiv","hiv long term","hiv life expectancy","modern hiv treatment","hiv not death sentence"],
+    sugg:["art","uu","future_treatment"]
+  },
+  research_questions:{
+    short:`Before joining any HIV study, there are key questions you have the right to ask — and good research teams will welcome them.`,
+    more:`• What are the risks — and how will they be managed?\n• What are the potential benefits?\n• Does this strategy address the reservoir? If so, how?\n• How intensive is the monitoring?\n• Can I stop at any time? (The answer should always be yes.)\n• What happens if my viral load rises?\n• Who do I contact if I have concerns?\n\nYour questions make research better.`,
+    tags:["questions for researchers","what to ask hiv study","hiv trial questions","informed consent questions","what to know before hiv trial"],
+    sugg:["clinical_trials","ati","informed_consent"]
+  },
+  hiv_timing:{
+    short:`HIV starts hiding very early — often within days to weeks of infection, before most people even know they have it.`,
+    more:`The reservoir forms so quickly that by the time someone is diagnosed and starts treatment, HIV is already hiding in long-lived cells.\n\nThis is why <b>early treatment</b> matters — starting ART soon after infection leads to a smaller reservoir, which may make future cure strategies more effective.`,
+    tags:["how quickly hiv hides","when does hiv hide","hiv reservoir formation","early treatment hiv","hiv early infection","why start treatment early hiv"],
+    sugg:["reservoir","latency","art"]
   },
   support:{
     short:`Hey — whatever you're going through, you don't have to face it alone. There are people who care and who get it.`,
     isSupport:true,
-    tags:["need help","support hiv","hiv crisis","scared hiv","alone hiv","hiv emergency","hiv worried","feeling distressed","not ok","struggling hiv","hopeless hiv","sad about hiv"],
+    tags:["need help","support hiv","hiv crisis","scared hiv","alone hiv","worried","distressed","not ok","struggling","hopeless","sad","anxious","suicid","harm","afraid"],
     sugg:[]
-  },
-
-  // ── Local resources ──
-  local_resources:{
-    short:`For personal support, testing, or PrEP access, your best first step is a local community organisation or sexual health clinic. They know your area and can guide you directly.`,
-    more:`In Germany, try:\n• <a href="https://berlin.aidshilfe.de" target="_blank">Berliner AIDS-Hilfe</a> — counselling, support, community\n• <a href="https://queermedics.de" target="_blank">Queer Medics</a> — find inclusive doctors near you\n• Your local sexual health clinic or Gesundheitsamt\n\nEliz shares general information — for personal medical advice, always speak with a healthcare provider.`,
-    tags:["where to get tested","hiv test","get tested hiv","testing hiv","where to get prep","prep access","hiv clinic","sexual health clinic","local hiv support","community hiv","i have hiv","just diagnosed","newly diagnosed hiv","hiv positive","hiv diagnosis","where can i get help","hiv help near me","hiv support near me"],
-    sugg:["healthcare","mental_health","support"]
-  },
-
-  // ── Undetectable ──
-  undetectable:{
-    short:`"Undetectable" means the virus level in your blood is so low that tests can't detect it. It doesn't mean HIV is gone — it's still present in the body in hidden forms.`,
-    more:`Reaching undetectable status is a major goal of treatment. When undetectable:\n\n• Your immune system stays healthy\n• You cannot pass HIV on sexually (U=U)\n• HIV is still hiding in the reservoir — which is why treatment must continue\n\nUndetectable is not a cure, but it's a powerful and life-changing outcome.`,
-    tags:["undetectable hiv","what does undetectable mean","hiv undetectable","what is undetectable","undetectable means","when is hiv undetectable","hiv not detectable"],
-    sugg:["uu","viral_load","reservoir"]
-  },
-
-  // ── HIV lifecycle ──
-  hiv_lifecycle:{
-    short:`HIV has a specific way of taking over cells. It enters, copies its genetic material into the cell's DNA, then uses that cell to make new virus particles that spread to others.`,
-    more:`The steps:\n1. HIV attaches to a CD4 cell using the CCR5 receptor\n2. It releases its genetic material into the cell\n3. Uses <b>reverse transcription</b> to convert RNA into DNA\n4. <b>Integration</b> — HIV DNA is inserted into the cell's own DNA\n5. The cell is used to produce new virus\n6. New virus particles are released to infect more cells\n\nEach step is a potential target for treatment — which is why combination ART works so well.`,
-    tags:["hiv lifecycle","hiv cycle","how hiv replicates","hiv replication","hiv inside cell","what does hiv do","reverse transcription","integration hiv","hiv dna","hiv rna","viral replication hiv"],
-    sugg:["art","reservoir","cd4"]
-  },
-
-  // ── CD4 cells ──
-  cd4:{
-    short:`CD4 T cells are key immune cells that coordinate your body's defence. HIV specifically targets and destroys them — weakening the immune system over time.`,
-    more:`A healthy CD4 count is around 500–1,500 cells/mm³. As HIV destroys CD4 cells:\n\n• The immune system weakens\n• The body becomes vulnerable to infections\n• Risk of AIDS increases\n\nWith ART, CD4 counts recover and stay high. Your doctor monitors your CD4 count at regular checkups alongside your viral load.`,
-    tags:["cd4","cd4 cells","cd4 count","t cells hiv","t helper cells","immune cells hiv","cd4 t cells","what are cd4 cells","hiv immune cells","low cd4"],
-    sugg:["art","viral_load","aids"]
-  },
-
-  // ── Latency ──
-  latency:{
-    short:`Latency is when HIV is inside a cell but completely silent — not making new virus. The immune system can't see it, and treatment can't reach it. This is what makes HIV so hard to cure.`,
-    more:`When HIV enters latency:\n\n• It inserts itself into the cell's DNA (<b>integration</b>)\n• The cell looks completely normal\n• Neither the immune system nor ART can detect or destroy it\n• It can stay latent for years\n\nIf treatment stops, latent HIV can reactivate — which is why lifelong treatment is needed until a cure is found.`,
-    tags:["latency hiv","latent hiv","what is latency","hiv latent","silent hiv","inactive hiv","hiv sleeping","latent reservoir","hiv integration","hiv in dna"],
-    sugg:["reservoir","cure_strategies","art"]
-  },
-
-  // ── Viral rebound ──
-  viral_rebound:{
-    short:`Viral rebound is when HIV becomes detectable again after treatment is stopped. It shows the virus was still hiding in the body even when undetectable.`,
-    more:`Rebound typically happens within <b>days to weeks</b> after stopping treatment — sometimes faster.\n\nIn clinical studies, viral rebound is actually used as a research tool. Scientists watch how quickly rebound happens to understand whether a new therapy is working.`,
-    tags:["viral rebound","hiv rebound","what is viral rebound","hiv comes back","hiv return after treatment","rebound hiv","stopping treatment hiv","treatment stopped hiv"],
-    sugg:["reservoir","ati","art"]
-  },
-
-  // ── Immune system ──
-  immune_system:{
-    short:`Your immune system is your body's defence network. HIV specifically targets it — making your body less able to fight infections over time.`,
-    more:`Key players:\n\n• <b>CD4 T cells</b> — the main target of HIV; coordinate immune defence\n• <b>Antibodies</b> — proteins that recognise and block viruses\n• <b>Macrophages</b> — immune cells that can also be infected by HIV\n• <b>Natural killer cells</b> — help destroy infected cells\n\nWith ART, the immune system can recover significantly. Cure research focuses heavily on strengthening the immune system so it can control HIV on its own.`,
-    tags:["immune system hiv","how hiv affects immune system","immunity hiv","hiv immune response","body defence hiv","macrophage hiv","natural killer cells hiv","immune cells hiv","antibodies hiv"],
-    sugg:["cd4","art","cure_strategies"]
-  },
-
-  // ── Informed consent ──
-  informed_consent:{
-    short:`Informed consent means you receive clear, complete information about a study — including risks, benefits, and procedures — before agreeing to take part. It's always voluntary.`,
-    more:`In HIV cure research, informed consent is especially important because:\n\n• Some interventions carry real risks (like ATI)\n• Benefits may not be direct or guaranteed\n• You have the right to withdraw at any time\n\nGood research teams take time to explain everything and answer your questions before you sign anything. You should never feel pressured.`,
-    tags:["informed consent","consent research","hiv study consent","what is informed consent","research consent hiv","participant rights hiv","right to withdraw study"],
-    sugg:["clinical_trials","ati","about"]
-  },
-
-  // ── Gene therapy / CRISPR detail ──
-  gene_therapy:{
-    short:`Gene therapy involves changing DNA to treat or prevent disease. In HIV research, it's being explored to either remove HIV from infected cells or make cells resistant to infection.`,
-    more:`Two main approaches:\n\n<b>CRISPR gene editing:</b> Acts like molecular scissors — finds exactly where HIV DNA is hiding in a cell and cuts it out.\n\n<b>Modifying CCR5:</b> Editing cells so HIV can't use the CCR5 "door handle" to get in — inspired by the natural resistance seen in cure cases.\n\n<b>AAV vectors:</b> Safe virus-like tools used to deliver new genetic instructions into cells.\n\nGene therapy is still in early research phases but represents one of the most exciting directions in cure science.`,
-    tags:["gene therapy hiv","crispr hiv","gene editing hiv","aav vector hiv","ccr5 gene editing","modifying dna hiv","genetic cure hiv","vector hiv research"],
-    sugg:["cure_strategies","ccr5","cure_cases"]
-  },
-
-  // ── Assays / lab methods ──
-  assays:{
-    short:`Assays are laboratory tests used to measure HIV and evaluate treatments. They're essential for understanding the reservoir and knowing whether a cure strategy is working.`,
-    more:`Key assays in HIV research:\n\n• <b>Viral load assay</b> — measures HIV in the blood\n• <b>PCR assay</b> — detects HIV genetic material in cells\n• <b>Reservoir assay</b> — measures hidden HIV (e.g. IPDA, Q4ddPCR)\n• <b>Neutralisation assay</b> — tests whether antibodies can block HIV\n• <b>Cell-based assay</b> — studies HIV behaviour in living cells\n\nNo single test can fully measure all of HIV in the body — which is why scientists use multiple approaches together.`,
-    tags:["assay hiv","lab test hiv","hiv assay","pcr hiv","reservoir assay","viral load test","neutralisation assay","cell assay hiv","measuring hiv","hiv lab methods","hiv research methods","ipda assay"],
-    sugg:["q4ddpcr","reservoir","viral_load"]
-  },
-
-  // ── What is a cure in science ──
-  cure_definition:{
-    short:`In science, an HIV cure means controlling or removing HIV so that treatment is no longer needed — either by eliminating all virus, or by achieving lasting immune control.`,
-    more:`There are two definitions researchers use:\n\n<b>Sterilising cure:</b> All replication-capable HIV is removed. Extremely difficult because even a tiny amount left can restart infection.\n\n<b>Functional cure:</b> HIV stays in the body but is permanently controlled by the immune system, with no need for medication.\n\nThe ultimate goal is a safe, accessible cure that works for everyone — regardless of HIV subtype, location, or health status.`,
-    tags:["what is hiv cure","cure definition hiv","sterilising cure","functional cure","hiv cure definition","what counts as hiv cure","scientific hiv cure","when is hiv cured"],
-    sugg:["cure_types","cure_strategies","cure_cases"]
-  },
-
-  // ── Participation in research ──
-  participation:{
-    short:`Participating in HIV research means contributing to the development of new treatments and potentially a cure. Every advance we have today came from people who volunteered to take part.`,
-    more:`Before joining any study, you should know:\n\n• The risks and potential benefits\n• What monitoring and procedures are involved\n• That you can withdraw at any time\n• That your safety always comes first\n\nParticipation is a personal choice — and a meaningful one. It's also okay to ask questions, take time to decide, and seek a second opinion.`,
-    tags:["participate hiv research","join hiv study","hiv research participation","clinical trial participation","should i join hiv study","hiv study volunteer","hiv participant","research volunteer hiv"],
-    sugg:["clinical_trials","ati","informed_consent"]
-  },
-
-  // ── Future of treatment ──
-  future_treatment:{
-    short:`The future of HIV treatment is heading toward longer-acting options, fewer side effects, and more personalised care — moving further away from daily pills.`,
-    more:`What's coming:\n\n• Injections lasting <b>4–6 months</b> (being tested now)\n• <b>Implants</b> that release medication slowly over months\n• <b>bNAb infusions</b> as an alternative to ART\n• More options for people who face barriers to daily adherence\n\nThe goal is treatment that fits your life — not the other way around. And beyond treatment, an accessible cure for everyone.`,
-    tags:["future hiv treatment","long acting hiv","hiv injection","hiv implant","future of hiv","hiv treatment future","new hiv treatment","upcoming hiv treatment","hiv treatment advances"],
-    sugg:["bnabs","treatment_history","art"]
-  },
-
-  // ── Community & health literacy ──
-  health_literacy:{
-    short:`HIV cure literacy means understanding what cure research is, what it isn't, and how to engage with it. It helps you ask better questions and make informed decisions.`,
-    more:`It's not just about knowing the science — it's about being able to:\n\n• Critically assess information and spot misinformation\n• Understand risks and realistic timelines\n• Engage with researchers as a partner, not just a participant\n• Access information in formats that are relevant to your life\n\nLooking4Cure exists to make this kind of literacy possible for everyone — especially communities that are often left out of research conversations.`,
-    tags:["health literacy hiv","hiv literacy","hiv cure literacy","understanding hiv research","hiv misinformation","hiv information","hiv education","hiv knowledge","understanding cure research"],
-    sugg:["about","participation","stigma"]
-  },
-
-  // ── Second Berlin Patient (Nature 2026) ──
-  second_berlin:{
-    short:`In late 2025, a second Berlin patient achieved long-term HIV remission after a stem cell transplant — and this case broke new ground. Unlike previous cures, the donor wasn't fully resistant to HIV. This suggests the immune response itself may be key to clearing the reservoir.`,
-    more:`Published in <i>Nature</i> (February 2026) by Charité Berlin researchers, the second Berlin patient (B2) has maintained undetectable HIV for <b>over 6 years</b> without ART after a stem cell transplant for leukaemia.\n\nWhat makes this case remarkable: the donor had only a <b>partial CCR5 mutation</b> (heterozygous CCR5Δ32), not the full mutation seen in previous cure cases. This means full CCR5 resistance alone isn't required for a cure.\n\nThe research points to <b>antibody-dependent cellular cytotoxicity (ADCC)</b> — where immune cells destroy HIV-infected cells guided by antibodies — as a likely contributor to reservoir clearance. Natural killer (NK) cells also appear to have played a significant role.\n\nThis is one of the most important HIV cure cases ever documented.`,
-    tags:["second berlin patient","berlin patient 2","b2 patient","ccr5 heterozygous","nature 2026","hiv cure 2026","new cure case","latest cure case","stem cell hiv 2026","charite cure","adcc hiv","natural killer cells hiv","gaebler","penack"],
-    sugg:["cure_cases","ccr5","adcc_nk"]
-  },
-
-  // ── ADCC and Natural Killer cells ──
-  adcc_nk:{
-    short:`ADCC (antibody-dependent cellular cytotoxicity) is when immune cells — particularly natural killer (NK) cells — are guided by antibodies to find and destroy HIV-infected cells. It may play an important role in clearing the HIV reservoir.`,
-    more:`In the second Berlin patient, researchers found <b>unusually high ADCC activity</b> around the time of the stem cell transplant. This suggests that the combination of strong antibodies and active NK cells may have helped clear the HIV reservoir, even without full CCR5 resistance.\n\n<b>Natural killer (NK) cells</b> are part of the innate immune system — they can attack infected cells without prior "training." Some NK cell subsets appear memory-like and may persist long-term.\n\nThis discovery opens new questions: could boosting ADCC activity be a strategy toward a functional cure, even without a stem cell transplant?`,
-    tags:["adcc","antibody dependent cellular cytotoxicity","natural killer cells","nk cells hiv","nk hiv","adcc hiv","innate immunity hiv","immune clearance hiv","nk cell cure"],
-    sugg:["second_berlin","bnabs","cure_strategies"]
-  },
-
-  // ── Graft-versus-reservoir ──
-  gvr:{
-    short:`Graft-versus-reservoir (GVR) is a phenomenon where transplanted immune cells from a donor recognise and attack HIV-infected cells in the recipient — helping to clear the viral reservoir.`,
-    more:`In stem cell transplants for cancer, the donor's immune cells sometimes attack residual disease in the recipient — this is called the graft-versus-leukaemia (GVL) effect. Researchers now believe a similar process may help clear HIV-infected cells.\n\nIn the second Berlin patient, differences between donor and recipient immune proteins (HLA mismatches and minor histocompatibility antigens) may have driven GVR effects — clearing HIV even without full CCR5 resistance.\n\nThis opens the possibility that the <b>allogeneic immune response itself</b>, not just donor cell resistance to HIV, may be critical to achieving remission.`,
-    tags:["graft versus reservoir","gvr hiv","graft versus leukemia","allo-sct hiv","stem cell immune effect","donor immune response hiv","hla mismatch hiv"],
-    sugg:["second_berlin","cure_cases","cure_strategies"]
-  },
-
-  // ── Doctor appointment checklist ──
-  appointment:{
-    short:`It's easy to forget things when you're sitting in front of your doctor. Writing things down in advance — on your phone or on paper — really helps.`,
-    more:`For regular checkups (every 3–6 months), your doctor monitors your <b>CD4 count</b> (immune system strength) and <b>viral load</b> (amount of virus in your blood).\n\nThings to think about before your appointment:\n\n<b>Your body:</b> Any changes, pain, or discomfort? Nothing is too small to mention.\n\n<b>Your mind:</b> How have you been feeling mentally? Stress, sleep, mood, loneliness — all worth talking about. Studies show 58% of people living with HIV experience loneliness, so you're not alone.\n\n<b>Your lifestyle:</b> Travelling, partying, changes in routine? Your medication can adapt to fit your life — not the other way around.\n\n<b>Your medications:</b> Anything prescribed by another doctor, or bought at a pharmacy? Check interactions at <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,
-    tags:["doctor appointment hiv","hiv checklist","prepare hiv appointment","hiv checkup","hiv doctor visit","what to ask hiv doctor","hiv regular check","hiv monitoring","cd4 checkup","viral load checkup"],
-    sugg:["healthcare","mental_health","art"]
-  },
-
-  // ── Why HIV isn't cured when undetectable ──
-  why_not_cured:{
-    short:`Even when HIV is undetectable, it's not gone. It's hiding. The virus hides inside cells in a state called latency, where it's invisible to both your immune system and to treatment.`,
-    more:`HIV integrates its DNA into the DNA of long-lived immune cells (CD4 T cells). While silent there, it produces no signals — so neither your body nor medication can find it.\n\nThis hidden virus is the <b>HIV reservoir</b>. It's extremely small (about 1 infected cell per 100,000), but it's enough to restart infection if treatment stops.\n\nUndetectable means the treatment is working brilliantly — but HIV is still there, asleep. This is why current research is so focused on either eliminating or permanently silencing the reservoir.`,
-    tags:["why not cured undetectable","hiv still there","hiv hiding when undetectable","why cant hiv be cured treatment","hiv undetectable not cured","why need lifelong treatment","why continue hiv meds"],
-    sugg:["reservoir","latency","cure_strategies"]
-  },
-
-  // ── How quickly HIV hides ──
-  hiv_timing:{
-    short:`HIV starts hiding very early — often within days to weeks of infection, before most people even know they have it. This early reservoir formation is one of the biggest challenges in cure research.`,
-    more:`The reservoir forms so quickly that by the time someone is diagnosed and starts treatment, HIV is already hiding in long-lived cells.\n\nThis is why <b>early treatment</b> matters — starting ART soon after infection leads to a smaller reservoir, which may make future cure strategies more effective.\n\nIf treatment is stopped, viral rebound typically happens within <b>days to weeks</b> — confirming the reservoir was still active despite appearing dormant.`,
-    tags:["how quickly hiv hides","when does hiv hide","hiv reservoir formation","early treatment hiv","hiv early infection","hiv days weeks hiding","hiv rebound how fast","why start treatment early hiv"],
-    sugg:["reservoir","latency","art"]
-  },
-
-  // ── Is HIV a chronic condition ──
-  chronic:{
-    short:`Yes — with treatment, HIV is a manageable chronic condition. People living with HIV on effective ART can expect to live full, long, healthy lives.`,
-    more:`HIV went from being a death sentence in the 1980s to a manageable long-term condition today. Modern treatment:\n\n• Has minimal side effects\n• Involves one pill a day, or an injection every 2 months\n• Keeps the virus undetectable and untransmittable (U=U)\n• Allows the immune system to stay healthy\n\nThe remaining challenge is the need for <b>lifelong treatment</b> — which is why cure research continues. A cure would mean freedom from that daily commitment.`,
-    tags:["hiv chronic condition","is hiv manageable","living with hiv","hiv long term","hiv life expectancy","hiv manageable today","hiv not death sentence","modern hiv treatment","hiv daily life"],
-    sugg:["art","uu","future_treatment"]
-  },
-
-  // ── What questions to ask researchers ──
-  research_questions:{
-    short:`Before joining any HIV study, there are key questions you have the right to ask — and good research teams will welcome them.`,
-    more:`Questions to consider:\n\n• <b>What are the risks?</b> What could go wrong, and how will it be managed?\n• <b>What are the potential benefits?</b> For you personally, and for science?\n• <b>Does this strategy address the reservoir?</b> If so, how?\n• <b>What monitoring is involved?</b> How often, how intensive?\n• <b>Can I stop at any time?</b> (The answer should always be yes.)\n• <b>What happens if my viral load rises?</b> What's the plan?\n• <b>Who do I contact if I have concerns during the study?</b>\n\nParticipation is meaningful — and your questions make research better.`,
-    tags:["questions for researchers","what to ask hiv study","hiv trial questions","research participation questions","informed consent questions","study questions hiv","what to know before hiv trial"],
-    sugg:["clinical_trials","ati","informed_consent"]
   }
 };
 
-// ── Guaranteed exact answers ──
+// ══════════════════════════════════════════════
+// KNOWLEDGE BASE — GERMAN OVERRIDES
+// ══════════════════════════════════════════════
+const KB_DE = {
+  hiv:{short:`HIV ist ein Virus, das das Immunsystem angreift. Unbehandelt schwächt es den Körper — mit Behandlung leben Menschen lang und gesund.`,more:`HIV wird hauptsächlich durch ungeschützten Penetrationssex, gemeinsame Nadeln, Blut oder von Elternteil zu Kind übertragen.\n\nHIV wird <b>nicht</b> durch Umarmungen, geteiltes Essen oder alltäglichen Kontakt übertragen.\n\nHIV schleust sich in Immunzellen ein und versteckt sich in deren DNA — das macht es schwer zu entfernen, aber gut behandelbar.`,tags:["hiv","was ist hiv","hiv erklärt","wie funktioniert hiv"],sugg:["aids","art","prep"]},
+  aids:{short:`AIDS ist das fortgeschrittenste Stadium von HIV — es tritt auf, wenn HIV lange unbehandelt bleibt und das Immunsystem stark geschwächt ist. Mit heutiger Behandlung erreichen die meisten Menschen mit HIV dieses Stadium nie.`,more:`Frühe Diagnose und Behandlung machen einen riesigen Unterschied. Moderne HIV-Medikamente sind so wirksam, dass AIDS bei Menschen mit Zugang zur Versorgung selten geworden ist.`,tags:["aids","was ist aids","aids definition","hiv vs aids","unterschied aids hiv"],sugg:["art","viral_load","healthcare"]},
+  art:{short:`ART (antiretrovirale Therapie) ist die Medikation, die HIV unter Kontrolle hält. Sie heilt HIV nicht, stoppt aber die Virusvermehrung — du bleibst gesund und kannst HIV nicht übertragen.`,more:`Moderne ART ist meist eine Pille täglich oder eine Injektion alle paar Monate. Nebenwirkungen sind viel seltener als früher.\n\n💊 Wechselwirkungen prüfen: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,tags:["art","antiretrovirale therapie","hiv behandlung","hiv medikamente","was ist art"],sugg:["uu","viral_load","treatment_history"]},
+  cure:{short:`Es gibt noch keine allgemein verfügbare Heilung für HIV. Eine kleine Anzahl von Menschen wurde durch Stammzelltransplantationen geheilt — aber das ist eine komplexe Behandlung für lebensbedrohlichen Krebs. Die Forschung macht schnelle Fortschritte.`,more:`Wissenschaftler*innen arbeiten an zwei Zielen:\n\n<b>Sterilisierende Heilung</b> — alles HIV aus dem Körper entfernen.\n<b>Funktionale Heilung</b> — HIV bleibt, aber das Immunsystem kontrolliert es ohne Medikamente.\n\nBeides ist noch nicht verfügbar, aber klinische Studien testen jedes Jahr neue Ansätze.`,tags:["heilung hiv","gibt es heilung hiv","hiv heilen","heilung für hiv","wann heilung hiv"],sugg:["cure_strategies","bnabs","cure_cases"]},
+  prep:{short:`PrEP ist ein Medikament, das HIV-negative Menschen nehmen, um HIV zu verhindern. Bei richtiger Einnahme ist es über 99% effektiv gegen sexuelle Übertragung.`,more:`<b>Optionen:</b>\n• Tagespille\n• Injektion alle 2 Monate\n• Lenacapavir — Injektion alle 6 Monate (noch teuer, nicht überall verfügbar)\n\nPrEP schützt nicht vor anderen STIs — regelmäßiges Testen ist weiterhin wichtig.`,tags:["prep","was ist prep","hiv prävention","hiv verhüten","prep pille","prep injektion"],sugg:["uu","hiv","art"]},
+  uu:{short:`U=U bedeutet: Nicht nachweisbar = Nicht übertragbar. Wenn du in Behandlung bist und deine Viruslast nicht nachweisbar ist, kannst du HIV beim Sex nicht übertragen. Das ist wissenschaftlich bewiesen.`,more:`Von großen internationalen Studien bestätigt und von allen führenden Gesundheitsorganisationen anerkannt.\n\nMenschen mit wirksamer Behandlung haben beim Sex kein Übertragungsrisiko. U=U ist auch ein mächtiges Werkzeug gegen Stigma.`,tags:["u=u","nicht nachweisbar nicht übertragbar","kein übertragungsrisiko hiv","undetectable hiv deutsch"],sugg:["art","viral_load","prep"]},
+  viral_load:{short:`Die Viruslast ist die Menge HIV in deinem Blut. Das Ziel der Behandlung ist, sie so weit zu senken, dass sie nicht nachweisbar wird — gut für deine Gesundheit, und du kannst HIV nicht mehr sexuell übertragen.`,more:`Wenn du nicht nachweisbar bist, ist HIV noch in deinem Körper (versteckt im Reservoir), aber nicht aktiv. Das ist, worauf sich U=U bezieht.`,tags:["viruslast","nicht nachweisbar","virus im blut","was ist viruslast","viruslasttest"],sugg:["uu","art","reservoir"]},
+  reservoir:{short:`Auch bei perfekter Behandlung kann HIV sich still in bestimmten Zellen verstecken. Dieser verborgene Vorrat heißt Reservoir — und ist der Hauptgrund, warum HIV noch nicht heilbar ist.`,more:`Stell dir vor: das Virus im Ruhemodus. Die Behandlung hält es schlafend, kann es aber nicht zerstören. Wenn die Behandlung stoppt, wacht es auf.\n\nDas Reservoir ist winzig — etwa eine infizierte Zelle pro 100.000 — aber unglaublich schwer zu finden. Wissenschaftler*innen nennen es "eine Nadel im Heuhaufen."`,tags:["hiv reservoir","reservoir hiv","verstecktes hiv","latenz hiv","latentes hiv","schlafendes hiv","warum keine heilung hiv"],sugg:["cure_strategies","bnabs","q4ddpcr"]},
+  cure_cases:{short:`Eine kleine Zahl von Menschen wurde durch Stammzelltransplantationen von HIV geheilt oder befindet sich in Langzeitremission. Der aktuellste Fall: der "zweite Berliner Patient" — über 6 Jahre HIV-Remission ohne ART.`,more:`Die meisten Fälle beinhalten Spender*innen mit der seltenen <b>CCR5Δ32-Mutation</b>.\n\nDer <b>zweite Berliner Patient (Nature, 2026)</b> änderte das Bild: Der Spender hatte nur eine teilweise CCR5-Mutation — dennoch hält die Remission 6+ Jahre an. Das zeigt: die <b>Immunantwort selbst</b> kann das Reservoir klären.\n\nDiese Fälle sind bemerkenswert, aber die Behandlung ist nur für lebensbedrohlichen Krebs — nicht als allgemeine Heilung verfügbar.`,tags:["hiv geheilt","berliner patient","stammzelltransplantation hiv","wurde jemand geheilt","zweiter berliner patient"],sugg:["second_berlin","ccr5","cure_strategies"]},
+  cure_types:{short:`Wissenschaftler*innen verfolgen zwei Heilungsarten: sterilisierende Heilung (HIV komplett entfernt) und funktionale Heilung (Immunsystem kontrolliert HIV dauerhaft ohne Medikamente).`,more:`<b>Sterilisierend:</b> Sehr schwierig — selbst winzige Spuren können HIV zurückbringen.\n\n<b>Funktional / Remission:</b> Virus bleibt, aber permanent still ohne Behandlung.\n\n<b>Elite-Controller</b> sind seltene Menschen, deren Immunsystem das natürlich tut.`,tags:["arten von heilung","sterilisierende heilung","funktionale heilung","hiv remission","elite controller"],sugg:["cure_strategies","bnabs","cure_cases"]},
+  cure_strategies:{short:`Es gibt noch keine Heilung, aber Forscher*innen testen spannende Ansätze — von Genbearbeitung über umprogrammierte Immunzellen bis zu neuen Antikörpern.`,more:`<b>Shock & Kill:</b> Schlafendes HIV aufwecken, damit das Immunsystem es zerstört.\n\n<b>Block & Lock:</b> HIV permanent einschläfern.\n\n<b>CAR-T-Zellen:</b> Immunzellen im Labor umprogrammieren.\n\n<b>CRISPR:</b> HIV-DNA aus Zellen herausschneiden.\n\n<b>Therapeutische Impfstoffe:</b> Immunsystem stärken — einige mit mRNA-Technologie.\n\n<b>bNAbs:</b> Sehr vielversprechende Antikörper!`,tags:["heilungsstrategien hiv","shock and kill","block and lock","car-t zellen hiv","crispr hiv","hiv heilungsforschung"],sugg:["bnabs","ati","q4ddpcr"]},
+  bnabs:{short:`bNAbs sind mächtige, im Labor hergestellte Antikörper, die HIV am Eindringen in Zellen hindern und infizierte Zellen klären. Sie sind einer der vielversprechendsten Bereiche der HIV-Heilungsforschung.`,more:`HIV mutiert viel, aber einige Teile ändern sich nie — bNAbs zielen auf diese stabilen Teile ab.\n\n<b>2025 Ergebnisse:</b> Etwa 3 von 4 Teilnehmenden kontrollierten das Virus 20+ Wochen ohne ART. Einige blieben 2+ Jahre supprimiert.\n\nDas Ziel: tägliche Pillen durch Infusionen alle paar Monate ersetzen.`,tags:["bnabs","breit neutralisierende antikörper","antikörper hiv behandlung","bnabs hiv deutsch"],sugg:["ati","cure_types","q4ddpcr"]},
+  q4ddpcr:{short:`Q4ddPCR ist ein neuer Labortest der Charité Berlin — er misst das HIV-Reservoir genauer als bisherige Tests, mit vier Zielregionen statt zwei.`,more:`Veröffentlicht in <i>Nature Communications</i> 2026:\n\n• Erkennt intaktes HIV in <b>95% der Proben</b> (vorher 79%)\n• Verfolgt genauer, wie schnell das Reservoir bei Behandlung schrumpft\n• Sagt besser vorher, welches Virus sich tatsächlich vermehren kann`,tags:["q4ddpcr","reservoir test hiv","neue hiv forschung","aktuelle hiv forschung","charite hiv forschung"],sugg:["reservoir","cure_strategies","bnabs"]},
+  ati:{short:`ATI (Analytische Therapieunterbrechung) ist eine überwachte Pause von HIV-Medikamenten in einer klinischen Studie — um zu testen, ob eine neue Therapie das Virus ohne ART kontrollieren kann.`,more:`Das Forschungsteam erklärt alles vorab: was passiert, wie weit es gehen kann, welche Maßnahmen möglich sind.\n\nEin*e Teilnehmende beschrieb die Erfahrung: <i>"Als ich die Therapie pauste, widersprach das allem, was man mir bei der Diagnose gesagt hatte — es war beängstigend."</i>\n\nUnd: <i>"Seit dem Tag meiner Infektion fühlte ich mich kontrolllos. Die Studienteilnahme gab mir etwas davon zurück."</i>\n\nDu kannst jederzeit aufhören.`,tags:["ati","analytische therapieunterbrechung","hiv behandlung pausieren","behandlung stoppen hiv studie"],sugg:["bnabs","cure_strategies","clinical_trials"]},
+  treatment_history:{short:`Die HIV-Behandlung hat einen langen Weg zurückgelegt — von brutal in den 80ern zu einer Pille täglich oder Injektion alle zwei Monate heute.`,more:`• 1983 – HIV identifiziert. ACT UP kämpfte für schnellere Forschung.\n• 1987 – Erstes Antiretroviroviral zugelassen.\n• 1996 – Kombinationstherapie machte HIV beherrschbar.\n• 2006 – Tagespille.\n• 2021 – Langwirksame Injektion alle 2 Monate.\n• Jetzt – 4–6-Monats-Injektionen, bNAbs werden getestet.`,tags:["geschichte hiv behandlung","hiv timeline","entwicklung hiv behandlung","erste hiv medikamente"],sugg:["art","prep","bnabs"]},
+  ccr5:{short:`CCR5 ist ein Protein, das HIV als "Türgriff" zum Eindringen in Zellen nutzt. Weniger als 1% der Menschen haben eine Mutation, die ihn bricht — sie sind natürlich HIV-resistent.`,more:`Das erklärt, warum Berliner Patient*innen durch Stammzelltransplantationen geheilt wurden.\n\nInteressant: Der zweite Berliner Patient (2025) zeigte, dass auch eine <b>teilweise</b> CCR5-Mutation zur Langzeitremission führen kann — die Immunantwort spielt ebenfalls eine Schlüsselrolle.`,tags:["ccr5","ccr5 mutation","türgriff hiv","hiv resistent","delta 32 hiv"],sugg:["cure_cases","second_berlin","reservoir"]},
+  second_berlin:{short:`2025 erreichte der "zweite Berliner Patient" über 6 Jahre HIV-Remission nach einer Stammzelltransplantation — und dieser Fall brach neues Terrain. Anders als frühere Heilungen war der Spender nicht vollständig HIV-resistent.`,more:`Veröffentlicht in <i>Nature</i> (2026) von Charité-Forschenden: Der Spender hatte nur eine <b>teilweise CCR5-Mutation</b>, nicht die vollständige Mutation früherer Heilungsfälle.\n\nDie Forschung deutet auf <b>ADCC</b> (antikörperabhängige zelluläre Zytotoxizität) und natürliche Killerzellen als wichtige Faktoren bei der Reservoir-Klärung hin.\n\nEiner der bedeutendsten HIV-Heilungsfälle überhaupt.`,tags:["zweiter berliner patient","zweiter berliner patient hiv","berliner patient 2","nature 2026 hiv","neue heilung hiv","charite heilung"],sugg:["cure_cases","ccr5","adcc_nk"]},
+  adcc_nk:{short:`ADCC (antikörperabhängige zelluläre Zytotoxizität) ist, wenn Immunzellen — geleitet von Antikörpern — HIV-infizierte Zellen finden und zerstören. Natürliche Killerzellen (NK-Zellen) spielen dabei eine Schlüsselrolle.`,more:`Beim zweiten Berliner Patienten fanden Forschende ungewöhnlich hohe ADCC-Aktivität zum Zeitpunkt der Transplantation. Das legt nahe: starke Antikörper + aktive NK-Zellen können das HIV-Reservoir klären.\n\nNeue Frage: Könnte die Stärkung der ADCC-Aktivität eine Strategie zur funktionalen Heilung sein?`,tags:["adcc hiv","antikörperabhängige zelluläre zytotoxizität","natürliche killerzellen hiv","nk zellen hiv","angeborenes immunsystem hiv"],sugg:["second_berlin","bnabs","cure_strategies"]},
+  gvr:{short:`Graft-versus-Reservoir (GVR) bezeichnet das Phänomen, bei dem transplantierte Spenderimmunzellen HIV-infizierte Zellen erkennen und angreifen — und dabei das virale Reservoir klären.`,more:`Ähnlich dem Graft-versus-Leukämie-Effekt bei Krebsbehandlungen. Beim zweiten Berliner Patienten könnten HLA-Unterschiede zwischen Spender und Empfänger GVR-Effekte ausgelöst haben.`,tags:["graft versus reservoir","gvr hiv","stammzelle immuneffekt hiv","spender immunantwort hiv"],sugg:["second_berlin","cure_cases","cure_strategies"]},
+  global:{short:`41 Millionen Menschen leben weltweit mit HIV. 9 Millionen haben noch keinen Zugang zur Behandlung. Budgetkürzungen verschlimmern die Lage — deshalb ist Heilungsforschung jetzt so wichtig.`,more:`UNAIDS-Modellierungen zeigen: Wenn die Finanzierungskürzungen anhalten, könnten bis 2029 4 Millionen mehr AIDS-bedingte Todesfälle und 6 Millionen neue Infektionen entstehen.`,tags:["globales hiv","hiv weltweit","hiv statistiken","hiv todesfälle","hiv finanzierung","unaids"],sugg:["about","cure_types","art"]},
+  clinical_trials:{short:`Klinische Studien sind der Weg, wie neue HIV-Behandlungen getestet werden — jede heute verfügbare Behandlung kam durch Studien. Teilnahme ist immer freiwillig, mit vollständigen Informationen.`,more:`Studien verlaufen in Phasen: Sicherheit (Phase I), frühe Wirkungen (Phase II), groß angelegte Wirksamkeit (Phase III). Du gibst immer informierte Einwilligung und kannst jederzeit aufhören.`,tags:["klinische studie hiv","hiv studie","hiv forschung teilnehmen","hiv trial deutsch"],sugg:["ati","bnabs","about"]},
+  informed_consent:{short:`Informierte Einwilligung bedeutet: Du erhältst klare, vollständige Informationen über eine Studie — einschließlich Risiken, Vorteile und Verfahren — bevor du zustimmst. Immer freiwillig.`,more:`In der HIV-Heilungsforschung besonders wichtig, da einige Interventionen echte Risiken tragen. Du kannst jederzeit zurücktreten. Gute Forschungsteams nehmen sich Zeit, alle Fragen zu beantworten.`,tags:["informierte einwilligung","einwilligung hiv studie","was ist informierte einwilligung","teilnehmerrechte hiv studie"],sugg:["clinical_trials","ati","participation"]},
+  participation:{short:`An HIV-Forschung teilzunehmen bedeutet, zur Entwicklung neuer Behandlungen beizutragen. Jeder Fortschritt, den wir heute haben, kam von Menschen, die freiwillig teilgenommen haben.`,more:`Vor der Teilnahme:\n\n• Risiken und Vorteile kennen\n• Monitoring verstehen\n• Wissen, dass du jederzeit aufhören kannst\n• Deine Sicherheit steht immer an erster Stelle`,tags:["hiv forschung mitmachen","hiv studie teilnahme","hiv forschungsfreiwillige"],sugg:["clinical_trials","ati","informed_consent"]},
+  about:{short:`Eliz ist Teil von Looking4Cure — einem Projekt von BeCURE an der Charité Berlin, Videograph Michel Steinberg und Forscher Tomer Einav. Ziel: HIV-Heilungsforschung für alle zugänglich machen.`,more:`Looking4Cure glaubt: Menschen mit HIV sollten Partner*innen in der Forschung sein — nicht nur Teilnehmende. HIV-Heilungskompetenz ist dafür zentral.\n\nBeCURE ist das Berliner Zentrum für HIV-Heilungsforschung an der Charité.`,tags:["looking4cure","becure","charite","über eliz","wer hat eliz gemacht","looking4cure projekt","michel steinberg","tomer einav"],sugg:["global","clinical_trials","cure_strategies"]},
+  healthcare:{short:`Einen Arzt zu finden, bei dem du dich wirklich sicher fühlst, ist wichtig. In Deutschland listet Queer Medics inklusive, erfahrene Anbieter*innen. Du hast immer das Recht auf respektvolle Versorgung.`,more:`Eine Studie von 2021 ergab: 60% der Menschen mit HIV in Deutschland erfahren Diskriminierung im Gesundheitswesen. Nicht okay — und nicht deine Schuld.\n\n<b>Deine Rechte:</b> respektiert werden, Nein sagen, Fragen stellen, zweite Meinung einholen.\n\nWechselwirkungen prüfen: <a href="https://www.hiv-druginteractions.org" target="_blank">hiv-druginteractions.org</a>`,tags:["arzt hiv","gesundheitsversorgung hiv","hiv diskriminierung arzt","rechte hiv patient","queer medics","hiv arzt finden"],sugg:["art","mental_health","appointment"]},
+  appointment:{short:`Es ist leicht, beim Arzt alles zu vergessen. Dinge im Voraus aufschreiben — auf dem Handy oder Papier — hilft wirklich.`,more:`Bei regulären Checkups (alle 3–6 Monate) werden <b>CD4-Zahl</b> und <b>Viruslast</b> kontrolliert.\n\n<b>Körper:</b> Veränderungen, Schmerzen, Beschwerden?\n<b>Geist:</b> Stress, Schlaf, Stimmung, Einsamkeit?\n<b>Lebensstil:</b> Änderungen in der Routine? Deine Medikation kann sich anpassen.\n<b>Medikamente:</b> Verschreibung von einem anderen Arzt oder Apotheke? Wechselwirkungen prüfen.`,tags:["arzttermin hiv","hiv checkliste","hiv checkup vorbereiten","was arzt hiv fragen","hiv monitoring"],sugg:["healthcare","mental_health","art"]},
+  mental_health:{short:`Mit HIV zu leben kann sich emotional auswirken — das ist vollkommen real und gültig. Studien zeigen: 58% der Menschen mit HIV erleben Einsamkeit. Du bist damit nicht allein.`,more:`Community, Peer-Support und das Gespräch mit jemandem, der/die es versteht, können einen echten Unterschied machen. In Berlin bietet die Berliner AIDS-Hilfe Beratung und Vernetzung.`,tags:["psychische gesundheit hiv","hiv einsamkeit","hiv angst","hiv depression","emotional hiv","allein hiv","hiv community support"],sugg:["support","healthcare","stigma"]},
+  stigma:{short:`HIV-Stigma ist real, schädlich und basiert auf Fehlinformationen. U=U widerlegt es — Menschen in Behandlung können HIV nicht sexuell übertragen.`,more:`Stigma betrifft Gesundheitsversorgung, psychische Gesundheit und Lebensqualität — besonders queere Communitys, trans Menschen, Sexarbeiter*innen und Menschen, die Drogen injizieren.\n\nLooking4Cure engagiert sich für inklusive HIV-Forschung.`,tags:["stigma hiv","hiv diskriminierung","hiv scham","hiv queer","hiv trans","hiv inklusion"],sugg:["uu","mental_health","support"]},
+  vaccine:{short:`Es gibt noch keinen vollständig wirksamen HIV-Impfstoff. HIV ist eines der schwierigsten Viren für die Impfstoffentwicklung — es mutiert zu schnell und versteckt sich in der DNA.`,more:`Therapeutische Impfstoffe für Menschen, die bereits mit HIV leben, werden getestet — einige mit mRNA-Technologie ähnlich COVID-19-Impfstoffen — um dem Immunsystem zu helfen, das Virus ohne tägliche Medikation zu kontrollieren.`,tags:["hiv impfstoff","impfstoff hiv","hiv impfung","warum kein hiv impfstoff","mrna hiv deutsch"],sugg:["cure_strategies","bnabs","hiv"]},
+  local_resources:{short:`Für Tests, PrEP-Zugang oder persönliche Unterstützung ist eine lokale Community-Organisation oder Sexualgesundheitsklinik dein bester erster Schritt.`,more:`In Deutschland:\n• <a href="https://berlin.aidshilfe.de" target="_blank">Berliner AIDS-Hilfe</a> — Beratung, Unterstützung, Community\n• <a href="https://queermedics.de" target="_blank">Queer Medics</a> — inklusive Ärzt*innen in deiner Nähe\n• Dein lokales Gesundheitsamt oder STI-Klinik\n\nEliz teilt allgemeine Informationen — für persönlichen medizinischen Rat bitte immer einen Arzt/eine Ärztin aufsuchen.`,tags:["wo testen hiv","hiv test","wo prep bekommen","prep zugang","hiv klinik","ich habe hiv","neue diagnose hiv","hiv positiv"],sugg:["healthcare","mental_health","support"]},
+  future_treatment:{short:`Die Zukunft der HIV-Behandlung geht in Richtung länger wirkender Optionen, weniger Nebenwirkungen und personalisierterer Versorgung — weg von der täglichen Pille.`,more:`Was kommt:\n\n• Injektionen mit <b>4–6 Monaten</b> Wirkdauer (werden jetzt getestet)\n• <b>bNAb-Infusionen</b> als Alternative zu ART\n• Mehr Optionen für Menschen mit Schwierigkeiten bei täglicher Einnahme\n\nDas Ziel: Behandlung, die zu deinem Leben passt.`,tags:["zukunft hiv behandlung","langwirksame hiv behandlung","neue hiv behandlung","hiv injektion zukunft"],sugg:["bnabs","treatment_history","art"]},
+  health_literacy:{short:`HIV-Heilungskompetenz bedeutet: verstehen, was Heilungsforschung ist, was sie nicht ist, und wie man sich damit auseinandersetzt.`,more:`Nicht nur Wissenschaft — auch: Fehlinformationen erkennen, Risiken verstehen, als Partner*in in der Forschung interagieren.\n\nLooking4Cure gibt es genau dafür — damit alle diese Kompetenz aufbauen können.`,tags:["hiv heilungskompetenz","hiv forschung verstehen","hiv bildung","hiv informationen deutsch"],sugg:["about","participation","stigma"]},
+  cd4:{short:`CD4-T-Zellen koordinieren die Immunabwehr. HIV greift diese Zellen gezielt an und zerstört sie — was das Immunsystem schwächt.`,more:`Gesunde CD4-Zahl: ~500–1.500 Zellen/mm³. Mit ART erholen sich die Zahlen. Dein Arzt überwacht sie regelmäßig.`,tags:["cd4","cd4 zellen","cd4 zahl","t-helferzellen hiv","immunzellen hiv","was sind cd4 zellen"],sugg:["art","viral_load","aids"]},
+  immune_system:{short:`Dein Immunsystem ist das Abwehrnetzwerk deines Körpers. HIV greift es gezielt an — und macht deinen Körper weniger fähig, Infektionen zu bekämpfen.`,more:`CD4-Zellen, Antikörper, Makrophagen, natürliche Killerzellen — alle beteiligt. Mit ART kann sich das Immunsystem erheblich erholen. Heilungsforschung zielt darauf, es zu stärken.`,tags:["immunsystem hiv","wie hiv immunsystem beeinflusst","immunzellen hiv","antikörper hiv deutsch"],sugg:["cd4","art","cure_strategies"]},
+  latency:{short:`Latenz ist, wenn HIV in einer Zelle sitzt, aber vollständig inaktiv ist — kein Virus wird produziert. Das Immunsystem kann es nicht sehen, ART kann es nicht erreichen.`,more:`HIV integriert sich in die DNA der Zelle. Die Zelle sieht normal aus. Es kann jahrelang latent bleiben. Das ist, was HIV so schwer heilbar macht.`,tags:["latenz hiv","latentes hiv","was ist latenz hiv","schlafendes hiv","hiv integration dna"],sugg:["reservoir","cure_strategies","art"]},
+  viral_rebound:{short:`Viraler Rebound: HIV wird wieder nachweisbar, nachdem die Behandlung gestoppt wurde. Es zeigt, dass das Virus noch im Körper versteckt war.`,more:`Typischerweise innerhalb von Tagen bis Wochen. In klinischen Studien als Forschungswerkzeug genutzt.`,tags:["viraler rebound","hiv rebound","hiv kommt zurück nach behandlung","behandlung abgesetzt hiv"],sugg:["reservoir","ati","art"]},
+  hiv_lifecycle:{short:`HIV übernimmt Zellen gezielt: es dringt ein, kopiert sein genetisches Material in die DNA und nutzt dann die Zelle zur Produktion neuer Viren.`,more:`Schritte: Eintritt → RNA→DNA (reverse Transkription) → DNA-Integration → neue Viren → Freisetzung.\n\nJeder Schritt ist ein potenzielles Behandlungsziel.`,tags:["hiv lebenszyklus","wie hiv sich vermehrt","hiv replikation","reverse transkription hiv"],sugg:["art","reservoir","cd4"]},
+  gene_therapy:{short:`Gentherapie verändert DNA, um Krankheiten zu behandeln. Bei HIV: entweder HIV aus infizierten Zellen entfernen oder Zellen resistent machen.`,more:`<b>CRISPR:</b> Molekulare Scheren, die HIV-DNA herausschneiden.\n<b>CCR5-Bearbeitung:</b> Zellen so modifizieren, dass HIV nicht eindringen kann.\n\nNoch in frühen Forschungsphasen — aber eine der aufregendsten Richtungen.`,tags:["gentherapie hiv","crispr hiv deutsch","genbearbeitung hiv","ccr5 genbearbeitung hiv"],sugg:["cure_strategies","ccr5","cure_cases"]},
+  assays:{short:`Assays sind Labortests zur Messung von HIV und Bewertung von Behandlungen. Unverzichtbar für das Verständnis des Reservoirs und die Frage, ob eine Heilungsstrategie wirkt.`,more:`Wichtige Assays: Viruslaststest, PCR, Reservoir-Assays (IPDA, Q4ddPCR), Neutralisierungsassay.\n\nKein einzelner Test kann HIV im Körper vollständig messen.`,tags:["assay hiv","labortest hiv","hiv assay deutsch","reservoir assay hiv","pcr hiv"],sugg:["q4ddpcr","reservoir","viral_load"]},
+  cure_definition:{short:`In der Wissenschaft bedeutet HIV-Heilung: das Virus so kontrollieren oder entfernen, dass keine Behandlung mehr nötig ist.`,more:`<b>Sterilisierend:</b> Alles replikationsfähige HIV entfernt. Extrem schwierig.\n<b>Funktional:</b> HIV dauerhaft durch das Immunsystem ohne Medikamente kontrolliert.\n\nUltimatives Ziel: eine sichere, zugängliche Heilung für alle.`,tags:["was ist hiv heilung","heilungsdefinition hiv","was gilt als hiv heilung","wissenschaftliche hiv heilung"],sugg:["cure_types","cure_strategies","cure_cases"]},
+  why_not_cured:{short:`Auch wenn HIV nicht nachweisbar ist, ist es nicht weg. Es versteckt sich. Das Virus verbirgt sich in Zellen in einem Zustand namens Latenz — unsichtbar für das Immunsystem und für Medikamente.`,more:`HIV integriert seine DNA in langlebige Immunzellen. Dort produziert es keine Signale — nichts kann es finden.\n\nDieses versteckte Virus ist das <b>HIV-Reservoir</b>. Klein, aber genug, um die Infektion neu zu starten. Deshalb fokussiert Forschung darauf, das Reservoir zu eliminieren oder dauerhaft stillzulegen.`,tags:["warum nicht geheilt nicht nachweisbar","hiv noch da","hiv versteckt wenn nicht nachweisbar","warum lebenslange behandlung hiv"],sugg:["reservoir","latency","cure_strategies"]},
+  chronic:{short:`Ja — mit Behandlung ist HIV eine beherrschbare chronische Erkrankung. Menschen mit HIV auf wirksamer ART können ein volles, langes, gesundes Leben führen.`,more:`HIV war in den 1980ern ein Todesurteil — heute ist es eine beherrschbare Langzeiterkrankung. Moderne Behandlung: minimale Nebenwirkungen, eine Pille täglich oder Injektion alle 2 Monate, Virus nicht nachweisbar (U=U).\n\nDie verbleibende Herausforderung: lebenslange Behandlung — deshalb geht Heilungsforschung weiter.`,tags:["hiv chronische erkrankung","ist hiv beherrschbar","mit hiv leben","hiv lebenserwartung","modernes hiv leben"],sugg:["art","uu","future_treatment"]},
+  research_questions:{short:`Vor der Studienteilnahme gibt es wichtige Fragen, die du das Recht hast zu stellen — und gute Forschungsteams begrüßen sie.`,more:`• Welche Risiken gibt es — und wie werden sie gemanagt?\n• Was sind potenzielle Vorteile?\n• Adressiert die Strategie das Reservoir? Wie?\n• Wie intensiv ist das Monitoring?\n• Kann ich jederzeit aufhören? (Immer: Ja)\n• Was passiert bei viralem Rebound?\n\nDeine Fragen machen Forschung besser.`,tags:["fragen an forschende hiv","was fragen hiv studie","was wissen vor hiv studie","studienteilnahme fragen"],sugg:["clinical_trials","ati","informed_consent"]},
+  hiv_timing:{short:`HIV beginnt sehr früh zu verstecken — oft innerhalb von Tagen bis Wochen nach der Infektion, bevor die meisten Menschen wissen, dass sie infiziert sind.`,more:`Das Reservoir bildet sich so schnell, dass es bei der Diagnose bereits vorhanden ist. <b>Frühe Behandlung</b> führt zu einem kleineren Reservoir — was zukünftige Heilungsstrategien effektiver machen könnte.`,tags:["wie schnell versteckt hiv","hiv reservoir bildung","frühe hiv behandlung","warum früh behandeln hiv"],sugg:["reservoir","latency","art"]},
+  support:{short:`Hey — was auch immer du gerade durchmachst, du musst es nicht alleine tragen. Es gibt Menschen, denen es wichtig ist und die es verstehen.`,isSupport:true,tags:["hilfe hiv","unterstützung hiv","hiv krise","angst hiv","allein hiv","hiv notfall","sorgen hiv","nicht okay","kämpfe hiv","hoffnungslos","traurig","ängstlich"],sugg:[]}
+};
+
+// ══════════════════════════════════════════════
+// GUARANTEED ANSWERS
+// ══════════════════════════════════════════════
 const GUARANTEED = {
+  // English
   "is there a cure for hiv":"cure","is there a cure":"cure","hiv cure":"cure",
   "what is hiv":"hiv","what's hiv":"hiv","explain hiv":"hiv",
-  "what is prep":"prep","what's prep":"prep","what is pre-exposure prophylaxis":"prep",
+  "what is prep":"prep","what's prep":"prep",
   "what is u=u":"uu","what's u=u":"uu","u=u":"uu",
-  "what is art":"art","what's art":"art","antiretroviral therapy":"art",
+  "what is art":"art","what's art":"art",
   "what is the hiv reservoir":"reservoir","hiv reservoir":"reservoir",
-  "what are bnabs":"bnabs","bnabs":"bnabs","broadly neutralising antibodies":"bnabs",
-  "what is ati":"ati","analytical treatment interruption":"ati",
-  "what is q4ddpcr":"q4ddpcr","q4ddpcr":"q4ddpcr",
+  "what are bnabs":"bnabs","bnabs":"bnabs",
+  "what is ati":"ati","q4ddpcr":"q4ddpcr",
   "latest research":"q4ddpcr","new hiv research":"q4ddpcr",
   "what does undetectable mean":"undetectable","undetectable":"undetectable",
   "what is latency":"latency","latent hiv":"latency",
   "what is viral rebound":"viral_rebound","viral rebound":"viral_rebound",
-  "what are cd4 cells":"cd4","cd4 cells":"cd4","cd4":"cd4",
-  "what is informed consent":"informed_consent","informed consent":"informed_consent",
+  "what are cd4 cells":"cd4","cd4":"cd4",
+  "what is informed consent":"informed_consent",
   "what is gene therapy":"gene_therapy","crispr":"gene_therapy",
   "where to get tested":"local_resources","where to get prep":"local_resources",
-  "i have hiv":"local_resources","just diagnosed":"local_resources",
-  "newly diagnosed":"local_resources","hiv positive":"local_resources",
-  "what is a cure":"cure_definition","cure definition":"cure_definition",
-  "what are assays":"assays","lab tests hiv":"assays",
-  "future of hiv treatment":"future_treatment","long acting hiv":"future_treatment",
-  "hiv lifecycle":"hiv_lifecycle","how hiv replicates":"hiv_lifecycle",
-  "immune system":"immune_system","how hiv affects immune system":"immune_system",
-  "health literacy":"health_literacy","hiv literacy":"health_literacy",
-  "participate in research":"participation","join a study":"participation",
+  "i have hiv":"local_resources","just diagnosed":"local_resources","newly diagnosed":"local_resources",
   "second berlin patient":"second_berlin","berlin patient 2":"second_berlin",
-  "nature 2026 hiv":"second_berlin","new cure case":"second_berlin",
-  "adcc":"adcc_nk","natural killer cells":"adcc_nk","nk cells hiv":"adcc_nk",
-  "graft versus reservoir":"gvr","gvr":"gvr",
-  "doctor appointment hiv":"appointment","hiv checklist":"appointment",
-  "why not cured undetectable":"why_not_cured","hiv still there":"why_not_cured",
-  "is hiv chronic":"chronic","hiv manageable":"chronic","living with hiv":"chronic",
-  "questions for researchers":"research_questions","what to ask hiv study":"research_questions",
-  "how quickly hiv hides":"hiv_timing","early hiv treatment":"hiv_timing"
+  "adcc":"adcc_nk","natural killer cells":"adcc_nk",
+  "graft versus reservoir":"gvr",
+  "is hiv chronic":"chronic","living with hiv":"chronic",
+  "why not cured undetectable":"why_not_cured",
+  "questions for researchers":"research_questions",
+  "how quickly does hiv hide":"hiv_timing",
+  // German
+  "was ist hiv":"hiv","hiv erklärt":"hiv",
+  "gibt es eine heilung":"cure","hiv heilen":"cure","heilung hiv":"cure",
+  "was ist prep":"prep","was ist art":"art","was ist u=u":"uu",
+  "hiv reservoir":"reservoir","was ist das reservoir":"reservoir",
+  "was sind bnabs":"bnabs","was ist ati":"ati",
+  "was bedeutet nicht nachweisbar":"undetectable","nicht nachweisbar hiv":"undetectable",
+  "was ist latenz":"latency","zweiter berliner patient":"second_berlin",
+  "wo testen hiv":"local_resources","wo prep bekommen":"local_resources",
+  "ich habe hiv":"local_resources","neue diagnose":"local_resources",
+  "ist hiv heilbar":"cure","kann hiv geheilt werden":"cure",
+  "ist hiv chronisch":"chronic","mit hiv leben":"chronic"
 };
 
-// ── Suggestion labels ──
-const LABELS = {
-  hiv:'What is HIV?', aids:'What is AIDS?', art:'How does ART work?',
-  cure:'Is there a cure?', prep:"What's PrEP?", uu:'What is U=U?',
-  viral_load:'Viral load', reservoir:'HIV reservoir',
-  undetectable:'What does undetectable mean?',
-  latency:'What is latency?', viral_rebound:'What is viral rebound?',
-  cd4:'What are CD4 cells?', immune_system:'HIV & the immune system',
-  hiv_lifecycle:'How does HIV work?',
-  cure_cases:'Has anyone been cured?', cure_types:'Types of cure',
-  cure_definition:'What counts as a cure?',
-  cure_strategies:'Cure strategies', bnabs:'What are bNAbs?',
-  q4ddpcr:'New reservoir research', ati:'What is ATI?',
-  treatment_history:'Treatment history', ccr5:'CCR5 mutation',
-  gene_therapy:'Gene therapy & CRISPR', assays:'How is HIV measured?',
-  global:'HIV globally', clinical_trials:'How do trials work?',
-  informed_consent:'What is informed consent?', participation:'Joining a study',
-  about:'About Looking4Cure', healthcare:'Finding a good doctor',
-  mental_health:'Mental health & HIV', stigma:'HIV & stigma',
-  vaccine:'Is there a vaccine?', support:'I need support',
-  local_resources:'Where to get tested or PrEP',
-  future_treatment:'Future of HIV treatment',
-  health_literacy:'HIV cure literacy',
-  second_berlin:'The second Berlin patient',
-  adcc_nk:'ADCC & natural killer cells',
-  gvr:'Graft-versus-reservoir',
-  appointment:'Doctor appointment tips',
-  why_not_cured:'Why isn\'t HIV cured when undetectable?',
-  chronic:'Is HIV a chronic condition?',
-  research_questions:'Questions to ask researchers',
-  hiv_timing:'How quickly does HIV hide?'
-};
+// ══════════════════════════════════════════════
+// VAGUE WORDS (no match)
+// ══════════════════════════════════════════════
+const VAGUE = new Set(['hi','hey','hello','ok','okay','sure','yes','no','ja','nein',
+  'danke','thanks','thank you','cool','nice','interesting','really','wow',
+  'what','was','what else','was noch','more','mehr','tell me more','und',
+  'so','right','hm','hmm','lol','oh','ah','gut','okay danke']);
 
-// ── Suggestion pools for rotation ──
+const PERSONAL_EN = ['i have hiv','i tested positive','i was diagnosed','just found out',
+  'where to get tested','where to get prep','i need hiv treatment','i need a doctor'];
+const PERSONAL_DE = ['ich habe hiv','ich bin positiv getestet','ich wurde diagnostiziert',
+  'wo kann ich mich testen','wo bekomme ich prep','ich brauche einen arzt'];
+
+// ══════════════════════════════════════════════
+// SUGGESTION POOLS
+// ══════════════════════════════════════════════
 const POOLS = [
   ['hiv','cure','prep'],
   ['uu','art','reservoir'],
@@ -637,90 +614,84 @@ const POOLS = [
 let poolIdx = 0;
 const nextPool = () => { const p = POOLS[poolIdx % POOLS.length]; poolIdx++; return p; };
 
-// ── Fallback messages ──
-const FALLBACKS = [
-  { msg:"I didn't quite catch that — try asking about a specific topic.", sugg:['hiv','prep','cure'] },
-  { msg:"Not sure what you mean — but I'm happy to help with anything HIV-related.", sugg:['uu','reservoir','bnabs'] },
-  { msg:"Try asking something more specific — I know a lot about HIV treatment, research, and prevention.", sugg:['cure_strategies','clinical_trials','treatment_history'] },
-  { msg:"Let me know what you'd like to know more about.", sugg:['stigma','mental_health','healthcare'] },
-  { msg:"Good question — can you be a bit more specific? I'm here to help.", sugg:['art','viral_load','global'] },
-];
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let lang = 'en';
 let fbIdx = 0;
+let expandSet = new Set();
 
-// ── Personal statements — redirect to local resources ──
-const PERSONAL = ['i have hiv','i tested positive','i was diagnosed','i just found out',
-  'i am hiv positive','i am positive','just got diagnosed','newly diagnosed',
-  'where can i get tested','where to get tested','how do i get prep',
-  'where can i get prep','where do i get help','i need hiv treatment',
-  'i need medication','i need a doctor','find a clinic'];
-
-// ── Vague / greetings that should never match ──
-const VAGUE = new Set(['hi','hey','hello','ok','okay','sure','yes','no',
-  'thanks','thank you','cool','nice','interesting','really','wow','what',
-  'what else','something else','more','tell me more','and','so','right',
-  'hm','hmm','lol','ok cool','oh','ah']);
-
-// ══════════════════════════════════════════════════
-// SEARCH ENGINE
-// ══════════════════════════════════════════════════
-function findEntry(q) {
-  const clean = q.toLowerCase().trim().replace(/[?!.,]/g,'').trim();
-
-  // Too short
-  if (clean.length < 3) return null;
-
-  // Guaranteed exact map
-  if (GUARANTEED[clean]) return KB[GUARANTEED[clean]];
-
-  // Personal statements → redirect to local resources
-  if (PERSONAL.some(p => clean.includes(p))) return KB.local_resources;
-
-  // Distress
-  const distress = ['help me','not ok','scared','crisis','distress',
-    'desperate','afraid','hopeless','suicid','self harm','hurting',
-    'depressed','anxious','not coping','struggling'];
-  if (distress.some(w => clean.includes(w))) return KB.support;
-
-  // Vague words → no match
-  if (VAGUE.has(clean)) return null;
-
-  // Word-level scoring — only words longer than 3 chars
-  const words = clean.split(/\s+/).filter(w => w.length > 3);
-
-  // If no meaningful words after filtering, return null
-  if (words.length === 0 && clean.length < 6) return null;
-
-  let best = null, bestScore = 0;
-
-  Object.values(KB).forEach(entry => {
-    let s = 0;
-    entry.tags.forEach(tag => {
-      const tagClean = tag.toLowerCase();
-      // Exact full match
-      if (clean === tagClean) { s += 25; return; }
-      // Query contains full tag
-      if (clean.includes(tagClean) && tagClean.length > 4) { s += 15; return; }
-      // Tag contains full query (only meaningful queries)
-      if (tagClean.includes(clean) && clean.length > 5) { s += 10; return; }
-      // Word overlap
-      const tagWords = tagClean.split(' ').filter(tw => tw.length > 3);
-      tagWords.forEach(tw => words.forEach(qw => {
-        if (tw === qw) s += 8;
-        else if (tw.startsWith(qw) && qw.length > 4) s += 4;
-        else if (qw.startsWith(tw) && tw.length > 4) s += 4;
-      }));
-    });
-    if (s > bestScore) { bestScore = s; best = entry; }
-  });
-
-  // Require meaningful score
-  return bestScore >= 8 ? best : null;
+// ══════════════════════════════════════════════
+// LANGUAGE SWITCH
+// ══════════════════════════════════════════════
+function setLang(newLang) {
+  lang = newLang;
+  document.getElementById('ph-sub').textContent = UI[lang].sub;
+  document.getElementById('inp').placeholder = UI[lang].placeholder;
+  document.getElementById('disc').textContent = UI[lang].disc;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+  document.getElementById('msgs').innerHTML = '';
+  fbIdx = 0; poolIdx = 0; expandSet = new Set();
+  showWelcome();
+  setTimeout(() => document.getElementById('inp').focus(), 100);
 }
 
-// ══════════════════════════════════════════════════
-// UI
-// ══════════════════════════════════════════════════
-let expandSet = new Set();
+function getKB(id) {
+  if (lang === 'de' && KB_DE[id]) return KB_DE[id];
+  return KB[id];
+}
+function getLabel(id) { return (LABELS[lang] || LABELS.en)[id] || id; }
+
+// ══════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════
+function findEntry(q) {
+  const clean = q.toLowerCase().trim().replace(/[?!.,]/g,'').trim();
+  if (clean.length < 3) return null;
+  if (GUARANTEED[clean]) return getKB(GUARANTEED[clean]);
+
+  // Distress
+  const distress = ['help me','not ok','scared','crisis','distress','desperate',
+    'afraid','hopeless','suicid','self harm','hurting','depressed','anxious',
+    'not coping','struggling','hilfe','nicht okay','verzweifelt','angst','traurig','hoffnungslos'];
+  if (distress.some(w => clean.includes(w))) return getKB('support');
+
+  // Personal
+  const personal = lang === 'de' ? PERSONAL_DE : PERSONAL_EN;
+  if (personal.some(p => clean.includes(p))) return getKB('local_resources');
+
+  if (VAGUE.has(clean)) return null;
+
+  const words = clean.split(/\s+/).filter(w => w.length > 3);
+  let best = null, bestScore = 0;
+  const kb = lang === 'de' ? {...KB, ...KB_DE} : KB;
+
+  Object.keys(kb).forEach(key => {
+    const entry = kb[key];
+    let s = 0;
+    entry.tags.forEach(tag => {
+      const t = tag.toLowerCase();
+      if (clean === t) s += 20;
+      else if (clean.includes(t) && t.length > 4) s += 12;
+      else if (t.includes(clean) && clean.length > 5) s += 8;
+      else {
+        t.split(' ').forEach(tw => words.forEach(qw => {
+          if (tw === qw) s += 8;
+          else if (tw.startsWith(qw) && qw.length > 4) s += 4;
+          else if (qw.startsWith(tw) && tw.length > 4) s += 4;
+        }));
+      }
+    });
+    if (s > bestScore) { bestScore = s; best = key; }
+  });
+
+  return bestScore >= 8 ? getKB(best) : null;
+}
+
+// ══════════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════════
 const tn = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
 const sb = () => { const m = document.getElementById('msgs'); m.scrollTop = m.scrollHeight; };
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -728,10 +699,10 @@ const nl2br = s => s.replace(/\n/g,'<br>');
 
 function showWelcome() {
   const area = document.getElementById('msgs');
+  if (area.children.length) return;
   const d = document.createElement('div');
   d.className = 'msg bot';
-  d.innerHTML = `<div class="bub">Hey 👋 I'm <b>Eliz</b>. Ask me anything about HIV — treatment, prevention, cure research, or just getting your head around it all.<br><br><span style="font-size:12px;color:#7c7a77">💬 Please don't share personal information in this chat. I'm here for general HIV information — not personal medical advice.</span></div>
-  <div class="mmeta">${tn()}</div>`;
+  d.innerHTML = `<div class="bub">${UI[lang].welcome}</div><div class="mmeta">${tn()}</div>`;
   area.appendChild(d);
   addSuggestions(['hiv','cure','prep'], true);
   sb();
@@ -749,34 +720,35 @@ function addBotMsg(entry) {
   const area = document.getElementById('msgs');
   const d = document.createElement('div');
   d.className = 'msg bot';
-  const entryId = Object.keys(KB).find(k => KB[k] === entry);
+  const entryId = lang === 'de'
+    ? (Object.keys(KB_DE).find(k => KB_DE[k] === entry) || Object.keys(KB).find(k => KB[k] === entry))
+    : Object.keys(KB).find(k => KB[k] === entry);
 
   let html = `<div class="bub">${nl2br(entry.short || '')}`;
-  if (entry.more && entryId && !expandSet.has(entryId)) {
-    html += `<br><button class="more-btn" onclick="expandEntry('${entryId}',this)">Read more ↓</button>`;
+  if (entry.more && entryId && !expandSet.has(lang+entryId)) {
+    html += `<br><button class="more-btn" onclick="expandEntry('${entryId}',this)">${UI[lang].readmore}</button>`;
   }
   html += `</div>`;
 
   if (entry.isSupport) {
     html += `<div class="scard">
-      <strong>🤝 Here for you</strong>
+      <strong>${UI[lang].support_title}</strong>
       <div><b>Berliner AIDS-Hilfe</b><br>
         <a href="tel:+4930886400">+49 30 886 400 0</a><br>
         <a href="https://berlin.aidshilfe.de" target="_blank">berlin.aidshilfe.de</a>
       </div>
-      <div class="sline">Medical helpline Germany 24/7: <a href="tel:116117"><b>116 117</b></a></div>
-      <div class="sline">Side effects: <a href="https://nebenwirkungen.bund.de" target="_blank">nebenwirkungen.bund.de</a></div>
+      <div class="sline">${UI[lang].support_line1} <a href="tel:116117"><b>116 117</b></a></div>
+      <div class="sline">${UI[lang].support_line2} <a href="https://nebenwirkungen.bund.de" target="_blank">nebenwirkungen.bund.de</a></div>
     </div>`;
   }
-
   html += `<div class="mmeta">${tn()}</div>`;
   d.innerHTML = html;
   area.appendChild(d);
 
-  // Build fresh suggestion list — use entry sugg + rotate pool to avoid repeats
-  let suggIds = (entry.sugg || []).filter(id => KB[id] && id !== entryId);
+  // Build suggestions
+  let suggIds = (entry.sugg || []).filter(id => getKB(id) && id !== entryId);
   if (suggIds.length < 3) {
-    const pool = nextPool().filter(id => id !== entryId && !suggIds.includes(id) && KB[id]);
+    const pool = nextPool().filter(id => id !== entryId && !suggIds.includes(id));
     suggIds = [...suggIds, ...pool].slice(0, 3);
   }
   addSuggestions(suggIds);
@@ -784,8 +756,9 @@ function addBotMsg(entry) {
 }
 
 function expandEntry(id, btn) {
-  expandSet.add(id);
-  const entry = KB[id];
+  const key = lang + id;
+  expandSet.add(key);
+  const entry = getKB(id);
   if (!entry?.more) return;
   const bub = btn.closest('.bub');
   btn.remove();
@@ -797,13 +770,13 @@ function expandEntry(id, btn) {
 
 function addSuggestions(ids, isWelcome=false) {
   const area = document.getElementById('msgs');
-  const valid = ids.filter(id => KB[id]).slice(0,3);
+  const valid = ids.filter(id => getKB(id)).slice(0, 3);
   if (!valid.length) return;
   const row = document.createElement('div');
   row.className = 'sugg-row';
   if (isWelcome) row.style.marginTop = '2px';
   valid.forEach(id => {
-    const label = LABELS[id] || id;
+    const label = getLabel(id);
     const btn = document.createElement('button');
     btn.className = 'sugg';
     btn.textContent = label;
@@ -827,14 +800,17 @@ function showTyping() {
 }
 function hideTyping() { const d = document.getElementById('typ'); if(d) d.remove(); }
 
+// ══════════════════════════════════════════════
+// RESPOND
+// ══════════════════════════════════════════════
 function respond(query, forcedId) {
   showTyping();
   setTimeout(() => {
     hideTyping();
-    if (forcedId && KB[forcedId]) { addBotMsg(KB[forcedId]); return; }
+    if (forcedId && getKB(forcedId)) { addBotMsg(getKB(forcedId)); return; }
     const entry = findEntry(query);
     if (!entry) {
-      const fb = FALLBACKS[fbIdx % FALLBACKS.length]; fbIdx++;
+      const fb = UI[lang].fallbacks[fbIdx % UI[lang].fallbacks.length]; fbIdx++;
       const area = document.getElementById('msgs');
       const d = document.createElement('div');
       d.className = 'msg bot';
